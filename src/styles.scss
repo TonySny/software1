@@ -1,1 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
+/* Fondo */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6f81c1, #4f1689);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Tarjeta */
+.login-card {
+  background: rgba(255, 255, 255, 0.15); /* un poco más visible */
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* soporte extra */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4); /* sombra más fuerte */
+  width: 320px;
+  color: white;
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.2); /* 🔥 clave */
+}
+
+/* Inputs */
+.input-group {
+  position: relative;
+  margin: 20px 0;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 10px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 16px;
+}
+
+/* LABEL */
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  transition: 0.3s ease;
+  color: #ddd;
+  pointer-events: none;
+}
+
+/* efectos sobre los inputs */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  font-size: 12px;
+  color: #fff;
+}
+.input-group input:focus {
+  box-shadow: 0 0 5px #00c6ff;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #00c6ff;
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Texto extra */
+.extra {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.extra a {
+  color: #00c6ff;
+  text-decoration: none;
+}

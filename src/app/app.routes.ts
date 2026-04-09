@@ -1,3 +1,9 @@
-import { Routes } from '@angular/router';
+/* rutas */
 
-export const routes: Routes = [];
+import { Routes } from '@angular/router';
+import { LoginComponent } from './auth/login/login';
+
+export const routes: Routes = [
+  { path: '', component: LoginComponent }, // ruta raíz que muestra el componente de login
+];
+

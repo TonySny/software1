@@ -6,3 +6,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender
   }
 ];
+
+import { Routes } from '@angular/router';
+import { LoginComponent } from './auth/login/login';
+
+export const routes: Routes = [
+  { path: '', component: LoginComponent }
+];
