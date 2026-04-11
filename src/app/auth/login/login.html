@@ -1,31 +1,29 @@
-
-
-
 <div class="login-container">
   <div class="login-card">
     <h2>Iniciar Sesión</h2>
 
-    <form>
+    <form (ngSubmit)="login()">
+
       <div class="input-group">
-        <input type="email" placeholder=" " required />
+        <input type="email" [(ngModel)]="email" name="email" placeholder=" " required />
         <label>Email</label>
       </div>
 
       <div class="input-group">
-        <input type="password" placeholder=" " required />
+        <input type="password" [(ngModel)]="password" name="password" placeholder=" " required />
         <label>Contraseña</label>
       </div>
 
       <button type="submit">Entrar</button>
 
-      <!--  Olvidé contraseña -->
       <p class="forgot">
         <a href="#">¿Has olvidado tu contraseña?</a>
       </p>
 
       <p class="extra">
-        ¿No tienes cuenta? <a href="#">Regístrate</a>
+        ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
       </p>
+
     </form>
   </div>
 </div>

@@ -1,26 +1,26 @@
 /* Fondo */
 .login-container {
   height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #8f9ed8, #032d6b);
+  background: linear-gradient(135deg, #8d9dd9, #4f1689);
   font-family: 'Segoe UI', sans-serif;
 }
 
 /* Tarjeta */
 .login-card {
-  background: rgba(255, 255, 255, 0.15); /* un poco más visible */
+  background: rgba(255, 255, 255, 0.15);
   padding: 40px;
   border-radius: 20px;
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* soporte extra */
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4); /* sombra más fuerte */
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   width: 320px;
   color: white;
   text-align: center;
-
-  border: 1px solid rgba(255, 255, 255, 0.2); /* 🔥 clave */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Inputs */
@@ -40,7 +40,6 @@
   font-size: 16px;
 }
 
-/* LABEL */
 .input-group label {
   position: absolute;
   top: 50%;
@@ -51,33 +50,29 @@
   pointer-events: none;
 }
 
-/* efectos sobre los inputs */
+/* Animación */
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
   top: -10px;
   font-size: 12px;
   color: #fff;
 }
-.input-group input:focus {
-  box-shadow: 0 0 5px #00c6ff;
-}
 
 /* Botón */
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: none;
   border-radius: 10px;
   background: #00c6ff;
-  background: linear-gradient(to right, #0072ff, #00c6ff);
   color: white;
-  font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  background: #0072ff;
 }
 
 /* Texto extra */

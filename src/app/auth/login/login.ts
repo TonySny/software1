@@ -1,11 +1,12 @@
-/* login component */
-
 import { Component } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // 🔥 FALTA ESTO
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  imports: [FormsModule, RouterModule], // 🔥 aquí también
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -16,26 +17,7 @@ export class LoginComponent {
 
   login() {
     console.log(this.email, this.password);
-  }
-}
 
-
-import { FormsModule } from '@angular/forms';
-import Swal from 'sweetalert2';
-
-@Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss'
-})
-export class Login {
-
-  email = '';
-  password = '';
-
-  login() {
     if (!this.email || !this.password) {
       Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
       return;
