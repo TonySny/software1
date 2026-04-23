@@ -1,0 +1,48 @@
+<div class="home-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Bienvenido al Sistema PQRS</h1>
+    <button class="logout" (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- SUBTÍTULO -->
+  <div class="home-title">
+    <p>Selecciona una opción para continuar</p>
+  </div>
+
+  <!-- TARJETAS -->
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">📩</div>
+      <h3>Peticiones</h3>
+      <p>Realiza solicitudes al sistema</p>
+      <button class="card-btn" routerLink="/peticiones">Ir</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">⚠️</div>
+      <h3>Quejas</h3>
+      <p>Reporta inconvenientes</p>
+      <button class="card-btn" routerLink="/quejas">Ir</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🛠️</div>
+      <h3>Reclamos</h3>
+      <p>Gestiona tus reclamos</p>
+      <button class="card-btn" routerLink="/reclamos">Ir</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">💡</div>
+      <h3>Sugerencias</h3>
+      <p>Ayúdanos a mejorar</p>
+      <button class="card-btn" routerLink="/sugerencias">Ir</button>
+    </div>
+
+  </div>
+
+
+</div>

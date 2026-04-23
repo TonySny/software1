@@ -4,8 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #8f9ed8, #032d6b);
+  background: linear-gradient(135deg, #86badc, #1e5ab5);
   font-family: 'Segoe UI', sans-serif;
+
 }
 
 /* Tarjeta */
@@ -89,4 +90,10 @@ button:hover {
 .extra a {
   color: #00c6ff;
   text-decoration: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }

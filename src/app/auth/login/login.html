@@ -16,13 +16,17 @@
 
       <button type="submit">Entrar</button>
 
-      <p class="forgot">
-        <a href="#">¿Has olvidado tu contraseña?</a>
-      </p>
+    <p class="forgot">
+  <span>¿Has olvidado tu contraseña? </span>
+  <a (click)="forgotPassword()">Recupérala</a>
+</p>
 
       <p class="extra">
         ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
       </p>
+
+
+
 
     </form>
   </div>

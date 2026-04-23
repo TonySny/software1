@@ -23,37 +23,37 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Inputs */
 .input-group {
   position: relative;
-  margin: 20px 0;
+  margin: 25px 0;
 }
 
 .input-group input {
   width: 100%;
-  padding: 12px 10px;
+  padding: 14px 12px;
   border: none;
   outline: none;
   border-radius: 10px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
   color: white;
   font-size: 16px;
+  line-height: 1.2;
 }
 
 .input-group label {
   position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
+  left: 12px;
+  top: 14px;
   transition: 0.3s ease;
   color: #ddd;
+  font-size: 14px;
   pointer-events: none;
 }
 
 /* Animación */
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
-  top: -10px;
+  top: -8px;
   font-size: 12px;
   color: #fff;
 }
