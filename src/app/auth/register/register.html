@@ -6,8 +6,13 @@
     <form (ngSubmit)="register()">
 
       <div class="input-group">
-        <input type="text" [(ngModel)]="nombre" name="nombre" placeholder=" " required />
+        <input type="text" [(ngModel)]="nombre" name="name" placeholder=" " required />
         <label>Nombre</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="apellido" name="surname" placeholder=" " required />
+        <label>Apellido</label>
       </div>
 
       <div class="input-group">
@@ -25,7 +30,9 @@
         <label>Confirmar contraseña</label>
       </div>
 
-      <button type="submit">Registrarse</button>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Registrando...' : 'Registrarse' }}
+      </button>
 
       <p class="extra">
         ¿Ya tienes cuenta? <a routerLink="/">Inicia sesión</a>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-register',
@@ -13,15 +14,19 @@ import Swal from 'sweetalert2';
 export class RegisterComponent {
 
   nombre = '';
+  apellido = '';
   email = '';
   password = '';
   confirmPassword = '';
+  loading = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private supabase: SupabaseService
+  ) {}
 
-  register() {
-
-    if (!this.nombre || !this.email || !this.password || !this.confirmPassword) {
+  async register() {
+    if (!this.nombre || !this.apellido || !this.email || !this.password || !this.confirmPassword) {
       Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
       return;
     }
@@ -39,8 +44,35 @@ export class RegisterComponent {
       showConfirmButton: false
     });
 
-    setTimeout(() => {
-      this.router.navigate(['/']); //  vuelve al login
-    }, 1500);
+    this.loading = true;
+
+    try {
+      const { data, error } = await this.supabase.signUp(
+        this.email, 
+        this.password, 
+        this.nombre, 
+        this.apellido
+      );
+
+      if (error) {
+        Swal.fire('Error', error.message, 'error');
+      } else {
+        Swal.fire({
+            icon: 'success',
+            title: 'Cuenta creada',
+            text: 'Registro exitoso',
+            timer: 1500,
+            showConfirmButton: false
+        });
+
+        setTimeout(() => {
+          this.router.navigate(['/']); //  vuelve al login
+        }, 1500);
+      }
+    } catch (err: any) {
+      Swal.fire('Error', 'Ocurrió un error inesperado', 'error');
+    } finally {
+      this.loading = false;
+    }
   }
 }

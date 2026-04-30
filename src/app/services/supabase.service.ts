@@ -22,6 +22,20 @@ export class SupabaseService {
     return { data, error };
   }
 
+  async signUp(email: string, password: string, name: string, surname: string) {
+    const { data, error } = await this.client.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+          full_surname: surname
+        }
+      }
+    });
+    return { data, error };
+  }
+
   async signOut() {
     return await this.client.auth.signOut();
   }
