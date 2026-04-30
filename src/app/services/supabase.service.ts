@@ -6,7 +6,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 })
 export class SupabaseService {
   private supabaseUrl = 'https://vgmyadnozbmorwtpzenx.supabase.co';
-  private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbXlhZG5vemJtb3J3dHB6ZW54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDc0MTcsImV4cCI6MjA5MjI4MzQxN30.8ndhs45C-l6VJdeHfLaD4AFSPzfcWUZXhaCpQavaWRg';
+  private supabaseKey = 'sb_publishable_XFLyFTai9gAgJ5HK30T3mw_vJrMHMis';
 
   client: SupabaseClient;
 

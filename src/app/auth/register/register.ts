@@ -13,8 +13,8 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 export class RegisterComponent {
 
-  nombre = '';
-  apellido = '';
+  name = '';
+  surname = '';
   email = '';
   password = '';
   confirmPassword = '';
@@ -26,7 +26,7 @@ export class RegisterComponent {
   ) {}
 
   async register() {
-    if (!this.nombre || !this.apellido || !this.email || !this.password || !this.confirmPassword) {
+    if (!this.name || !this.surname || !this.email || !this.password || !this.confirmPassword) {
       Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
       return;
     }
@@ -36,22 +36,14 @@ export class RegisterComponent {
       return;
     }
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Cuenta creada',
-      text: 'Registro exitoso ',
-      timer: 1500,
-      showConfirmButton: false
-    });
-
     this.loading = true;
 
     try {
       const { data, error } = await this.supabase.signUp(
         this.email, 
         this.password, 
-        this.nombre, 
-        this.apellido
+        this.name, 
+        this.surname
       );
 
       if (error) {
@@ -59,8 +51,8 @@ export class RegisterComponent {
       } else {
         Swal.fire({
             icon: 'success',
-            title: 'Cuenta creada',
-            text: 'Registro exitoso',
+            title: 'Verificación',
+            text: 'Se le enviará un correo de verificación. Por favor, revise su bandeja de entrada.',
             timer: 1500,
             showConfirmButton: false
         });
