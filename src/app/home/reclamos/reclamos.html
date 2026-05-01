@@ -1,22 +1,44 @@
-<div class="board-container">
-  <div class="top-bar">
-    <h2>Reclamos</h2>
-    <button class="logout" routerLink="/home">Salir</button>
+<div class="reclamos-container">
+
+  <div class="header">
+    <h1>🛠️ Reclamos</h1>
+    <button class="logout" routerLink="/home">← Volver</button>
   </div>
 
-  <div class="form-card">
-    <label>Asunto (Opcional)</label>
-    <input type="text" [(ngModel)]="asunto">
+  <div class="form-wrapper">
+    <div class="form-card">
 
-    <label>Descripción</label>
-    <textarea [(ngModel)]="descripcion"></textarea>
+      <div class="form-header">
+        <h2>🛠️ Nuevo Reclamo</h2>
+        <p>Completa el formulario y nuestro equipo gestionará tu reclamo a la brevedad.</p>
+      </div>
 
-    <label>Destino de respuesta</label>
-    <input type="email" [(ngModel)]="destino">
+      <div class="field-group">
+        <label>Asunto</label>
+        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Inconformidad con el servicio" />
+      </div>
 
-    <label>Adjuntar archivo</label>
-    <input type="file" (change)="onFileSelected($event)">
+      <div class="field-group">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="descripcion" placeholder="Explica el motivo de tu reclamo..." rows="4"></textarea>
+      </div>
 
-    <button class="send-btn" (click)="enviarReclamo()">Enviar</button>
+      <div class="field-group">
+        <label>Destino de respuesta</label>
+        <input type="email" [(ngModel)]="destino" placeholder="correo@ejemplo.com" />
+      </div>
+
+      <div class="field-group">
+        <label>Adjuntar archivo</label>
+        <div class="file-upload">
+          <input type="file" (change)="onFileSelected($event)" id="fileInput" />
+          <label for="fileInput" class="file-label">📎 Seleccionar archivo</label>
+        </div>
+      </div>
+
+      <button class="btn-enviar" (click)="enviarReclamo()">🛠️ Enviar Reclamo</button>
+
+    </div>
   </div>
+
 </div>

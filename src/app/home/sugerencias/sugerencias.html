@@ -1,22 +1,44 @@
-<div class="board-container">
-  <div class="top-bar">
-    <h2>Sugerencias</h2>
-    <button class="logout" routerLink="/home">Salir</button>
+<div class="sugerencias-container">
+
+  <div class="header">
+    <h1>💡 Sugerencias</h1>
+    <button class="logout" routerLink="/home">← Volver</button>
   </div>
 
-  <div class="form-card">
-    <label>Asunto (Opcional)</label>
-    <input type="text" [(ngModel)]="asunto">
+  <div class="form-wrapper">
+    <div class="form-card">
 
-    <label>Descripción</label>
-    <textarea [(ngModel)]="descripcion"></textarea>
+      <div class="form-header">
+        <h2>💡 Nueva Sugerencia</h2>
+        <p>Comparte tu idea y ayúdanos a mejorar nuestro servicio.</p>
+      </div>
 
-    <label>Destino de respuesta</label>
-    <input type="email" [(ngModel)]="destino">
+      <div class="field-group">
+        <label>Asunto</label>
+        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Mejora en el proceso de atención" />
+      </div>
 
-    <label>Adjuntar archivo</label>
-    <input type="file" (change)="onFileSelected($event)">
+      <div class="field-group">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="descripcion" placeholder="Comparte tu idea con el mayor detalle posible..." rows="4"></textarea>
+      </div>
 
-    <button class="send-btn" (click)="enviarSugerencia()">Enviar</button>
+      <div class="field-group">
+        <label>Destino de respuesta</label>
+        <input type="email" [(ngModel)]="destino" placeholder="correo@ejemplo.com" />
+      </div>
+
+      <div class="field-group">
+        <label>Adjuntar archivo</label>
+        <div class="file-upload">
+          <input type="file" (change)="onFileSelected($event)" id="fileInput" />
+          <label for="fileInput" class="file-label">📎 Seleccionar archivo</label>
+        </div>
+      </div>
+
+      <button class="btn-enviar" (click)="enviarSugerencia()">💡 Enviar Sugerencia</button>
+
+    </div>
   </div>
+
 </div>

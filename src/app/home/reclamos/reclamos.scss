@@ -1,79 +1,158 @@
-.board-container {
-  min-height: 100vh;
-  background: #d9d9d9;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+.reclamos-container {
+  height: 100vh;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.top-bar {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-}
+  margin-bottom: 20px;
 
-.top-bar h2 {
-  margin: 0;
-  color: #1f2d3d;
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
 }
 
 .logout {
-  background: #ff5a5a;
-  color: white;
+  padding: 5px 10px;
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.25);
+  color: white;
+  font-size: 0.75rem;
   font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  width: auto;
+  flex-shrink: 0;
+
+  &:hover { background: rgba(0,0,0,0.4); }
 }
 
-.logout:hover {
-  background: #d93636;
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
 }
 
 .form-card {
-  background: #b8b8bd;
-  padding: 30px;
-  width: 80%;
-  margin: auto;
-  border-radius: 10px;
-}
-
-.form-card label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #1f2d3d;
-}
-
-.form-card input,
-.form-card textarea {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 28px 50px;
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
   width: 100%;
-  padding: 10px;
-  margin-bottom: 18px;
+  max-width: 750px;
+  height: fit-content;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0 0 6px;
+  }
+
+  p {
+    opacity: 0.8;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.field-group {
+  margin-bottom: 14px;
+
+  label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.25s;
+    resize: none;
+
+    &::placeholder { color: rgba(255, 255, 255, 0.55); }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 0 3px rgba(56, 239, 125, 0.4);
+    }
+  }
+}
+
+.file-upload {
+  input[type="file"] { display: none; }
+
+  .file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px dashed rgba(255, 255, 255, 0.35);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+.btn-enviar {
+  width: 100%;
+  padding: 14px;
   border: none;
-  border-radius: 6px;
-  font-size: 15px;
-}
-
-.form-card textarea {
-  min-height: 140px;
-  resize: none;
-}
-
-.send-btn {
-  display: block;
-  margin: 20px auto 0;
-  background: #28465c;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #11998e, #38ef7d);
   color: white;
-  border: none;
-  padding: 12px 40px;
-  border-radius: 10px;
-  font-size: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: 'Segoe UI', sans-serif;
   cursor: pointer;
-  font-weight: bold;
-}
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(17, 153, 142, 0.4);
 
-.send-btn:hover {
-  background: #1d3445;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(17, 153, 142, 0.5);
+  }
+
+  &:active { transform: translateY(0); }
 }

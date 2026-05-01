@@ -1,24 +1,44 @@
-<p>quejas works!</p>
+<div class="quejas-container">
 
-<div class="board-container">
-  <div class="top-bar">
-    <h2>Quejas</h2>
-    <button class="logout" routerLink="/home">Salir</button>
+  <div class="header">
+    <h1>⚠️ Quejas</h1>
+    <button class="logout" routerLink="/home">← Volver</button>
   </div>
 
-  <div class="form-card">
-    <label>Asunto (Opcional)</label>
-    <input type="text" [(ngModel)]="asunto">
+  <div class="form-wrapper">
+    <div class="form-card">
 
-    <label>Descripción</label>
-    <textarea [(ngModel)]="descripcion"></textarea>
+      <div class="form-header">
+        <h2>⚠️ Nueva Queja</h2>
+        <p>Completa el formulario y nuestro equipo atenderá tu queja a la brevedad.</p>
+      </div>
 
-    <label>Destino de respuesta</label>
-    <input type="email" [(ngModel)]="destino">
+      <div class="field-group">
+        <label>Asunto</label>
+        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Problema con el servicio" />
+      </div>
 
-    <label>Adjuntar archivo</label>
-    <input type="file" (change)="onFileSelected($event)">
+      <div class="field-group">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="descripcion" placeholder="Cuéntanos qué inconveniente has tenido..." rows="4"></textarea>
+      </div>
 
-    <button class="send-btn" (click)="enviarQueja()">Enviar</button>
+      <div class="field-group">
+        <label>Destino de respuesta</label>
+        <input type="email" [(ngModel)]="destino" placeholder="correo@ejemplo.com" />
+      </div>
+
+      <div class="field-group">
+        <label>Adjuntar archivo</label>
+        <div class="file-upload">
+          <input type="file" (change)="onFileSelected($event)" id="fileInput" />
+          <label for="fileInput" class="file-label">📎 Seleccionar archivo</label>
+        </div>
+      </div>
+
+      <button class="btn-enviar" (click)="enviarQueja()">⚠️ Enviar Queja</button>
+
+    </div>
   </div>
+
 </div>
