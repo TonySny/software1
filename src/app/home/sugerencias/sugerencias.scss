@@ -1,7 +1,7 @@
 .sugerencias-container {
   height: 100vh;
   padding: 20px 40px;
-  background: linear-gradient(135deg, #ee1c1c, #b3b310);
+  background: linear-gradient(135deg, #00b4db, #0083b0);
   font-family: 'Segoe UI', sans-serif;
   color: white;
   display: flex;
@@ -109,7 +109,7 @@
     &:focus {
       background: rgba(255, 255, 255, 0.35);
       border-color: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 0 3px rgba(255, 210, 0, 0.4);
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
     }
   }
 }
@@ -139,7 +139,7 @@
   padding: 14px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, #f7971e, #ffd200);
+  background: linear-gradient(90deg, #00b4db, #0083b0);
   color: white;
   font-size: 1.05rem;
   font-weight: 700;
@@ -148,12 +148,12 @@
   margin-top: 10px;
   letter-spacing: 0.5px;
   transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(247, 151, 30, 0.5);
+  box-shadow: 0 4px 20px rgba(6, 128, 228, 0.5);
   text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(247, 151, 30, 0.6);
+    box-shadow: 0 8px 28px rgba(6, 128, 228, 0.5);
   }
 
   &:active { transform: translateY(0); }
