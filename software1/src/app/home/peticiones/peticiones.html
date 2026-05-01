@@ -1,0 +1,36 @@
+<p>peticiones works!</p>
+
+<div class="board">
+  <div class="top-bar">
+    <h3>¡Bienvenido al Sistema!</h3>
+    <h2>PQRSync</h2>
+    <button class="logout" routerLink="/home">Salir</button>
+  </div>
+
+  <div class="form-panel">
+    <form (ngSubmit)="enviarPeticion()">
+
+      <div class="field">
+        <label>Asunto (Opcional)</label>
+        <input type="text" [(ngModel)]="asunto" name="asunto" />
+      </div>
+
+      <div class="field">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="descripcion" name="descripcion" required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Destino de respuesta</label>
+        <input type="email" [(ngModel)]="destino" name="destino" required />
+      </div>
+
+      <div class="field file-row">
+        <label>Adjuntar archivo</label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+
+      <button type="submit" class="send-btn">Enviar</button>
+    </form>
+  </div>
+</div>
