@@ -5,6 +5,26 @@
 }
 
 /* HEADER */
+.top-banner {
+  background: #0A43B6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.top-banner-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-banner-logo-img {
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -14,10 +34,16 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+}
+
 .logo h1 {
   margin: 0;
   color: #870fa2;
 }
+
 
 .login-btn {
   padding: 10px 20px;
@@ -120,8 +146,73 @@
 
 /* FOOTER */
 .footer {
-  background: #343a40;
+  background: #0A43B6;
   color: white;
-  text-align: center;
   padding: 20px;
 }
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo-box {
+  width: auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.footer-logo-img {
+  width: auto;
+  max-width: 260px;
+  height: 60px;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-copy {
+  flex: 1 1 320px;
+  text-align: center;
+}
+
+.footer-copy p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.gov-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+
+
