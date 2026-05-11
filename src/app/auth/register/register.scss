@@ -1,87 +1,128 @@
-/* Fondo */
-.login-container {
-  height: 100vh;
+.register-container {
+  min-height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #8d9dd9, #4f1689);
   font-family: 'Segoe UI', sans-serif;
+  padding: 30px 0;
+  box-sizing: border-box;
 }
 
-/* Tarjeta */
-.login-card {
+.register-card {
   background: rgba(255, 255, 255, 0.15);
-  padding: 40px;
+  padding: 36px 40px;
   border-radius: 20px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  width: 320px;
+  width: 100%;
+  max-width: 600px;
   color: white;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
+
+  h2 {
+    margin-bottom: 24px;
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+}
+
+/* Fila de dos columnas */
+.row-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .input-group {
   position: relative;
-  margin: 25px 0;
+  margin: 18px 0;
+  text-align: left;
+
+  input,
+  select {
+    width: 100%;
+    padding: 13px 12px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: background 0.2s;
+
+    &:focus {
+      background: rgba(255,255,255,0.3);
+    }
+
+    option {
+      color: #333;
+      background: white;
+    }
+  }
+
+  label {
+    position: absolute;
+    left: 12px;
+    top: 13px;
+    transition: 0.3s ease;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  .select-label {
+    display: none;
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 11px;
+    color: #fff;
+  }
+
+  /* Placeholder para select */
+  select:required:invalid {
+    color: rgba(255,255,255,0.6);
+  }
 }
 
-.input-group input {
-  width: 100%;
-  padding: 14px 12px;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.25);
-  color: white;
-  font-size: 16px;
-  line-height: 1.2;
-}
-
-.input-group label {
-  position: absolute;
-  left: 12px;
-  top: 14px;
-  transition: 0.3s ease;
-  color: #ddd;
-  font-size: 14px;
-  pointer-events: none;
-}
-
-/* Animación */
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
-  top: -8px;
-  font-size: 12px;
-  color: #fff;
-}
-
-/* Botón */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   border: none;
   border-radius: 10px;
-  background: #00c6ff;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
   color: white;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 8px;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
-button:hover {
-  background: #0072ff;
-}
-
-/* Texto extra */
 .extra {
-  margin-top: 15px;
+  margin-top: 16px;
   font-size: 14px;
-}
 
-.extra a {
-  color: #00c6ff;
-  text-decoration: none;
+  a {
+    color: #00c6ff;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
 }

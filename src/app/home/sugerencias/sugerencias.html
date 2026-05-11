@@ -10,30 +10,77 @@
 
       <div class="form-header">
         <h2>💡 Nueva Sugerencia</h2>
-        <p>Comparte tu idea y ayúdanos a mejorar nuestro servicio.</p>
+        <p>Comparte tu idea y ayúdanos a mejorar nuestro servicio. Según la Ley 1755 de 2015, responderemos en un plazo máximo de 15 días hábiles.</p>
       </div>
 
       <div class="field-group">
-        <label>Asunto</label>
-        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Mejora en el proceso de atención" />
+        <label>Tipo de Identificación *</label>
+        <select [(ngModel)]="tipoIdentificacion" required>
+          <option value="">Selecciona</option>
+          <option value="CC">Cédula de Ciudadanía</option>
+          <option value="CE">Cédula de Extranjería</option>
+          <option value="TI">Tarjeta de Identidad</option>
+          <option value="NIT">NIT</option>
+        </select>
       </div>
 
       <div class="field-group">
-        <label>Descripción</label>
-        <textarea [(ngModel)]="descripcion" placeholder="Comparte tu idea con el mayor detalle posible..." rows="4"></textarea>
+        <label>Número de Identificación *</label>
+        <input type="text" [(ngModel)]="numeroIdentificacion" placeholder="Ej: 123456789" required />
       </div>
 
       <div class="field-group">
-        <label>Destino de respuesta</label>
-        <input type="email" [(ngModel)]="destino" placeholder="correo@ejemplo.com" />
+        <label>Nombres *</label>
+        <input type="text" [(ngModel)]="nombres" placeholder="Ej: Juan" required />
       </div>
 
       <div class="field-group">
-        <label>Adjuntar archivo</label>
+        <label>Apellidos *</label>
+        <input type="text" [(ngModel)]="apellidos" placeholder="Ej: Pérez" required />
+      </div>
+
+      <div class="field-group">
+        <label>Teléfono *</label>
+        <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
+      </div>
+
+      <div class="field-group">
+        <label>Email *</label>
+        <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
+      </div>
+
+      <div class="field-group">
+        <label>Asunto *</label>
+        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Mejora en el proceso de atención" required />
+      </div>
+
+      <div class="field-group">
+        <label>Descripción *</label>
+        <textarea [(ngModel)]="descripcion" placeholder="Comparte tu idea con el mayor detalle posible..." rows="4" required></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Medio de Respuesta Preferido *</label>
+        <select [(ngModel)]="medioRespuesta" required>
+          <option value="">Selecciona</option>
+          <option value="email">Email</option>
+          <option value="telefono">Teléfono</option>
+          <option value="correo">Correo Postal</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Adjuntar archivo (opcional)</label>
         <div class="file-upload">
           <input type="file" (change)="onFileSelected($event)" id="fileInput" />
           <label for="fileInput" class="file-label">📎 Seleccionar archivo</label>
         </div>
+      </div>
+
+      <div class="field-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="aceptaTerminos" required /> Acepto los términos y condiciones y autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012. *
+        </label>
       </div>
 
       <button class="btn-enviar" (click)="enviarSugerencia()">💡 Enviar Sugerencia</button>

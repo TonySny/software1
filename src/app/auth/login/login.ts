@@ -38,7 +38,7 @@ export class LoginComponent {
       } else {
         Swal.fire('Bienvenido', 'Login exitoso', 'success');
         setTimeout(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/dashboard']);
         }, 1500);
       }
     } catch (err: any) {
@@ -64,3 +64,4 @@ export class LoginComponent {
     });
   }
 }
+

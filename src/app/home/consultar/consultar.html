@@ -1,0 +1,36 @@
+<div class="consultar-container">
+
+  <div class="header">
+    <h1>🔍 Consultar PQRS</h1>
+    <button class="logout" routerLink="/home">← Volver</button>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h2>🔍 Consulta el Estado de tu PQRS</h2>
+        <p>Ingresa el número de radicado que recibiste al enviar tu solicitud.</p>
+      </div>
+
+      <div class="field-group">
+        <label>Número de Radicado *</label>
+        <input type="text" [(ngModel)]="numeroRadicado" placeholder="Ej: PQR-123456789-123" required />
+      </div>
+
+      <button class="btn-consultar" (click)="consultarPQRS()">🔍 Consultar</button>
+
+      <div *ngIf="pqrsData" class="resultado">
+        <h3>Estado de tu PQRS</h3>
+        <p><strong>Tipo:</strong> {{ pqrsData.tipo | titlecase }}</p>
+        <p><strong>Asunto:</strong> {{ pqrsData.asunto }}</p>
+        <p><strong>Estado:</strong> {{ pqrsData.estado | titlecase }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ pqrsData.fechaCreacion | date:'dd/MM/yyyy' }}</p>
+        <p *ngIf="pqrsData.fechaRespuesta"><strong>Fecha de Respuesta:</strong> {{ pqrsData.fechaRespuesta | date:'dd/MM/yyyy' }}</p>
+        <p *ngIf="pqrsData.respuesta"><strong>Respuesta:</strong> {{ pqrsData.respuesta }}</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

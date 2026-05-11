@@ -1,53 +1,56 @@
-<div class="home-container">
+<div class="landing-container">
 
   <!-- HEADER -->
-  <div class="header">
-    <h1>Bienvenido al Sistema PQRS</h1>
-    <button class="logout" (click)="logout()">Cerrar sesión</button>
-  </div>
-
-  <!-- SUBTÍTULO -->
-  <div class="home-title">
-    <p>Selecciona una opción para continuar</p>
-  </div>
-
-  <!-- TARJETAS -->
-  <div class="cards">
-
-    <div class="card">
-      <div class="icon">📩</div>
-      <h3>Peticiones</h3>
-      <p>Realiza solicitudes al sistema</p>
-      <button class="card-btn" routerLink="/peticiones">Ir</button>
+  <header class="header">
+    <div class="logo">
+      <h1>Sistema PQRS</h1>
     </div>
+    <nav class="nav">
+      <button class="login-btn" routerLink="/login">Iniciar Sesión</button>
+    </nav>
+  </header>
 
-    <div class="card">
-      <div class="icon">⚠️</div>
-      <h3>Quejas</h3>
-      <p>Reporta inconvenientes</p>
-      <button class="card-btn" routerLink="/quejas">Ir</button>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h2>Bienvenido al Sistema de Peticiones, Quejas, Reclamos y Sugerencias</h2>
+    <p>Tu voz importa. Envía tus PQRS de manera segura y eficiente, conforme a la Ley 1755 de 2015.</p>
+    <button class="cta-btn" routerLink="/login">Acceder al Sistema</button>
+  </section>
+
+  <!-- SECTIONS -->
+  <section class="info-section">
+    <div class="section">
+      <h3>¿Qué es PQRS?</h3>
+      <p>El sistema PQRS permite a los ciudadanos presentar Peticiones, Quejas, Reclamos y Sugerencias a las entidades públicas. Garantizamos respuesta oportuna y confidencialidad.</p>
     </div>
-
-    <div class="card">
-      <div class="icon">🛠️</div>
-      <h3>Reclamos</h3>
-      <p>Gestiona tus reclamos</p>
-      <button class="card-btn" routerLink="/reclamos">Ir</button>
+    <div class="section">
+      <h3>Normatividad</h3>
+      <p>Regulado por la Ley 1755 de 2015 y la Ley 1581 de 2012. Plazos de respuesta: 15 días hábiles para peticiones y sugerencias, 30 días para quejas y reclamos.</p>
     </div>
-
-    <div class="card">
-      <div class="icon">💡</div>
-      <h3>Sugerencias</h3>
-      <p>Ayúdanos a mejorar</p>
-      <button class="card-btn" routerLink="/sugerencias">Ir</button>
+    <div class="section">
+      <h3>Formulario PQRS</h3>
+      <p>Completa nuestro formulario en línea para enviar tu PQRS. Incluye todos los datos requeridos para una gestión eficiente.</p>
+      <button class="section-btn" routerLink="/login">Enviar PQRS</button>
     </div>
+    <div class="section">
+      <h3>Consultar Estado</h3>
+      <p>Revisa el estado de tu PQRS utilizando el número de radicado proporcionado al enviar tu solicitud.</p>
+      <button class="section-btn" routerLink="/login">Consultar</button>
+    </div>
+  </section>
 
-  </div>
+  <!-- CONTACTO -->
+  <section class="contact-section">
+    <h3>Contacto</h3>
+    <p>Para más información, contáctanos:</p>
+    <p>Email: pqrs@entidad.gov.co</p>
+    <p>Teléfono: (1) 123-4567</p>
+    <p>Dirección: Calle 123 #45-67, Bogotá</p>
+  </section>
 
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2026 Sistema PQRS. Todos los derechos reservados.</p>
+  </footer>
 
 </div>
-
-<button routerLink="/peticiones">Ir</button>
-<button routerLink="/quejas">Ir</button>
-<button routerLink="/reclamos">Ir</button>
-<button routerLink="/sugerencias">Ir</button>

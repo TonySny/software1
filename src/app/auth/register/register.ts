@@ -7,7 +7,7 @@ import { SupabaseService } from '../../services/supabase.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, RouterModule], // 🔥 AQUÍ VA
+  imports: [FormsModule, RouterModule],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
@@ -15,6 +15,12 @@ export class RegisterComponent {
 
   name = '';
   surname = '';
+  tipoDocumento = '';
+  numeroDocumento = '';
+  sexo = '';
+  edad: number | null = null;
+  grupoEtnico = '';
+  ciudad = '';
   email = '';
   password = '';
   confirmPassword = '';
@@ -26,11 +32,27 @@ export class RegisterComponent {
   ) {}
 
   async register() {
-    if (!this.name || !this.surname || !this.email || !this.password || !this.confirmPassword) {
-      Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
+    // Validar campos obligatorios
+    if (!this.name || !this.surname || !this.tipoDocumento || !this.numeroDocumento ||
+        !this.sexo || !this.edad || !this.grupoEtnico || !this.ciudad ||
+        !this.email || !this.password || !this.confirmPassword) {
+      Swal.fire('Campos incompletos', 'Todos los campos son obligatorios', 'error');
       return;
     }
 
+    // Validar mayor de edad
+    if (this.edad < 18) {
+      Swal.fire('No permitido', 'El sistema no permite el registro de menores de edad', 'error');
+      return;
+    }
+
+    // Validar contraseña mínimo 8 caracteres
+    if (this.password.length < 8) {
+      Swal.fire('Contraseña débil', 'La contraseña debe tener mínimo 8 caracteres', 'error');
+      return;
+    }
+
+    // Validar que las contraseñas coincidan
     if (this.password !== this.confirmPassword) {
       Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
       return;
@@ -40,9 +62,9 @@ export class RegisterComponent {
 
     try {
       const { data, error } = await this.supabase.signUp(
-        this.email, 
-        this.password, 
-        this.name, 
+        this.email,
+        this.password,
+        this.name,
         this.surname
       );
 
@@ -50,16 +72,13 @@ export class RegisterComponent {
         Swal.fire('Error', error.message, 'error');
       } else {
         Swal.fire({
-            icon: 'success',
-            title: 'Verificación',
-            text: 'Se le enviará un correo de verificación. Por favor, revise su bandeja de entrada.',
-            timer: 1500,
-            showConfirmButton: false
+          icon: 'success',
+          title: '¡Registro exitoso!',
+          text: 'Se ha enviado un correo de verificación. Por favor revisa tu bandeja de entrada.',
+          timer: 2000,
+          showConfirmButton: false
         });
-
-        setTimeout(() => {
-          this.router.navigate(['/']); //  vuelve al login
-        }, 1500);
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       }
     } catch (err: any) {
       Swal.fire('Error', 'Ocurrió un error inesperado', 'error');

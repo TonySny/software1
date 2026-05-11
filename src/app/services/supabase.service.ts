@@ -43,4 +43,21 @@ export class SupabaseService {
   getSession() {
     return this.client.auth.getSession();
   }
+
+  // Métodos para PQRS
+  async insertarPQRS(pqrsData: any) {
+    const { data, error } = await this.client
+      .from('pqrs')
+      .insert([pqrsData]);
+    return { data, error };
+  }
+
+  async consultarPQRS(numeroRadicado: string) {
+    const { data, error } = await this.client
+      .from('pqrs')
+      .select('*')
+      .eq('numeroRadicado', numeroRadicado)
+      .single();
+    return { data, error };
+  }
 }
