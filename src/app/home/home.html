@@ -1,28 +1,26 @@
 <div class="landing-container">
+
   <div class="top-banner">
     <div class="top-banner-logo">
       <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
     </div>
   </div>
 
-  <!-- HEADER -->
   <header class="header">
     <div class="logo">
-      <h1>Sistema PQRS</h1>
+      <h1>PQRSync</h1>
     </div>
     <nav class="nav">
-      <button class="login-btn" routerLink="/login">Iniciar Sesión</button>
+      <button class="login-btn" (click)="abrirLogin()">Iniciar Sesión</button>
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <h2>Bienvenido al Sistema de Peticiones, Quejas, Reclamos y Sugerencias</h2>
     <p>Tu voz importa. Envía tus PQRS de manera segura y eficiente, conforme a la Ley 1755 de 2015.</p>
-    <button class="cta-btn" routerLink="/login">Acceder al Sistema</button>
+    <button class="cta-btn" (click)="abrirLogin()">Acceder al Sistema</button>
   </section>
 
-  <!-- SECTIONS -->
   <section class="info-section">
     <div class="section">
       <h3>¿Qué es PQRS?</h3>
@@ -30,30 +28,47 @@
     </div>
     <div class="section">
       <h3>Normatividad</h3>
-      <p>Regulado por la Ley 1755 de 2015 y la Ley 1581 de 2012. Plazos de respuesta: 15 días hábiles para peticiones y sugerencias, 30 días para quejas y reclamos.</p>
+      <p>Regulado por la Ley 1755 de 2015 y la Ley 1581 de 2012. Plazos de respuesta: 15 días hábiles.</p>
     </div>
     <div class="section">
       <h3>Formulario PQRS</h3>
       <p>Completa nuestro formulario en línea para enviar tu PQRS. Incluye todos los datos requeridos para una gestión eficiente.</p>
-      <button class="section-btn" routerLink="/login">Enviar PQRS</button>
+      <button class="section-btn" (click)="abrirLogin()">Enviar PQRS</button>
     </div>
     <div class="section">
       <h3>Consultar Estado</h3>
       <p>Revisa el estado de tu PQRS utilizando el número de radicado proporcionado al enviar tu solicitud.</p>
-      <button class="section-btn" routerLink="/login">Consultar</button>
+      <button class="section-btn" (click)="abrirLogin()">Consultar</button>
     </div>
   </section>
 
   <!-- CONTACTO -->
   <section class="contact-section">
-    <h3>Contacto</h3>
-    <p>Para más información, contáctanos:</p>
-    <p>Email: pqrs@entidad.gov.co</p>
-    <p>Teléfono: (1) 123-4567</p>
-    <p>Dirección: Calle 123 #45-67, Bogotá</p>
-  </section>
+  <h3>Contacto</h3>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <h4>Correo Electrónico</h4>
+      <p>pqrs@entidad.gov.co</p>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📞</div>
+      <h4>Teléfono</h4>
+      <p>(2) 241-3890</p>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📍</div>
+      <h4>Dirección</h4>
+      <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">🕐</div>
+      <h4>Horario de atención</h4>
+      <p>Lunes a Viernes 8:00am - 5:00pm</p>
+    </div>
+  </div>
+</section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-brand">
       <div class="footer-logo">
@@ -62,10 +77,128 @@
         </div>
       </div>
       <div class="footer-copy">
-        <p>&copy; 2026 Sistema PQRS. Todos los derechos reservados.</p>
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
       </div>
       <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
     </div>
   </footer>
 
+</div>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" *ngIf="mostrarLogin || mostrarRegister" (click)="cerrarModales()"></div>
+
+<!-- MODAL LOGIN -->
+<div class="modal" *ngIf="mostrarLogin">
+  <button class="modal-close" (click)="cerrarModales()">✕</button>
+  <h2>Iniciar Sesión</h2>
+  <p class="modal-sub">Accede a tu cuenta PQRSync</p>
+
+  <div class="input-group">
+    <input type="email" [(ngModel)]="email" placeholder=" " />
+    <label>Correo electrónico</label>
+  </div>
+
+  <div class="input-group">
+    <input type="password" [(ngModel)]="password" placeholder=" " />
+    <label>Contraseña</label>
+  </div>
+
+  <button class="modal-btn" (click)="login()" [disabled]="loadingLogin">
+    {{ loadingLogin ? 'Cargando...' : 'Entrar' }}
+  </button>
+
+  <p class="modal-extra">
+    ¿No tienes cuenta? <a (click)="abrirRegister()">Regístrate</a>
+  </p>
+</div>
+
+<!-- MODAL REGISTER -->
+<div class="modal modal-wide" *ngIf="mostrarRegister">
+  <button class="modal-close" (click)="cerrarModales()">✕</button>
+  <h2>Crear Cuenta</h2>
+  <p class="modal-sub">Regístrate para usar el sistema PQRS</p>
+
+  <div class="row-group">
+    <div class="input-group">
+      <input type="text" [(ngModel)]="name" placeholder=" " />
+      <label>Nombre</label>
+    </div>
+    <div class="input-group">
+      <input type="text" [(ngModel)]="surname" placeholder=" " />
+      <label>Apellido</label>
+    </div>
+  </div>
+
+  <div class="row-group">
+    <div class="input-group">
+      <select [(ngModel)]="tipoDocumento">
+        <option value="" disabled selected>Tipo doc.</option>
+        <option value="CC">C.C.</option>
+        <option value="TI">T.I.</option>
+        <option value="CE">C.E.</option>
+        <option value="PP">Pasaporte</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <input type="text" [(ngModel)]="numeroDocumento" placeholder=" " />
+      <label>Número documento</label>
+    </div>
+  </div>
+
+  <div class="row-group">
+    <div class="input-group">
+      <select [(ngModel)]="sexo">
+        <option value="" disabled selected>Sexo</option>
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+        <option value="O">Otro</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <input type="number" [(ngModel)]="edad" placeholder=" " min="18" />
+      <label>Edad</label>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <select [(ngModel)]="grupoEtnico">
+      <option value="" disabled selected>Grupo étnico</option>
+      <option value="ninguno">Ninguno</option>
+      <option value="indigena">Indígena</option>
+      <option value="afrocolombiano">Afrocolombiano</option>
+      <option value="raizal">Raizal</option>
+      <option value="palenquero">Palenquero</option>
+      <option value="mestizo">Mestizo</option>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <input type="text" [(ngModel)]="ciudad" placeholder=" " />
+    <label>Ciudad de origen</label>
+  </div>
+
+  <div class="input-group">
+    <input type="email" [(ngModel)]="emailReg" placeholder=" " />
+    <label>Correo electrónico</label>
+  </div>
+
+  <div class="row-group">
+    <div class="input-group">
+      <input type="password" [(ngModel)]="passwordReg" placeholder=" " />
+      <label>Contraseña</label>
+    </div>
+    <div class="input-group">
+      <input type="password" [(ngModel)]="confirmPassword" placeholder=" " />
+      <label>Confirmar contraseña</label>
+    </div>
+  </div>
+
+  <button class="modal-btn" (click)="register()" [disabled]="loadingRegister">
+    {{ loadingRegister ? 'Registrando...' : 'Registrarse' }}
+  </button>
+
+  <p class="modal-extra">
+    ¿Ya tienes cuenta? <a (click)="abrirLogin()">Inicia sesión</a>
+  </p>
 </div>

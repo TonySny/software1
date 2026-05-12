@@ -36,7 +36,7 @@ export class LoginComponent {
       if (error) {
         Swal.fire('Oops...', error.message, 'error');
       } else {
-        Swal.fire('Bienvenido', 'Login exitoso', 'success');
+        Swal.fire('Bienvenido', 'Has iniciado sesión correctamente.', 'success');
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
         }, 1500);
