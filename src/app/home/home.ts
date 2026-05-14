@@ -71,6 +71,10 @@ export class HomeComponent implements OnInit{
     this.mostrarRegister = false;
   }
 
+  abrirNormativa() {
+    window.location.href = "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334";
+  }
+
   async login() {
     if (!this.email || !this.password) {
       Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
@@ -86,7 +90,7 @@ export class HomeComponent implements OnInit{
         this.cerrarModales();
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
-        }, 1500);
+        }, 1000);
       }
     } catch {
       Swal.fire('Error', 'Ocurrió un error inesperado', 'error');
