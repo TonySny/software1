@@ -121,11 +121,11 @@
 
   <div class="row-group">
     <div class="input-group">
-      <input type="text" [(ngModel)]="name" placeholder=" " />
+      <input type="text" [(ngModel)]="nombre" placeholder=" " />
       <label>Nombre</label>
     </div>
     <div class="input-group">
-      <input type="text" [(ngModel)]="surname" placeholder=" " />
+      <input type="text" [(ngModel)]="apellido" placeholder=" " />
       <label>Apellido</label>
     </div>
   </div>
@@ -134,14 +134,11 @@
     <div class="input-group">
       <select [(ngModel)]="tipoDocumento">
         <option value="" disabled selected>Tipo doc.</option>
-        <option value="CC">C.C.</option>
-        <option value="TI">T.I.</option>
-        <option value="CE">C.E.</option>
-        <option value="PP">Pasaporte</option>
+        <option *ngFor="let tipo of tiposDocumento" [value]="tipo.id">{{tipo.name}}</option>
       </select>
     </div>
     <div class="input-group">
-      <input type="text" [(ngModel)]="numeroDocumento" placeholder=" " />
+      <input type="text" [(ngModel)]="numeroDocumento" placeholder=" " [disabled]="!tipoDocumento" />
       <label>Número documento</label>
     </div>
   </div>
@@ -156,7 +153,7 @@
       </select>
     </div>
     <div class="input-group">
-      <input type="number" [(ngModel)]="edad" placeholder=" " min="18" />
+      <input type="number" [(ngModel)]="edad" placeholder="" />
       <label>Edad</label>
     </div>
   </div>
@@ -164,23 +161,34 @@
   <div class="input-group">
     <select [(ngModel)]="grupoEtnico">
       <option value="" disabled selected>Grupo étnico</option>
-      <option value="ninguno">Ninguno</option>
-      <option value="indigena">Indígena</option>
-      <option value="afrocolombiano">Afrocolombiano</option>
-      <option value="raizal">Raizal</option>
-      <option value="palenquero">Palenquero</option>
-      <option value="mestizo">Mestizo</option>
+      <option *ngFor="let gret of gruposEtnicos" [value]="gret.id">{{gret.name}}</option>
     </select>
   </div>
 
-  <div class="input-group">
-    <input type="text" [(ngModel)]="ciudad" placeholder=" " />
-    <label>Ciudad de origen</label>
+  <div class="row-group">
+    <div class="input-group">
+      <select [(ngModel)]="departamento" (ngModelChange)="onDepartmentChange($event)">
+        <option value="" disabled selected>Departamento</option>
+        <option *ngFor="let dep of departamentos" [value]="dep.id">{{dep.name}}</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <select [(ngModel)]="ciudad" [disabled]="!departamento">
+        <option value="" disabled selected>Ciudad</option>
+        <option *ngFor="let city of ciudades" [value]="city.id">{{city.name}}</option>
+      </select>
+    </div>
   </div>
 
-  <div class="input-group">
-    <input type="email" [(ngModel)]="emailReg" placeholder=" " />
-    <label>Correo electrónico</label>
+  <div class="row-group">
+    <div class="input-group">
+      <input type="email" [(ngModel)]="emailReg" placeholder="" />
+      <label>Correo electrónico</label>
+    </div>
+    <div class="input-group">
+      <input type="text" [(ngModel)]="confirmEmailReg" placeholder=""/>
+      <label>Confirmar correo electrónico</label>
+    </div>
   </div>
 
   <div class="row-group">

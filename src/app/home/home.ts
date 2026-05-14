@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
   // Control de modales
   mostrarLogin = false;
@@ -24,23 +24,37 @@ export class HomeComponent {
   loadingLogin = false;
 
   // Register
-  name = '';
-  surname = '';
+  nombre = '';
+  apellido = '';
   tipoDocumento = '';
   numeroDocumento = '';
   sexo = '';
   edad: number | null = null;
   grupoEtnico = '';
+  departamento = "";
   ciudad = '';
   emailReg = '';
+  confirmEmailReg = '';
   passwordReg = '';
   confirmPassword = '';
   loadingRegister = false;
+
+  // Opciones para selects
+  gruposEtnicos: any[] = [];
+  tiposDocumento: any[] = [];
+  departamentos: any[] = [];
+  ciudades: any[] = [];
 
   constructor(
     private supabase: SupabaseService,
     private router: Router
   ) {}
+  
+  async ngOnInit() {
+    await this.showDepartments();
+    await this.showEthnicGroups();
+    await this.showDocumentTypes();
+  }
 
   abrirLogin() {
     this.mostrarLogin = true;
@@ -68,7 +82,7 @@ export class HomeComponent {
       if (error) {
         Swal.fire('Error', 'Correo o contraseña incorrectos', 'error');
       } else {
-        Swal.fire('Bienvenid@', 'Has iniciado sesión correctamente.', 'success');
+        Swal.fire('Bienvenido/a', 'Has iniciado sesión correctamente.', 'success');
         this.cerrarModales();
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
@@ -82,14 +96,20 @@ export class HomeComponent {
   }
 
   async register() {
-    if (!this.name || !this.surname || !this.tipoDocumento || !this.numeroDocumento ||
+    if (!this.nombre || !this.apellido || !this.tipoDocumento || !this.numeroDocumento ||
         !this.sexo || !this.edad || !this.grupoEtnico || !this.ciudad ||
-        !this.emailReg || !this.passwordReg || !this.confirmPassword) {
+        !this.emailReg || !this.confirmEmailReg || !this.passwordReg || !this.confirmPassword) {
       Swal.fire('Campos incompletos', 'Todos los campos son obligatorios', 'error');
       return;
     }
-    if (this.edad < 18) {
-      Swal.fire('No permitido', 'El sistema no permite el registro de menores de edad', 'error');
+
+    if (this.emailReg !== this.confirmEmailReg) {
+      Swal.fire('Error', 'Los correos electrónicos no coinciden', 'error');
+      return;
+    }
+
+    if (this.edad < 0 || this.edad > 120) {
+      Swal.fire('No permitido', 'Esa edad no esta en el rango valido', 'error');
       return;
     }
     if (this.passwordReg.length < 8) {
@@ -102,10 +122,21 @@ export class HomeComponent {
     }
     this.loadingRegister = true;
     try {
-      const { data, error } = await this.supabase.signUp(this.emailReg, this.passwordReg, this.name, this.surname);
+      const { data, error } = await this.supabase.signUp(
+        this.emailReg, 
+        this.passwordReg, 
+        this.nombre, 
+        this.apellido,
+        this.numeroDocumento,
+        this.tipoDocumento,
+        this.sexo,
+        this.edad,
+        this.grupoEtnico,
+        this.ciudad
+      );
       if (error) {
-        Swal.fire('Error', error.message, 'error');
-      } else {
+        Swal.fire('Error', `No se pudo completar el registro: ${error.message}`, 'error');
+      }
         Swal.fire({
           icon: 'success',
           title: '¡Registro exitoso!',
@@ -114,11 +145,42 @@ export class HomeComponent {
           showConfirmButton: false
         });
         setTimeout(() => this.abrirLogin(), 2000);
-      }
     } catch {
-      Swal.fire('Error', 'Ocurrió un error inesperado', 'error');
+      Swal.fire('Error', 'Ocurrió un error inesperado. Vuelva a intentarlo', 'error');
     } finally {
       this.loadingRegister = false;
     }
+  }
+  
+  async showDepartments() {
+    const { data, error } = await this.supabase.selectDepartments();
+    if (error) {  
+      Swal.fire('Error', 'No se pudieron cargar los departamentos', 'error'); 
+      return;
+    }
+
+    this.departamentos = data ?? []
+  }
+
+  async onDepartmentChange(departmentId: string) {
+    this.ciudades = [];
+    
+    const { data, error } = await this.supabase.selectCities(departmentId);
+    if (error) {  
+      Swal.fire('Error', 'No se pudieron cargar las ciudades', 'error'); 
+      return;
+    }
+
+    this.ciudades = data ?? []
+  }
+
+  async showEthnicGroups() {
+    const { data, error } = await this.supabase.selectEthnicGroup();
+    this.gruposEtnicos = data ?? []
+  }
+
+  async showDocumentTypes() {
+    const { data, error} = await this.supabase.selectDocumentTypes();
+    this.tiposDocumento = data ?? []
   }
 }
