@@ -1,0 +1,22 @@
+.forgot {
+  margin-top: 10px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.forgot a {
+  color: #ddd;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.forgot a:hover {
+  color: #00c6ff;
+  text-decoration: underline;
+}
+
+.login-container {
+  min-height: 100vh;
+  width: 100%;
+}
+

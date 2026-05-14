@@ -1,0 +1,22 @@
+<div class="board-container">
+  <div class="top-bar">
+    <h2>Sugerencias</h2>
+    <button class="logout" routerLink="/home">Salir</button>
+  </div>
+
+  <div class="form-card">
+    <label>Asunto (Opcional)</label>
+    <input type="text" [(ngModel)]="asunto">
+
+    <label>Descripción</label>
+    <textarea [(ngModel)]="descripcion"></textarea>
+
+    <label>Destino de respuesta</label>
+    <input type="email" [(ngModel)]="destino">
+
+    <label>Adjuntar archivo</label>
+    <input type="file" (change)="onFileSelected($event)">
+
+    <button class="send-btn" (click)="enviarSugerencia()">Enviar</button>
+  </div>
+</div>

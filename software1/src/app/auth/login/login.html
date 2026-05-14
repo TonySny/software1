@@ -1,10 +1,4 @@
 <div class="login-container">
-
-  <div class="app-title">
-    <h1>PQRSync</h1>
-    <p>Sistema de Peticiones, Quejas, Reclamos y Sugerencias</p>
-  </div>
-
   <div class="login-card">
     <h2>Iniciar Sesión</h2>
 
@@ -24,14 +18,17 @@
         {{ loading ? 'Cargando...' : 'Entrar' }}
       </button>
 
-      <p class="forgot">
-        <span>¿Has olvidado tu contraseña? </span>
-        <a (click)="forgotPassword()">Recupérala</a>
-      </p>
+    <p class="forgot">
+  <span>¿Has olvidado tu contraseña? </span>
+  <a (click)="forgotPassword()">Recupérala</a>
+</p>
 
       <p class="extra">
         ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
       </p>
+
+
+
 
     </form>
   </div>

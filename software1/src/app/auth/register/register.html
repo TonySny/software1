@@ -1,0 +1,43 @@
+
+<div class="login-container">
+  <div class="login-card">
+    <h2>Crear Cuenta</h2>
+
+    <form (ngSubmit)="register()">
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="name" name="name" placeholder=" " required />
+        <label>Nombre</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="surname" name="surname" placeholder=" " required />
+        <label>Apellido</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" [(ngModel)]="email" name="email" placeholder=" " required />
+        <label>Email</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" [(ngModel)]="password" name="password" placeholder=" " required />
+        <label>Contraseña</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder=" " required />
+        <label>Confirmar contraseña</label>
+      </div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Registrando...' : 'Registrarse' }}
+      </button>
+
+      <p class="extra">
+        ¿Ya tienes cuenta? <a routerLink="/">Inicia sesión</a>
+      </p>
+
+    </form>
+  </div>
+</div>
