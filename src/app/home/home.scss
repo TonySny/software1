@@ -104,6 +104,9 @@
 }
 
 .section {
+  display: flex;
+  flex-direction: column;
+  
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -117,12 +120,16 @@
 }
 
 .section-btn {
-  margin-top: 10px;
+  margin-top: auto;
+  margin-bottom: 10px;
   padding: 8px 15px;
+
   background: #870fa2;
   color: white;
+  
   border: none;
   border-radius: 5px;
+  
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
@@ -219,14 +226,14 @@
   padding: 20px 30px;
   background: linear-gradient(135deg, #870fa2, #4f1689);
   text-align: center;
+}
 
-  h3 {
-    color: white;
-    font-size: 1.3rem;
-    font-weight: 800;
-    margin-bottom: 18px;
-    margin-top: 0;
-  }
+.contact-section h3 {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  margin-top: 0;
 }
 
 .contact-grid {
@@ -274,6 +281,10 @@
   max-width: 420px;
   z-index: 101;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 40px;
+  scrollbar-width: none;
 
   h2 {
     color: #870fa2;
@@ -284,7 +295,17 @@
   }
 }
 
-.modal-wide { max-width: 620px; max-height: 90vh; overflow-y: auto; }
+/*
+.modal::-webkit-scrollbar {
+  display: none;
+}
+*/
+
+.modal-wide { 
+  max-width: 620px;
+  max-height: 80vh; 
+}
+
 
 .modal-sub {
   text-align: center;
@@ -296,13 +317,20 @@
 .modal-close {
   position: absolute;
   top: 16px; right: 16px;
+
   background: #f0f0f0;
   border: none;
   border-radius: 50%;
+  
   width: 32px; height: 32px;
   cursor: pointer;
   font-size: 0.9rem;
   color: #333;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover { background: #ddd; }
 }
 

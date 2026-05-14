@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit{
   emailReg = '';
   confirmEmailReg = '';
   passwordReg = '';
-  confirmPassword = '';
+  confirmPasswordReg = '';
   loadingRegister = false;
 
   // Opciones para selects
@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit{
   async register() {
     if (!this.nombre || !this.apellido || !this.tipoDocumento || !this.numeroDocumento ||
         !this.sexo || !this.edad || !this.grupoEtnico || !this.ciudad ||
-        !this.emailReg || !this.confirmEmailReg || !this.passwordReg || !this.confirmPassword) {
+        !this.emailReg || !this.confirmEmailReg || !this.passwordReg || !this.confirmPasswordReg) {
       Swal.fire('Campos incompletos', 'Todos los campos son obligatorios', 'error');
       return;
     }
@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit{
       Swal.fire('Contraseña débil', 'La contraseña debe tener mínimo 8 caracteres', 'error');
       return;
     }
-    if (this.passwordReg !== this.confirmPassword) {
+    if (this.passwordReg !== this.confirmPasswordReg) {
       Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
       return;
     }
