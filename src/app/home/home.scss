@@ -44,12 +44,14 @@
   gap: 20px;
 }
 
-.card {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 30px;
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+.section {
+  display: flex;
+  flex-direction: column;
+  
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   text-align: center;
   transition: 0.3s;
 }
@@ -63,9 +65,268 @@
   margin-bottom: 10px;
 }
 
-.card-btn {
-  margin-top: 10px;
+.section-btn {
+  margin-top: auto;
+  margin-bottom: 10px;
   padding: 8px 15px;
+
+  background: #870fa2;
+  color: white;
+  
+  border: none;
+  border-radius: 5px;
+  
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.section-btn:hover {
+  background: #6a0d7a;
+}
+
+/* CONTACT */
+.contact-section {
+  padding: 50px 20px;
+  background: #e9ecef;
+  text-align: center;
+}
+
+.contact-section h3 {
+  color: #870fa2;
+  margin-bottom: 20px;
+}
+
+/* FOOTER */
+.footer {
+  background: #0A43B6;
+  color: white;
+  padding: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo-box {
+  width: auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.footer-logo-img {
+  width: auto;
+  max-width: 260px;
+  height: 60px;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-copy {
+  flex: 1 1 320px;
+  text-align: center;
+}
+
+.footer-copy p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.gov-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+/* CONTACTO MEJORADO */
+.contact-section {
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #870fa2, #4f1689);
+  text-align: center;
+}
+
+.contact-section h3 {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  margin-top: 0;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 14px 12px;
+  color: white;
+  transition: transform 0.3s;
+
+  &:hover { transform: translateY(-4px); }
+
+  .contact-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+  p { font-size: 0.84rem; opacity: 0.85; margin: 0; }
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  z-index: 101;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 40px;
+  scrollbar-width: none;
+
+  h2 {
+    color: #870fa2;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+}
+
+/*
+.modal::-webkit-scrollbar {
+  display: none;
+}
+*/
+
+.modal-wide { 
+  max-width: 620px;
+  max-height: 80vh; 
+}
+
+
+.modal-sub {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  
+  width: 32px; height: 32px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover { background: #ddd; }
+}
+
+.modal .input-group {
+  position: relative;
+  margin-bottom: 20px;
+
+  input, select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    color: #333;
+    transition: border 0.2s;
+    background: white;
+
+    &:focus { border-color: #870fa2; }
+  }
+
+  label {
+    position: absolute;
+    left: 14px; top: 13px;
+    color: #999;
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: 0.2s;
+    background: white;
+    padding: 0 4px;
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 0.75rem;
+    color: #870fa2;
+  }
+}
+
+.modal .row-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 13px;
   border: none;
   border-radius: 10px;
   background: #00c6ff;
