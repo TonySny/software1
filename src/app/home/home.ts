@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -47,7 +47,8 @@ export class HomeComponent implements OnInit{
 
   constructor(
     private supabase: SupabaseService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
   
   async ngOnInit() {
@@ -116,10 +117,12 @@ export class HomeComponent implements OnInit{
       Swal.fire('No permitido', 'Esa edad no esta en el rango valido', 'error');
       return;
     }
+
     if (this.passwordReg.length < 8) {
       Swal.fire('Contraseña débil', 'La contraseña debe tener mínimo 8 caracteres', 'error');
       return;
     }
+
     if (this.passwordReg !== this.confirmPasswordReg) {
       Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
       return;
@@ -140,7 +143,7 @@ export class HomeComponent implements OnInit{
       );
       if (error) {
         Swal.fire('Error', `No se pudo completar el registro: ${error.message}`, 'error');
-      }
+      } else {
         Swal.fire({
           icon: 'success',
           title: '¡Registro exitoso!',
@@ -149,6 +152,8 @@ export class HomeComponent implements OnInit{
           showConfirmButton: false
         });
         setTimeout(() => this.abrirLogin(), 2000);
+      }
+        console.log("error en la linea 153: "+error)
     } catch {
       Swal.fire('Error', 'Ocurrió un error inesperado. Vuelva a intentarlo', 'error');
     } finally {
@@ -167,15 +172,18 @@ export class HomeComponent implements OnInit{
   }
 
   async onDepartmentChange(departmentId: string) {
+    this.ciudad = "";
     this.ciudades = [];
+    this.cdr.detectChanges();
     
     const { data, error } = await this.supabase.selectCities(departmentId);
     if (error) {  
       Swal.fire('Error', 'No se pudieron cargar las ciudades', 'error'); 
       return;
     }
-
+    
     this.ciudades = data ?? []
+    this.cdr.detectChanges();
   }
 
   async showEthnicGroups() {

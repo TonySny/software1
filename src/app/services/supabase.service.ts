@@ -25,7 +25,6 @@ export class SupabaseService {
   async signUp(
     email: string, 
     password: string, 
-    //phone: string,
     nombre: string, 
     apellido: string,
     numeroDocumento: string,
@@ -38,52 +37,19 @@ export class SupabaseService {
     const { data: data, error: error } = await this.client.auth.signUp({
       email,
       password,
-      //phone,
       options: {
         data: {
           full_name: nombre,
-          full_surname: apellido
+          full_surname: apellido,
+          dni: numeroDocumento,
+          dni_type_id: tipoDocumentoId,
+          sex: sexo,
+          age: edad,
+          ethnic_group_id: grupoEtnicoId,
+          city_id: ciudadId
         }
       }
     });
-
-    if (error) { return { data, error }; }
-    const userId = data.user?.id
-
-    // if (!userId) { return {data: null, error: "No se pudo obtener el user ID"}; }
-
-    // consultar el rol
-    const { data: roleData} = await this.client
-      .from('profile_roles')
-      .select('id')
-      .eq('name', 'CLIENTE')
-      .single();
-
-    // crear perfil
-    const { data: profileData } = await this.client
-      .from('profiles')
-      .insert({
-        name: nombre,
-        surname: apellido,
-        role_id: roleData?.id,
-        dni: numeroDocumento,
-        dni_type_id: tipoDocumentoId,
-        sex: sexo,
-        age: edad,
-        ethnic_group_id: grupoEtnicoId,
-        cities_id: ciudadId
-      })
-      .select()
-      .single();
-    
-    /*
-    if (profileError) {
-      return {
-        data: { user: authData.user, profile: profileData},
-        error: authError || profileError
-      };
-    }
-    */
 
     return { data, error };
   }
