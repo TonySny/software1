@@ -349,8 +349,6 @@
     color: #333;
     transition: border 0.2s;
     background: white;
-
-    &:focus { border-color: #870fa2; }
   }
 
   label {
@@ -365,10 +363,18 @@
   }
 
   input:focus + label,
-  input:not(:placeholder-shown) + label {
+  input:not(:placeholder-shown) + label,
+  select:focus + label,
+  select.has-value + label {
     top: -10px;
     font-size: 0.75rem;
     color: #870fa2;
+  }
+
+  select:focus {
+    border-color: #870fa2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(135, 15, 162, 0.2);
   }
 }
 

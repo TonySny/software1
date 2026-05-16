@@ -119,35 +119,38 @@
   <button class="modal-close" (click)="cerrarModales()">✕</button>
   <h2>Crear Cuenta</h2>
   <p class="modal-sub">Regístrate para usar el sistema PQRS</p>
+  <p class="modal-sub">Los campos enmarcados con (*); son obligatorios</p>
 
+  <!-- CAMPO DE IDENTIFICACIÓN 1-->
   <div class="row-group">
     <div class="input-group">
       <input type="text" [(ngModel)]="nombre" placeholder=" " />
-      <label>Nombre</label>
+      <label>Nombre *</label>
     </div>
     <div class="input-group">
       <input type="text" [(ngModel)]="apellido" placeholder=" " />
-      <label>Apellido</label>
+      <label>Apellido *</label>
     </div>
   </div>
 
+  <!-- CAMPO DE IDENTIFICACIÓN 2 -->
   <div class="row-group">
     <div class="input-group">
-      <select [(ngModel)]="tipoDocumento">
-        <option value="" disabled selected>Tipo doc.</option>
+      <select id="tipoDocumento" [(ngModel)]="tipoDocumento" [class.has-value]="tipoDocumento">
         <option *ngFor="let tipo of tiposDocumento" [value]="tipo.id">{{tipo.name}}</option>
       </select>
+      <label for="tipoDocumento">Tipo de documento *</label>
     </div>
     <div class="input-group">
       <input type="text" [(ngModel)]="numeroDocumento" placeholder=" " [disabled]="!tipoDocumento" />
-      <label>Número documento</label>
+      <label>Número documento *</label>
     </div>
   </div>
 
+  <!-- CAMPO DE SEXO Y EDAD (GRUPAL)-->
   <div class="row-group">
     <div class="input-group">
-      <select [(ngModel)]="sexo">
-        <option value="" disabled selected>Sexo</option>
+      <select id="sexo" [(ngModel)]="sexo" [class.has-value]="sexo">
         <option value="M">Masculino</option>
         <option value="F">Femenino</option>
         <!-- problematico -->
@@ -155,6 +158,7 @@
         <!-- ... -->
         <option value="N/A">Prefiero no decirlo</option>
       </select>
+      <label>Sexo *</label>
     </div>
     <div class="input-group">
       <input type="number" [(ngModel)]="edad" placeholder="" />
@@ -162,50 +166,56 @@
     </div>
   </div>
 
+  <!-- CAMPO DE GRUPO ETNICO -->
   <div class="input-group">
-    <select [(ngModel)]="grupoEtnico">
-      <option value="" disabled selected>Grupo étnico</option>
+    <select id="grupoEtnico" [(ngModel)]="grupoEtnico" [class.has-value]="grupoEtnico">
+      <option value="N/A" disabled selected hidden></option>
       <option *ngFor="let gret of gruposEtnicos" [value]="gret.id">{{gret.name}}</option>
     </select>
+    <label>Grupo Étnico</label>
   </div>
-
+  
+  <!-- CAMPO DE DEPARTAMENTO -->
   <div class="row-group">
     <div class="input-group">
-      <select [(ngModel)]="departamento" (ngModelChange)="onDepartmentChange($event)">
-        <option value="" disabled selected>Departamento</option>
+      <select id="departamento" [(ngModel)]="departamento" [class.has-value]="departamento" (ngModelChange)="onDepartmentChange($event)">
         <option *ngFor="let dep of departamentos" [value]="dep.id">{{dep.name}}</option>
       </select>
+      <label>Departamento *</label>
     </div>
     <div class="input-group">
-      <select [(ngModel)]="ciudad" [disabled]="!departamento">
-        <option value="" disabled selected>Ciudad</option>
+      <select id="ciudad" [(ngModel)]="ciudad" [class.has-value]="ciudad" [disabled]="!departamento">
         <option *ngFor="let city of ciudades" [value]="city.id">{{city.name}}</option>
       </select>
+      <label>Ciudad *</label>
     </div>
   </div>
 
+  <!-- CAMPO DE EMAIL Y CONFIRMACIÓN ( GRUPAL ) -->
   <div class="row-group">
     <div class="input-group">
       <input type="email" [(ngModel)]="emailReg" placeholder="" />
-      <label>Correo electrónico</label>
+      <label>Correo electrónico *</label>
     </div>
     <div class="input-group">
       <input type="text" [(ngModel)]="confirmEmailReg" placeholder=""/>
-      <label>Confirmar correo electrónico</label>
+      <label>Confirmar correo electrónico *</label>
     </div>
   </div>
 
+  <!-- CAMPO DE CONTRASEÑA Y CONFIRMACIÓN ( GRUPAL )-->
   <div class="row-group">
     <div class="input-group">
       <input type="password" [(ngModel)]="passwordReg" placeholder=" " />
-      <label>Contraseña</label>
+      <label>Contraseña *</label>
     </div>
     <div class="input-group">
       <input type="password" [(ngModel)]="confirmPasswordReg" placeholder=" " />
-      <label>Confirmar contraseña</label>
+      <label>Confirmar contraseña *</label>
     </div>
   </div>
 
+  <!-- BOTÓN -->
   <button class="modal-btn" (click)="register()" [disabled]="loadingRegister">
     {{ loadingRegister ? 'Registrando...' : 'Registrarse' }}
   </button>

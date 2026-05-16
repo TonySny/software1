@@ -147,15 +147,13 @@ export class HomeComponent implements OnInit{
         Swal.fire({
           icon: 'success',
           title: '¡Registro exitoso!',
-          text: 'Se ha enviado un correo de verificación.',
-          timer: 2000,
-          showConfirmButton: false
+          text: 'Se ha registrado un perfil con su cuenta de usuario',
+          showConfirmButton: true
         });
         setTimeout(() => this.abrirLogin(), 2000);
       }
-        console.log("error en la linea 153: "+error)
     } catch {
-      Swal.fire('Error', 'Ocurrió un error inesperado. Vuelva a intentarlo', 'error');
+      Swal.fire('Error', 'Ha ocurrido un error inesperado. Vuelva a intentarlo', 'error');
     } finally {
       this.loadingRegister = false;
     }
