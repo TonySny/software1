@@ -45,30 +45,30 @@
 
   <!-- CONTACTO -->
   <section class="contact-section">
-  <h3>Contacto</h3>
-  <div class="contact-grid">
-    <div class="contact-card">
-      <div class="contact-icon">📧</div>
-      <h4>Correo Electrónico</h4>
-      <p>pqrs@entidad.gov.co</p>
+    <h3>Contacto</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h4>Correo Electrónico</h4>
+        <p>pqrs@entidad.gov.co</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>Teléfono</h4>
+        <p>(2) 241-3890</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>Dirección</h4>
+        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+      </div>
     </div>
-    <div class="contact-card">
-      <div class="contact-icon">📞</div>
-      <h4>Teléfono</h4>
-      <p>(2) 241-3890</p>
-    </div>
-    <div class="contact-card">
-      <div class="contact-icon">📍</div>
-      <h4>Dirección</h4>
-      <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
-    </div>
-    <div class="contact-card">
-      <div class="contact-icon">🕐</div>
-      <h4>Horario de atención</h4>
-      <p>Lunes a Viernes 8:00am - 5:00pm</p>
-    </div>
-  </div>
-</section>
+  </section>
 
   <footer class="footer">
     <div class="footer-brand">
@@ -110,6 +110,10 @@
   </button>
 
   <p class="modal-extra">
+    ¿Olvidaste tu contraseña? <a (click)="forgotPassword()">Recupérala</a>
+  </p>
+
+  <p class="modal-extra">
     ¿No tienes cuenta? <a (click)="abrirRegister()">Regístrate</a>
   </p>
 </div>
@@ -119,9 +123,8 @@
   <button class="modal-close" (click)="cerrarModales()">✕</button>
   <h2>Crear Cuenta</h2>
   <p class="modal-sub">Regístrate para usar el sistema PQRS</p>
-  <p class="modal-sub">Los campos enmarcados con (*); son obligatorios</p>
+  <p class="modal-sub">Los campos enmarcados con (*) son obligatorios</p>
 
-  <!-- CAMPO DE IDENTIFICACIÓN 1-->
   <div class="row-group">
     <div class="input-group">
       <input type="text" [(ngModel)]="nombre" placeholder=" " />
@@ -133,7 +136,6 @@
     </div>
   </div>
 
-  <!-- CAMPO DE IDENTIFICACIÓN 2 -->
   <div class="row-group">
     <div class="input-group">
       <select id="tipoDocumento" [(ngModel)]="tipoDocumento" [class.has-value]="tipoDocumento">
@@ -147,35 +149,30 @@
     </div>
   </div>
 
-  <!-- CAMPO DE SEXO Y EDAD (GRUPAL)-->
   <div class="row-group">
     <div class="input-group">
       <select id="sexo" [(ngModel)]="sexo" [class.has-value]="sexo">
         <option value="M">Masculino</option>
         <option value="F">Femenino</option>
-        <!-- problematico -->
         <option value="Otro">Otro</option>
-        <!-- ... -->
         <option value="N/A">Prefiero no decirlo</option>
       </select>
       <label>Sexo *</label>
     </div>
     <div class="input-group">
       <input type="number" [(ngModel)]="edad" placeholder="" />
-      <label>Edad</label>
+      <label>Edad *</label>
     </div>
   </div>
 
-  <!-- CAMPO DE GRUPO ETNICO -->
   <div class="input-group">
     <select id="grupoEtnico" [(ngModel)]="grupoEtnico" [class.has-value]="grupoEtnico">
       <option value="N/A" disabled selected hidden></option>
       <option *ngFor="let gret of gruposEtnicos" [value]="gret.id">{{gret.name}}</option>
     </select>
-    <label>Grupo Étnico</label>
+    <label>Grupo Étnico *</label>
   </div>
-  
-  <!-- CAMPO DE DEPARTAMENTO -->
+
   <div class="row-group">
     <div class="input-group">
       <select id="departamento" [(ngModel)]="departamento" [class.has-value]="departamento" (ngModelChange)="onDepartmentChange($event)">
@@ -191,7 +188,6 @@
     </div>
   </div>
 
-  <!-- CAMPO DE EMAIL Y CONFIRMACIÓN ( GRUPAL ) -->
   <div class="row-group">
     <div class="input-group">
       <input type="email" [(ngModel)]="emailReg" placeholder="" />
@@ -203,7 +199,6 @@
     </div>
   </div>
 
-  <!-- CAMPO DE CONTRASEÑA Y CONFIRMACIÓN ( GRUPAL )-->
   <div class="row-group">
     <div class="input-group">
       <input type="password" [(ngModel)]="passwordReg" placeholder=" " />
@@ -215,7 +210,6 @@
     </div>
   </div>
 
-  <!-- BOTÓN -->
   <button class="modal-btn" (click)="register()" [disabled]="loadingRegister">
     {{ loadingRegister ? 'Registrando...' : 'Registrarse' }}
   </button>

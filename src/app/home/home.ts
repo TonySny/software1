@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   // Control de modales
   mostrarLogin = false;
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit{
   sexo = '';
   edad: number | null = null;
   grupoEtnico = '';
-  departamento = "";
+  departamento = '';
   ciudad = '';
   emailReg = '';
   confirmEmailReg = '';
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit{
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
-  
+
   async ngOnInit() {
     await this.showDepartments();
     await this.showEthnicGroups();
@@ -73,7 +73,46 @@ export class HomeComponent implements OnInit{
   }
 
   abrirNormativa() {
-    window.location.href = "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334";
+    window.location.href = 'https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334';
+  }
+
+  async documentoYaExiste(): Promise<boolean> {
+    const { data } = await this.supabase.client
+      .from('profiles')
+      .select('id')
+      .eq('dni', this.numeroDocumento)
+      .maybeSingle();
+    return !!data;
+  }
+
+  async forgotPassword() {
+    const { value: correo } = await Swal.fire({
+      title: 'Recuperar contraseña',
+      input: 'email',
+      inputLabel: 'Ingresa tu correo electrónico',
+      inputPlaceholder: 'correo@ejemplo.com',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Enviar',
+      confirmButtonColor: '#870fa2',
+    });
+
+    if (correo) {
+      const { error } = await this.supabase.client.auth.resetPasswordForEmail(correo, {
+        redirectTo: 'http://localhost:4200/#/reset-password'
+      });
+
+      if (error) {
+        Swal.fire('Error', 'No se pudo enviar el correo de recuperación', 'error');
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correo enviado!',
+          text: 'Revisa tu bandeja de entrada para restablecer tu contraseña.',
+          confirmButtonColor: '#870fa2'
+        });
+      }
+    }
   }
 
   async login() {
@@ -87,7 +126,7 @@ export class HomeComponent implements OnInit{
       if (error) {
         Swal.fire('Error', 'Correo o contraseña incorrectos', 'error');
       } else {
-        Swal.fire('Bienvenido/a', 'Has iniciado sesión correctamente.', 'success');
+        Swal.fire('¡Bienvenid@!', 'Has iniciado sesión correctamente.', 'success');
         this.cerrarModales();
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
@@ -113,8 +152,13 @@ export class HomeComponent implements OnInit{
       return;
     }
 
-    if (this.edad < 0 || this.edad > 120) {
-      Swal.fire('No permitido', 'Esa edad no esta en el rango valido', 'error');
+    if (this.edad < 18) {
+      Swal.fire('No permitido', 'El sistema no permite el registro de menores de edad', 'error');
+      return;
+    }
+
+    if (this.edad > 120) {
+      Swal.fire('No permitido', 'Esa edad no está en el rango válido', 'error');
       return;
     }
 
@@ -127,12 +171,19 @@ export class HomeComponent implements OnInit{
       Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
       return;
     }
+
+    const documentoDuplicado = await this.documentoYaExiste();
+    if (documentoDuplicado) {
+      Swal.fire('Error', 'Ya existe un usuario registrado con ese número de documento', 'error');
+      return;
+    }
+
     this.loadingRegister = true;
     try {
       const { data, error } = await this.supabase.signUp(
-        this.emailReg, 
-        this.passwordReg, 
-        this.nombre, 
+        this.emailReg,
+        this.passwordReg,
+        this.nombre,
         this.apellido,
         this.numeroDocumento,
         this.tipoDocumento,
@@ -158,39 +209,38 @@ export class HomeComponent implements OnInit{
       this.loadingRegister = false;
     }
   }
-  
+
   async showDepartments() {
     const { data, error } = await this.supabase.selectDepartments();
-    if (error) {  
-      Swal.fire('Error', 'No se pudieron cargar los departamentos', 'error'); 
+    if (error) {
+      Swal.fire('Error', 'No se pudieron cargar los departamentos', 'error');
       return;
     }
-
-    this.departamentos = data ?? []
+    this.departamentos = data ?? [];
   }
 
   async onDepartmentChange(departmentId: string) {
-    this.ciudad = "";
+    this.ciudad = '';
     this.ciudades = [];
     this.cdr.detectChanges();
-    
+
     const { data, error } = await this.supabase.selectCities(departmentId);
-    if (error) {  
-      Swal.fire('Error', 'No se pudieron cargar las ciudades', 'error'); 
+    if (error) {
+      Swal.fire('Error', 'No se pudieron cargar las ciudades', 'error');
       return;
     }
-    
-    this.ciudades = data ?? []
+
+    this.ciudades = data ?? [];
     this.cdr.detectChanges();
   }
 
   async showEthnicGroups() {
     const { data, error } = await this.supabase.selectEthnicGroup();
-    this.gruposEtnicos = data ?? []
+    this.gruposEtnicos = data ?? [];
   }
 
   async showDocumentTypes() {
-    const { data, error} = await this.supabase.selectDocumentTypes();
-    this.tiposDocumento = data ?? []
+    const { data, error } = await this.supabase.selectDocumentTypes();
+    this.tiposDocumento = data ?? [];
   }
 }

@@ -1,36 +1,109 @@
-<div class="consultar-container">
+<div class="consultar-wrapper">
 
-  <div class="header">
-    <h1>🔍 Consultar PQRS</h1>
-    <button class="logout" routerLink="/home">← Volver</button>
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
   </div>
 
-  <div class="form-wrapper">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="logout-btn" routerLink="/dashboard">← Volver</button>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="main-content">
     <div class="form-card">
 
       <div class="form-header">
-        <h2>🔍 Consulta el Estado de tu PQRS</h2>
+        <div class="form-icon">🔍</div>
+        <h2>Consultar Estado de PQRS</h2>
         <p>Ingresa el número de radicado que recibiste al enviar tu solicitud.</p>
       </div>
 
       <div class="field-group">
         <label>Número de Radicado *</label>
-        <input type="text" [(ngModel)]="numeroRadicado" placeholder="Ej: PQR-123456789-123" required />
+        <input type="text" [(ngModel)]="numeroRadicado" placeholder="Ej: PQR-123456789-123" />
       </div>
 
       <button class="btn-consultar" (click)="consultarPQRS()">🔍 Consultar</button>
 
+      <!-- RESULTADO -->
       <div *ngIf="pqrsData" class="resultado">
-        <h3>Estado de tu PQRS</h3>
-        <p><strong>Tipo:</strong> {{ pqrsData.tipo | titlecase }}</p>
-        <p><strong>Asunto:</strong> {{ pqrsData.asunto }}</p>
-        <p><strong>Estado:</strong> {{ pqrsData.estado | titlecase }}</p>
-        <p><strong>Fecha de Creación:</strong> {{ pqrsData.fechaCreacion | date:'dd/MM/yyyy' }}</p>
-        <p *ngIf="pqrsData.fechaRespuesta"><strong>Fecha de Respuesta:</strong> {{ pqrsData.fechaRespuesta | date:'dd/MM/yyyy' }}</p>
-        <p *ngIf="pqrsData.respuesta"><strong>Respuesta:</strong> {{ pqrsData.respuesta }}</p>
+        <h3>📋 Estado de tu solicitud</h3>
+        <div class="resultado-grid">
+          <div class="resultado-item">
+            <span class="resultado-label">Tipo</span>
+            <span class="resultado-valor">{{ pqrsData.tipo | titlecase }}</span>
+          </div>
+          <div class="resultado-item">
+            <span class="resultado-label">Asunto</span>
+            <span class="resultado-valor">{{ pqrsData.asunto }}</span>
+          </div>
+          <div class="resultado-item">
+            <span class="resultado-label">Estado</span>
+            <span class="resultado-valor estado-badge">{{ pqrsData.estado | titlecase }}</span>
+          </div>
+          <div class="resultado-item">
+            <span class="resultado-label">Fecha de creación</span>
+            <span class="resultado-valor">{{ pqrsData.fechaCreacion | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="resultado-item" *ngIf="pqrsData.fechaRespuesta">
+            <span class="resultado-label">Fecha de respuesta</span>
+            <span class="resultado-valor">{{ pqrsData.fechaRespuesta | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="resultado-item" *ngIf="pqrsData.respuesta">
+            <span class="resultado-label">Respuesta</span>
+            <span class="resultado-valor">{{ pqrsData.respuesta }}</span>
+          </div>
+        </div>
       </div>
 
     </div>
-  </div>
+  </main>
+
+  <!-- CONTACTO -->
+  <section class="contact-section">
+    <h3>Contacto</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h4>Correo Electrónico</h4>
+        <p>pqrs@entidad.gov.co</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>Teléfono</h4>
+        <p>(2) 241-3890</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>Dirección</h4>
+        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo-box">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
 
 </div>
