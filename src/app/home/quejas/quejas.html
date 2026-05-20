@@ -2,7 +2,7 @@
 
   <div class="header">
     <h1>⚠️ Quejas</h1>
-    <button class="logout" routerLink="/home">← Volver</button>
+    <button type="button" class="logout" routerLink="/dashboard">← Volver</button>
   </div>
 
   <div class="form-wrapper">
@@ -70,10 +70,22 @@
       </div>
 
       <div class="field-group">
-        <label>Adjuntar archivo (opcional)</label>
+        <label>Adjuntar archivos (opcional)</label>
         <div class="file-upload">
-          <input type="file" (change)="onFileSelected($event)" id="fileInput" />
-          <label for="fileInput" class="file-label">📎 Seleccionar archivo</label>
+          <input type="file" multiple (change)="onFileSelected($event)" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.webp" />
+          <label for="fileInput" class="file-label">📎 Seleccionar archivos</label>
+        </div>
+        <div class="file-list" *ngIf="archivo.length > 0">
+          <span>Archivos cargados ({{ archivo.length }}):</span>
+          <ul>
+            <li *ngFor="let file of archivo; let i = index">
+              {{ file.name }}
+              <button type="button" class="remove-file" (click)="removeFile(i)">Eliminar</button>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="errorArchivos.length > 0" class="error-message">
+          ❌ Archivos no permitidos: {{ errorArchivos.join(', ') }}
         </div>
       </div>
 
@@ -83,7 +95,7 @@
         </label>
       </div>
 
-      <button class="btn-enviar" (click)="enviarQueja()">⚠️ Enviar Queja</button>
+      <button class="btn-enviar" (click)="enviarQueja()" [disabled]="errorArchivos.length > 0">⚠️ Enviar Queja</button>
 
     </div>
   </div>

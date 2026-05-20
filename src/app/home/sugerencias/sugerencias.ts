@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -7,7 +8,7 @@ import { SupabaseService } from '../../services/supabase.service';
 @Component({
   selector: 'app-sugerencias',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './sugerencias.html',
   styleUrl: './sugerencias.scss'
 })
@@ -21,13 +22,40 @@ export class SugerenciasComponent {
   asunto = '';
   descripcion = '';
   medioRespuesta = '';
-  archivo: File | null = null;
+  archivo: File[] = [];
   aceptaTerminos = false;
+  errorArchivos: string[] = [];
 
   constructor(private supabaseService: SupabaseService) {}
 
   onFileSelected(event: any) {
-    this.archivo = event.target.files[0];
+    const target = event.target as HTMLInputElement;
+    const archivosNuevos = target.files ? Array.from(target.files) : [];
+    const tiposPermitidos = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+    const archivosValidos: File[] = [];
+    const archivosInvalidos: string[] = [];
+
+    archivosNuevos.forEach((file: any) => {
+      if (tiposPermitidos.includes(file.type)) {
+        archivosValidos.push(file);
+      } else {
+        archivosInvalidos.push(file.name);
+      }
+    });
+
+    if (archivosInvalidos.length > 0) {
+      this.errorArchivos = archivosInvalidos;
+      Swal.fire('Archivo no permitido', `Los siguientes archivos no son permitidos: ${archivosInvalidos.join(', ')}. Solo se permiten PDF e imágenes (PNG, JPG, JPEG, WEBP).`, 'error');
+    } else {
+      this.errorArchivos = [];
+    }
+
+    this.archivo = [...this.archivo, ...archivosValidos];
+    target.value = '';
+  }
+
+  removeFile(index: number) {
+    this.archivo = this.archivo.filter((_, i) => i !== index);
   }
 
   async enviarSugerencia() {
@@ -52,7 +80,7 @@ export class SugerenciasComponent {
       numeroRadicado: numeroRadicado,
       estado: 'recibido',
       fechaCreacion: new Date().toISOString(),
-      archivo: this.archivo ? this.archivo.name : null
+      archivo: this.archivo.length ? this.archivo.map(file => file.name) : null
     };
 
     try {
@@ -85,7 +113,7 @@ export class SugerenciasComponent {
     this.asunto = '';
     this.descripcion = '';
     this.medioRespuesta = '';
-    this.archivo = null;
+    this.archivo = [];
     this.aceptaTerminos = false;
   }
 }
