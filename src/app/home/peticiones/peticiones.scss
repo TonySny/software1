@@ -1,38 +1,27 @@
-// ============================================================
-// Peticiones — Angular Component
-// Paleta: #0A2540 (navy) · #F3F4F6 (blanco gris) · #ffffff
-// ============================================================
 
-$navy:     #0A2540;
-$light:    #F3F4F6;
-$white:    #ffffff;
-
-// ── Layout principal ─────────────────────────────────────────
 .peticiones-container {
   min-height: 100vh;
-  background: $light;
-  font-family: 'Segoe UI', sans-serif;
+  background: #F3F4F6;
+  font-family: "Segoe UI", sans-serif;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-// ── Header ───────────────────────────────────────────────────
 .header {
-  background: $navy;
+  background: #0A2540;
   padding: 14px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-
-  h1 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: $white;
-    margin: 0;
-    letter-spacing: 0.5px;
-  }
+}
+.header h1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .logout {
@@ -46,294 +35,338 @@ $white:    #ffffff;
   border-radius: 8px;
   background: transparent;
   color: rgba(243, 244, 246, 0.75);
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: rgba(243, 244, 246, 0.1);
-    color: $white;
-  }
+}
+.logout:hover {
+  background: rgba(243, 244, 246, 0.1);
+  color: #ffffff;
 }
 
-// ── Form wrapper ─────────────────────────────────────────────
 .form-wrapper {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: flex-start;
-  padding: 28px 24px 48px;
+  gap: 36px;
+  padding: 36px 40px 48px;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-// ── Form card ────────────────────────────────────────────────
+.info-panel {
+  width: 255px;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+.info-panel h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0A2540;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.info-panel p {
+  font-size: 0.82rem;
+  color: rgba(10, 37, 64, 0.55);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.info-panel__divider {
+  border: none;
+  border-top: 1px solid rgba(10, 37, 64, 0.12);
+  margin: 18px 0;
+}
+.info-panel__law {
+  font-size: 0.72rem;
+  color: rgba(10, 37, 64, 0.45);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.info-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  background: rgba(10, 37, 64, 0.05);
+  border: 1px solid rgba(10, 37, 64, 0.1);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.info-badge__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.info-badge__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.info-badge__text strong {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0A2540;
+  display: block;
+}
+.info-badge__text span {
+  font-size: 0.73rem;
+  color: rgba(10, 37, 64, 0.5);
+  line-height: 1.45;
+}
+
 .form-card {
-  background: $white;
+  flex: 1;
+  background: #ffffff;
   border-radius: 16px;
   border: 1px solid rgba(10, 37, 64, 0.1);
-  padding: 32px 36px;
-  width: 100%;
-  max-width: 700px;
+  padding: 28px 32px;
   box-shadow: 0 2px 16px rgba(10, 37, 64, 0.07);
+  min-width: 0;
 }
 
-// ── Form header ──────────────────────────────────────────────
 .form-header {
-  margin-bottom: 24px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(10, 37, 64, 0.08);
-
-  h2 {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: $navy;
-    margin: 0 0 10px;
-  }
-
-  p {
-    font-size: 0.82rem;
-    color: rgba(10, 37, 64, 0.5);
-    line-height: 1.6;
-    margin: 0;
-    background: rgba(10, 37, 64, 0.04);
-    border: 1px solid rgba(10, 37, 64, 0.09);
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
+}
+.form-header h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0A2540;
+  margin: 0;
 }
 
-// ── Field group ──────────────────────────────────────────────
 .field-group {
-  margin-bottom: 16px;
-
-  label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: rgba(10, 37, 64, 0.5);
-    margin-bottom: 6px;
-
-    &:has(input[type="checkbox"]) {
-      text-transform: none;
-      font-size: 0.82rem;
-      font-weight: 400;
-      letter-spacing: 0;
-      color: rgba(10, 37, 64, 0.65);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      line-height: 1.5;
-
-      input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        margin-top: 2px;
-        flex-shrink: 0;
-        accent-color: $navy;
-        cursor: pointer;
-      }
-    }
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="number"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid rgba(10, 37, 64, 0.14);
-    border-radius: 10px;
-    background: $light;
-    color: $navy;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    box-sizing: border-box;
-    resize: vertical;
-    appearance: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-
-    &::placeholder { color: rgba(10, 37, 64, 0.25); }
-
-    &:focus {
-      border-color: $navy;
-      background: $white;
-      box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.07);
-    }
-  }
-
-  select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A2540' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-color: $light;
-    padding-right: 38px;
-    cursor: pointer;
-
-    &:focus { background-color: $white; }
-  }
-
-  textarea { min-height: 110px; }
+  margin-bottom: 14px;
+}
+.field-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(10, 37, 64, 0.5);
+  margin-bottom: 5px;
+}
+.field-group label:has(input[type=checkbox]) {
+  text-transform: none;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(10, 37, 64, 0.65);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.field-group label:has(input[type=checkbox]) input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #0A2540;
+  cursor: pointer;
+}
+.field-group input[type=text],
+.field-group input[type=email],
+.field-group input[type=tel],
+.field-group input[type=number],
+.field-group select,
+.field-group textarea {
+  width: 100%;
+  padding: 9px 13px;
+  border: 1.5px solid rgba(10, 37, 64, 0.14);
+  border-radius: 10px;
+  background: #F3F4F6;
+  color: #0A2540;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.field-group input[type=text]::placeholder,
+.field-group input[type=email]::placeholder,
+.field-group input[type=tel]::placeholder,
+.field-group input[type=number]::placeholder,
+.field-group select::placeholder,
+.field-group textarea::placeholder {
+  color: rgba(10, 37, 64, 0.25);
+}
+.field-group input[type=text]:focus,
+.field-group input[type=email]:focus,
+.field-group input[type=tel]:focus,
+.field-group input[type=number]:focus,
+.field-group select:focus,
+.field-group textarea:focus {
+  border-color: #0A2540;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.07);
+}
+.field-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A2540' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  background-color: #F3F4F6;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.field-group select:focus {
+  background-color: #ffffff;
+}
+.field-group textarea {
+  min-height: 100px;
 }
 
-// ── File upload ──────────────────────────────────────────────
-.file-upload {
-  input[type="file"] { display: none; }
-
-  .file-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
-    background: $light;
-    border: 1.5px dashed rgba(10, 37, 64, 0.22);
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: rgba(10, 37, 64, 0.6);
-    font-weight: 600;
-    // Anula el text-transform uppercase heredado del label padre
-    text-transform: none;
-    letter-spacing: 0;
-    transition: border-color 0.2s, background 0.2s, color 0.2s;
-
-    &:hover {
-      border-color: $navy;
-      color: $navy;
-      background: rgba(10, 37, 64, 0.04);
-    }
-  }
+.file-upload input[type=file] {
+  display: none;
+}
+.file-upload .file-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #F3F4F6;
+  border: 1.5px dashed rgba(10, 37, 64, 0.22);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.83rem;
+  color: rgba(10, 37, 64, 0.6);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.file-upload .file-label:hover {
+  border-color: #0A2540;
+  color: #0A2540;
+  background: rgba(10, 37, 64, 0.04);
 }
 
 .file-list {
-  margin-top: 12px;
-
-  span {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: rgba(10, 37, 64, 0.45);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 7px 12px;
-    background: rgba(10, 37, 64, 0.04);
-    border: 1px solid rgba(10, 37, 64, 0.1);
-    border-radius: 8px;
-    font-size: 0.85rem;
-    color: $navy;
-    // Evita que el nombre del archivo desborde el card
-    min-width: 0;
-
-    // Nombre del archivo truncado
-    & > *:first-child,
-    & > span:first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      flex: 1;
-      min-width: 0;
-    }
-  }
-
-  .remove-file {
-    border: 1px solid rgba(10, 37, 64, 0.15);
-    background: rgba(10, 37, 64, 0.05);
-    color: rgba(10, 37, 64, 0.5);
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    // Sin uppercase heredado
-    text-transform: none;
-    letter-spacing: 0;
-    padding: 3px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 0.2s, color 0.2s;
-
-    &:hover {
-      background: rgba(10, 37, 64, 0.1);
-      color: $navy;
-    }
-  }
-}
-
-// ── Error message ────────────────────────────────────────────
-.error-message {
   margin-top: 10px;
-  padding: 10px 12px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: #dc2626;
-  font-weight: 500;
+}
+.file-list span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(10, 37, 64, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+.file-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.file-list li {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
+  padding: 6px 11px;
+  background: rgba(10, 37, 64, 0.04);
+  border: 1px solid rgba(10, 37, 64, 0.1);
+  border-radius: 8px;
+  font-size: 0.83rem;
+  color: #0A2540;
+  min-width: 0;
+}
+.file-list li > *:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+.file-list .remove-file {
+  border: 1px solid rgba(10, 37, 64, 0.15);
+  background: rgba(10, 37, 64, 0.05);
+  color: rgba(10, 37, 64, 0.5);
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 3px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.file-list .remove-file:hover {
+  background: rgba(10, 37, 64, 0.1);
+  color: #0A2540;
 }
 
-// ── Botón enviar ─────────────────────────────────────────────
+.error-message {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 8px;
+  padding: 7px 11px;
+}
+
 .btn-enviar {
   width: 100%;
-  padding: 13px;
+  padding: 12px;
   border: none;
   border-radius: 10px;
-  background: $navy;
-  color: $white;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 0.95rem;
+  background: #0A2540;
+  color: #ffffff;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.93rem;
   font-weight: 800;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 6px;
   letter-spacing: 0.5px;
   transition: opacity 0.2s, transform 0.15s;
-
-  &:hover {
-    opacity: 0.87;
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    transform: none;
-  }
+}
+.btn-enviar:hover {
+  opacity: 0.87;
+  transform: translateY(-1px);
+}
+.btn-enviar:active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.btn-enviar:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
 }
 
-// ── Responsive ───────────────────────────────────────────────
-@media (max-width: 600px) {
-  .header { padding: 14px 20px; }
-  .form-wrapper { padding: 16px 16px 40px; }
-  .form-card { padding: 24px 20px; }
+@media (max-width: 768px) {
+  .form-wrapper {
+    flex-direction: column;
+    padding: 20px 16px 40px;
+    gap: 24px;
+  }
+  .info-panel {
+    width: 100%;
+  }
+  .header {
+    padding: 14px 20px;
+  }
+  .form-card {
+    padding: 24px 20px;
+  }
 }
