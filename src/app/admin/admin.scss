@@ -1,0 +1,282 @@
+/* ============================================================
+   Admin Dashboard — CSS puro (sin anidado)
+   ============================================================ */
+
+.admin-container {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+/* ── TOP BANNER ─────────────────────────────────────────────── */
+.admin-container .top-banner {
+  background: #0A43B6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.admin-container .top-banner-logo-img {
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.admin-container .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .logo h1 {
+  margin: 0;
+  color: #870fa2;
+}
+
+.admin-container .nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-container .bienvenido-text {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.admin-container .bienvenido-text strong {
+  color: #870fa2;
+}
+
+.admin-container .logout-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: #870fa2;
+  border: 2px solid #870fa2;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.2s;
+}
+
+.admin-container .logout-btn:hover {
+  background: #870fa2;
+  color: white;
+}
+
+/* ── MAIN ───────────────────────────────────────────────────── */
+.admin-container .main-content {
+  flex: 1;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+/* ── PERFIL ─────────────────────────────────────────────────── */
+.admin-container .perfil-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  animation: fadeUp 0.5s ease;
+}
+
+.admin-container .avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #f3d0fc, #e0a8f5);
+  border-radius: 50%;
+  padding: 12px;
+  box-shadow: 0 4px 20px rgba(135, 15, 162, 0.2);
+  margin-bottom: 16px;
+}
+
+.admin-container .avatar-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.admin-container .admin-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #870fa2;
+  margin: 0 0 4px;
+}
+
+.admin-container .admin-role {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+.admin-container .btn-editar {
+  padding: 10px 28px;
+  background: linear-gradient(90deg, #870fa2, #4f1689);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  transition: opacity 0.2s;
+}
+
+.admin-container .btn-editar:hover {
+  opacity: 0.88;
+}
+
+/* ── CARDS ──────────────────────────────────────────────────── */
+.admin-container .cards-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.admin-container .card {
+  background: white;
+  border-radius: 12px;
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-container .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(135, 15, 162, 0.15);
+}
+
+.admin-container .card .card-icon {
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+}
+
+.admin-container .card h3 {
+  color: #870fa2;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.admin-container .card p {
+  color: #666;
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.admin-container .btn-ir {
+  padding: 10px 28px;
+  background: linear-gradient(90deg, #870fa2, #4f1689);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  transition: opacity 0.2s;
+  margin-top: auto;
+}
+
+.admin-container .btn-ir:hover {
+  opacity: 0.88;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.admin-container .footer {
+  background: #0A43B6;
+  color: white;
+  padding: 20px;
+}
+
+.admin-container .footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-container .footer-logo-img {
+  width: auto;
+  max-width: 260px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.admin-container .footer-copy {
+  flex: 1 1 320px;
+  text-align: center;
+}
+
+.admin-container .footer-copy p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.admin-container .gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.admin-container .gov-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ── ANIMACION ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .admin-container .cards-section {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-container .header {
+    padding: 14px 16px;
+  }
+
+  .admin-container .bienvenido-text {
+    display: none;
+  }
+}

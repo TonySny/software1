@@ -115,30 +115,109 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async login() {
-    if (!this.email || !this.password) {
-      Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
-      return;
-    }
-    this.loadingLogin = true;
-    try {
-      const { data, error } = await this.supabase.signIn(this.email, this.password);
-      if (error) {
-        Swal.fire('Error', 'Correo o contraseña incorrectos', 'error');
-      } else {
-        Swal.fire('¡Bienvenid@!', 'Has iniciado sesión correctamente.', 'success');
-        this.cerrarModales();
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1000);
-      }
-    } catch {
-      Swal.fire('Error', 'Ocurrió un error inesperado', 'error');
-    } finally {
-      this.loadingLogin = false;
-    }
+async login() {
+
+
+  /* VALIDAR CAMPOS */
+  if (!this.email || !this.password) {
+
+    Swal.fire(
+      'Error',
+      'Todos los campos son obligatorios',
+      'error'
+    );
+
+    return;
   }
 
+  this.loadingLogin = true;
+
+  try {
+
+    /* LOGIN SUPABASE */
+    const { error } =
+      await this.supabase.signIn(
+        this.email,
+        this.password
+      );
+
+    /* ERROR LOGIN */
+    if (error) {
+
+      Swal.fire(
+        'Error',
+        'Correo o contraseña incorrectos',
+        'error'
+      );
+
+      return;
+    }
+
+    /* OBTENER ROL */
+    const userRole =
+      await this.supabase.getUserRole();
+
+    console.log('ROL:', userRole);
+
+    /* VALIDAR ROL */
+    if (!userRole) {
+
+      Swal.fire(
+        'Error',
+        'No se encontró el rol del usuario',
+        'error'
+      );
+
+      return;
+    }
+
+    /* LOGIN EXITOSO */
+    Swal.fire(
+      '¡Bienvenid@!',
+      'Has iniciado sesión correctamente.',
+      'success'
+    );
+
+    this.cerrarModales();
+
+    /* REDIRECCION SEGUN ROL */
+  setTimeout(() => {
+
+  const rol = userRole?.toLowerCase().trim();
+
+  console.log('ROL LIMPIO:', rol);
+
+  if (rol === 'admin') {
+
+    this.router.navigate(['/admin']);
+
+  } else if (rol === 'funcionario') {
+
+    this.router.navigate(['/funcionario']);
+
+  } else {
+
+    this.router.navigate(['/dashboard']);
+
+  }
+
+}, 1000);
+  } catch {
+
+    Swal.fire(
+      'Error',
+      'Ocurrió un error inesperado',
+      'error'
+    );
+
+  } finally {
+
+    this.loadingLogin = false;
+
+  }
+
+
+}
   async register() {
     if (!this.nombre || !this.apellido || !this.tipoDocumento || !this.numeroDocumento ||
         !this.sexo || !this.edad || !this.grupoEtnico || !this.ciudad ||
@@ -244,3 +323,4 @@ export class HomeComponent implements OnInit {
     this.tiposDocumento = data ?? [];
   }
 }
+

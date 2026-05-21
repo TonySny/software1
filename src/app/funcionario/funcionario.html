@@ -1,0 +1,64 @@
+<p>funcionario works!</p>
+
+<div class="funcionario-container">
+
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <div class="top-banner-logo">
+      <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <span class="bienvenido-text">Bienvenido, <strong>{{ nombreFuncionario }}</strong></span>
+      <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PERFIL -->
+    <section class="perfil-section">
+      <div class="avatar-wrapper">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="avatar-svg">
+          <circle cx="50" cy="38" r="22" fill="#e8c8f4"/>
+          <ellipse cx="50" cy="88" rx="34" ry="24" fill="#e8c8f4"/>
+        </svg>
+      </div>
+      <h2 class="funcionario-name">{{ nombreFuncionario }}</h2>
+      <p class="funcionario-role">Funcionario</p>
+      <button class="btn-editar" (click)="editarPerfil()">Editar perfil</button>
+    </section>
+
+    <!-- TARJETA -->
+    <section class="cards-section">
+      <div class="card" (click)="irA('/funcionario/solicitudes')">
+        <div class="card-icon">📂</div>
+        <h3>Visualizar Solicitudes</h3>
+        <p>Revisa las solicitudes PQRS que te han sido asignadas y gestiona su respuesta.</p>
+        <button class="btn-ir">Ir →</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>

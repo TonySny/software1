@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +22,25 @@ export class SupabaseService {
     });
     return { data, error };
   }
+async signUp(
+  email: string,
+  password: string,
+  nombre: string,
+  apellido: string,
+  numeroDocumento: string,
+  tipoDocumentoId: string,
+  sexo: string,
+  edad: number,
+  grupoEtnicoId: string,
+  ciudadId: string
+) {
 
-  async signUp(
-    email: string, 
-    password: string, 
-    nombre: string, 
-    apellido: string,
-    numeroDocumento: string,
-    tipoDocumentoId: string,
-    sexo: string,
-    edad: number,
-    grupoEtnicoId: string,
-    ciudadId: string
-  ) {
-    const { data: data, error: error } = await this.client.auth.signUp({
+  const { data, error } =
+    await this.client.auth.signUp({
+
       email,
       password,
+
       options: {
         data: {
           full_name: nombre,
@@ -46,20 +50,55 @@ export class SupabaseService {
           sex: sexo,
           age: edad,
           ethnic_group_id: grupoEtnicoId,
-          city_id: ciudadId
+          city_id: ciudadId,
+
+          role: 'usuario'
         }
       }
+
     });
 
-    return { data, error };
+  return { data, error };
+}
+
+
+async getUserRole() {
+
+  const { data: { user } } =
+    await this.client.auth.getUser();
+
+  if (!user) return null;
+
+  const { data, error } =
+    await this.client
+      .from('profiles')
+      .select(`
+        role_id,
+        profile_roles (
+          name
+        )
+      `)
+      .eq('id', user.id)
+      .single();
+
+  console.log('PROFILE:', data);
+
+  if (error || !data) {
+    console.log(error);
+    return null;
   }
+
+  return (data as any).profile_roles.name;
+
+}
+
 
   async selectEthnicGroup(){
     const { data, error } = await this.client
       .from('ethnic_groups')
       .select('id, name')
       .order('name', { ascending: true });
-      
+
     return { data, error };
   }
 
@@ -68,7 +107,7 @@ export class SupabaseService {
       .from('document_types')
       .select('id, name')
       .order('name', { ascending: true });
-      
+
     return { data, error };
   }
 
@@ -118,3 +157,4 @@ export class SupabaseService {
     return { data, error };
   }
 }
+

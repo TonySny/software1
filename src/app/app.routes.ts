@@ -7,6 +7,9 @@ import { ReclamosComponent } from './home/reclamos/reclamos';
 import { SugerenciasComponent } from './home/sugerencias/sugerencias';
 import { ConsultarComponent } from './home/consultar/consultar';
 import { ResetPasswordComponent } from './reset-password/reset.password';
+import { AdminComponent } from './admin/admin';
+import { FuncionarioComponent } from './funcionario/funcionario';
+import { SolicitudesComponent } from './funcionario/solicitudes/solicitudes';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,5 +20,8 @@ export const routes: Routes = [
   { path: 'reclamos', component: ReclamosComponent },
   { path: 'sugerencias', component: SugerenciasComponent },
   { path: 'consultar', component: ConsultarComponent },
-  { path: 'reset-password', component: ResetPasswordComponent }
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'funcionario', component: FuncionarioComponent },
+  { path: 'funcionario/solicitudes', component: SolicitudesComponent }
 ];
