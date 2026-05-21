@@ -1,0 +1,238 @@
+.funcionario-container {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+.top-banner {
+  background: #0A43B6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.top-banner-logo-img {
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo h1 {
+  margin: 0;
+  color: #870fa2;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bienvenido-text {
+  color: #555;
+  font-size: 0.95rem;
+  strong { color: #870fa2; }
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: #870fa2;
+  border: 2px solid #870fa2;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #870fa2;
+    color: white;
+  }
+}
+
+.main-content {
+  flex: 1;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.perfil-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  animation: fadeUp 0.5s ease;
+}
+
+.avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #f3d0fc, #e0a8f5);
+  border-radius: 50%;
+  padding: 12px;
+  box-shadow: 0 4px 20px rgba(135, 15, 162, 0.2);
+  margin-bottom: 16px;
+}
+
+.avatar-svg { width: 100%; height: 100%; }
+
+.funcionario-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #870fa2;
+  margin: 0 0 4px;
+}
+
+.funcionario-role {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+.btn-editar {
+  padding: 10px 28px;
+  background: linear-gradient(90deg, #870fa2, #4f1689);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.88; }
+}
+
+.cards-section {
+  display: flex;
+  justify-content: center;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(135, 15, 162, 0.15);
+  }
+
+  .card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+  }
+
+  h3 {
+    color: #870fa2;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    font-size: 0.88rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+}
+
+.btn-ir {
+  padding: 10px 28px;
+  background: linear-gradient(90deg, #870fa2, #4f1689);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.88; }
+}
+
+.footer {
+  background: #0A43B6;
+  color: white;
+  padding: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo-img {
+  width: auto;
+  max-width: 260px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.footer-copy {
+  flex: 1 1 320px;
+  text-align: center;
+  p { margin: 0; font-size: 0.95rem; }
+}
+
+.gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .header { padding: 14px 16px; }
+  .bienvenido-text { display: none; }
+}

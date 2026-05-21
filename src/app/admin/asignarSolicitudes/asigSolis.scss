@@ -1,0 +1,246 @@
+.solicitudes-container {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+/* TOP BANNER */
+.top-banner {
+  background: #0A43B6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.top-banner-logo-img {
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo h1 {
+  margin: 0;
+  color: #870fa2;
+}
+
+.volver-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: #870fa2;
+  border: 2px solid #870fa2;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #870fa2;
+    color: white;
+  }
+}
+
+/* MAIN */
+.main-content {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #870fa2;
+  margin-bottom: 28px;
+}
+
+.loading {
+  text-align: center;
+  color: #888;
+  padding: 40px;
+  font-size: 1rem;
+}
+
+/* TABLA */
+.tabla-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.tabla-solicitudes {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead tr {
+    background: linear-gradient(90deg, #870fa2, #4f1689);
+    color: white;
+
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: #fdf5ff; }
+
+    td {
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      color: #444;
+      vertical-align: middle;
+    }
+  }
+}
+
+/* AVATAR */
+.avatar {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #f3d0fc, #e0a8f5);
+  border-radius: 50%;
+  padding: 5px;
+
+  svg { width: 100%; height: 100%; }
+}
+
+/* NOMBRE Y ASUNTO */
+.nombre-solicitante {
+  font-weight: 600;
+  color: #333;
+}
+
+.asunto-text {
+  font-size: 0.82rem;
+  color: #888;
+}
+
+/* TIPO BADGE */
+.tipo-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &.peticion  { background: #e3f2fd; color: #1565c0; }
+  &.queja     { background: #fce4ec; color: #c62828; }
+  &.reclamo   { background: #fff3e0; color: #e65100; }
+  &.sugerencia { background: #e8f5e9; color: #2e7d32; }
+}
+
+/* TIEMPO */
+.tiempo {
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  &.urgente  { color: #c62828; }
+  &.proximo  { color: #e65100; }
+  &.normal   { color: #2e7d32; }
+}
+
+/* SELECT ASIGNAR */
+.asignar-select {
+  padding: 7px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #333;
+  background: white;
+  cursor: pointer;
+  min-width: 180px;
+  transition: border 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #870fa2;
+    box-shadow: 0 0 0 3px rgba(135, 15, 162, 0.15);
+  }
+}
+
+.no-datos {
+  text-align: center;
+  color: #888;
+  padding: 40px;
+  font-size: 0.95rem;
+}
+
+/* FOOTER */
+.footer {
+  background: #0A43B6;
+  color: white;
+  padding: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo-img {
+  width: auto;
+  max-width: 260px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.footer-copy {
+  flex: 1 1 320px;
+  text-align: center;
+  p { margin: 0; font-size: 0.95rem; }
+}
+
+.gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .tabla-solicitudes thead th:nth-child(4),
+  .tabla-solicitudes tbody td:nth-child(4) { display: none; }
+}

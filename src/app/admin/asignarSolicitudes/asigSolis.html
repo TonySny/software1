@@ -1,0 +1,97 @@
+<div class="solicitudes-container">
+
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <div class="top-banner-logo">
+      <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="volver-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <h2 class="page-title">Asignar Solicitudes</h2>
+
+    <!-- LOADING -->
+    <div class="loading" *ngIf="cargando">Cargando solicitudes...</div>
+
+    <!-- TABLA -->
+    <div class="tabla-wrapper" *ngIf="!cargando">
+      <table class="tabla-solicitudes">
+        <thead>
+          <tr>
+            <th></th>
+            <th>De</th>
+            <th>Tipo</th>
+            <th>Tiempo Restante</th>
+            <th>Asignar a</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let solicitud of solicitudes">
+            <td>
+              <div class="avatar">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="38" r="22" fill="#e8c8f4"/>
+                  <ellipse cx="50" cy="88" rx="34" ry="24" fill="#e8c8f4"/>
+                </svg>
+              </div>
+            </td>
+            <td>
+              <span class="nombre-solicitante">{{ solicitud.nombre }}</span>
+              <br>
+              <span class="asunto-text">{{ solicitud.asunto }}</span>
+            </td>
+            <td>
+              <span class="tipo-badge" [ngClass]="solicitud.tipo?.toLowerCase()">
+                {{ solicitud.tipo }}
+              </span>
+            </td>
+            <td>
+              <span class="tiempo" [ngClass]="getTiempoClase(solicitud.dias_restantes)">
+                {{ solicitud.dias_restantes }} día(s)
+              </span>
+            </td>
+            <td>
+              <select class="asignar-select"
+                [(ngModel)]="solicitud.funcionario_asignado"
+                (change)="asignarSolicitud(solicitud)">
+                <option value="">— Sin asignar —</option>
+                <option *ngFor="let f of funcionarios" [value]="f.id">
+                  {{ f.full_name }} {{ f.full_surname }}
+                </option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="no-datos" *ngIf="solicitudes.length === 0">
+        No hay solicitudes pendientes.
+      </p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>

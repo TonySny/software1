@@ -1,0 +1,110 @@
+<div class="detalle-container">
+
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <div class="top-banner-logo">
+      <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="volver-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content" *ngIf="solicitud">
+    <h2 class="page-title">Detalle de Solicitud</h2>
+
+    <div class="form-card">
+
+      <!-- ASUNTO -->
+      <div class="field-group">
+        <label class="field-label">Asunto</label>
+        <input class="field-input readonly" type="text" [value]="solicitud.asunto" disabled />
+      </div>
+
+      <!-- DESCRIPCION -->
+      <div class="field-group">
+        <label class="field-label">Descripción</label>
+        <textarea class="field-textarea readonly" rows="5" disabled>{{ solicitud.descripcion }}</textarea>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="field-group">
+        <label class="field-label">Correo del solicitante</label>
+        <input class="field-input readonly" type="email" [value]="solicitud.email" disabled />
+      </div>
+
+      <!-- ARCHIVOS ADJUNTOS -->
+      <div class="field-group" *ngIf="solicitud.archivos?.length > 0">
+        <label class="field-label">Archivos Adjuntos</label>
+        <div class="archivos-lista">
+          <a class="archivo-item" *ngFor="let archivo of solicitud.archivos"
+             [href]="archivo.url" target="_blank">
+            📎 {{ archivo.nombre }}
+          </a>
+        </div>
+      </div>
+
+      <div class="field-group" *ngIf="!solicitud.archivos?.length">
+        <label class="field-label">Archivos Adjuntos</label>
+        <p class="sin-archivos">No hay archivos adjuntos.</p>
+      </div>
+
+      <!-- SEPARADOR -->
+      <div class="separador"></div>
+
+      <!-- RESPUESTA Y ESTADO -->
+      <div class="respuesta-row">
+
+        <!-- RESPUESTA -->
+        <div class="field-group respuesta-field">
+          <label class="field-label">Respuesta</label>
+          <textarea class="field-textarea" rows="5" [(ngModel)]="respuesta"
+            placeholder="Escribe aquí la respuesta al ciudadano..."></textarea>
+        </div>
+
+        <!-- ESTADO + CONFIRMAR -->
+        <div class="estado-section">
+          <div class="field-group">
+            <label class="field-label">Estado</label>
+            <select class="field-select" [(ngModel)]="estado">
+              <option value="recibida">Recibida</option>
+              <option value="en_proceso">En proceso</option>
+              <option value="respondida">Respondida</option>
+              <option value="cerrada">Cerrada</option>
+            </select>
+          </div>
+          <button class="btn-confirmar" (click)="confirmar()" [disabled]="guardando">
+            {{ guardando ? 'Guardando...' : 'Confirmar' }}
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LOADING -->
+  <div class="loading" *ngIf="!solicitud">Cargando solicitud...</div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>

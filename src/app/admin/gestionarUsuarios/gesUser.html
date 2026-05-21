@@ -1,0 +1,79 @@
+<div class="usuarios-container">
+
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <div class="top-banner-logo">
+      <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="volver-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <h2 class="page-title">Gestionar Usuarios</h2>
+
+    <!-- LOADING -->
+    <div class="loading" *ngIf="cargando">Cargando usuarios...</div>
+
+    <!-- TABLA -->
+    <div class="tabla-wrapper" *ngIf="!cargando">
+      <table class="tabla-usuarios">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>
+              <div class="avatar">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="38" r="22" fill="#e8c8f4"/>
+                  <ellipse cx="50" cy="88" rx="34" ry="24" fill="#e8c8f4"/>
+                </svg>
+              </div>
+            </td>
+            <td>{{ usuario.full_name }}</td>
+            <td>{{ usuario.full_surname }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>
+              <select class="rol-select" [(ngModel)]="usuario.rol" (change)="cambiarRol(usuario)">
+                <option value="ciudadano">Ciudadano</option>
+                <option value="funcionario">Funcionario</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="no-usuarios" *ngIf="usuarios.length === 0">No hay usuarios registrados.</p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>

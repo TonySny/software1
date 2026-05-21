@@ -1,0 +1,102 @@
+<div class="solicitudes-container">
+
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <div class="top-banner-logo">
+      <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="volver-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <h2 class="page-title">Mis Solicitudes</h2>
+
+    <div class="layout">
+
+      <!-- FILTROS -->
+      <aside class="filtros">
+        <h3 class="filtros-titulo">Filtrar por tipo</h3>
+        <label class="filtro-item" *ngFor="let tipo of tipos">
+          <input type="checkbox" [(ngModel)]="tipo.activo" (change)="aplicarFiltro()" />
+          <span class="filtro-label">{{ tipo.nombre }}</span>
+        </label>
+      </aside>
+
+      <!-- TABLA -->
+      <div class="tabla-section">
+
+        <div class="loading" *ngIf="cargando">Cargando solicitudes...</div>
+
+        <div class="tabla-wrapper" *ngIf="!cargando">
+          <table class="tabla-solicitudes">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Título / De</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Tiempo Restante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of solicitudesFiltradas">
+                <td>
+                  <div class="avatar">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="50" cy="38" r="22" fill="#e8c8f4"/>
+                      <ellipse cx="50" cy="88" rx="34" ry="24" fill="#e8c8f4"/>
+                    </svg>
+                  </div>
+                </td>
+                <td>
+                  <span class="titulo-text">{{ s.asunto }}</span><br>
+                  <span class="nombre-text">De: {{ s.nombre }}</span>
+                </td>
+                <td class="fecha-text">{{ s.created_at | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <span class="tipo-badge" [ngClass]="s.tipo?.toLowerCase()">
+                    {{ s.tipo }}
+                  </span>
+                </td>
+                <td>
+                  <span class="tiempo" [ngClass]="getTiempoClase(s.dias_restantes)">
+                    {{ s.dias_restantes }} día(s)
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="no-datos" *ngIf="solicitudesFiltradas.length === 0">
+            No hay solicitudes para mostrar.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>
