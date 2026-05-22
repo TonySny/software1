@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+
 import { SupabaseService } from '../../services/supabase.service';
-import { FormsModule } from '@angular/forms';
-
-
-
 
 @Component({
   selector: 'app-solicitudes',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './solicitudes.html',
-  styleUrls: ['./solicitudes.scss']
+  styleUrl: './solicitudes.scss'
 })
+
 export class SolicitudesComponent implements OnInit {
 
   solicitudes: any[] = [];
@@ -32,105 +31,84 @@ export class SolicitudesComponent implements OnInit {
 
   }
 
- async cargarSolicitudes() {
+  async cargarSolicitudes() {
 
-  const { data, error } =
-    await this.supabase.client
-      .from('requests')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const { data, error } =
+      await this.supabase.client
+        .from('requests')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  console.log('SOLICITUDES:', data);
+    if (error) {
 
-  if (error) {
+      console.log(error);
 
-    console.log(error);
+      Swal.fire(
+        'Error',
+        'No se pudieron cargar las solicitudes',
+        'error'
+      );
 
-    Swal.fire(
-      'Error',
-      'No se pudieron cargar las solicitudes',
-      'error'
-    );
+      return;
+    }
 
-    return;
+    this.solicitudes = data || [];
+
+    console.log('SOLICITUDES:', this.solicitudes);
+
   }
 
-  this.solicitudes = data || [];
-}
+  async responderSolicitud(solicitud: any) {
 
-async responderSolicitud(solicitud: any) {
+    if (!solicitud.response) {
 
-  if (!solicitud.respuesta) {
+      Swal.fire(
+        'Error',
+        'Debes escribir una respuesta',
+        'error'
+      );
 
-    Swal.fire(
-      'Error',
-      'Debes escribir una respuesta',
-      'error'
-    );
+      return;
+    }
 
-    return;
-  }
+    const { error } =
+      await this.supabase.client
+        .from('requests')
+        .update({
+          response: solicitud.response,
+          status: 'Respondida'
+        })
+        .eq('id', solicitud.id);
 
-  const { error } =
-    await this.supabase.client
-      .from('requests')
-      .update({
-        response: solicitud.respuesta
-      })
-      .eq('id', solicitud.id);
+    if (error) {
 
-  if (error) {
+      console.log(error);
 
-    console.log(error);
+      Swal.fire(
+        'Error',
+        'No se pudo enviar la respuesta',
+        'error'
+      );
 
-    Swal.fire(
-      'Error',
-      'No se pudo enviar la respuesta',
-      'error'
-    );
-
-    return;
-  }
-
-  Swal.fire(
-    'Éxito',
-    'Solicitud respondida correctamente',
-    'success'
-  );
-}
-  async cargarsolicitudes() {
-
-  const { data, error } =
-    await this.supabase.client
-      .from('requests')
-      .select('*');
-
-  console.log(data);
-
-  if (error) {
-
-    console.log(error);
+      return;
+    }
 
     Swal.fire(
-      'Error',
-      'No se pudieron cargar las solicitudes',
-      'error'
+      'Éxito',
+      'Solicitud respondida correctamente',
+      'success'
     );
 
-    return;
+    await this.cargarSolicitudes();
+
   }
 
-  this.solicitudes = data || [];
+  async logout() {
 
-}
+    await this.supabase.signOut();
 
+    this.router.navigate(['/']);
 
-async logout() {
-
-  await this.supabase.signOut();
-
-  this.router.navigate(['/']);
-
-}
+  }
 
 }

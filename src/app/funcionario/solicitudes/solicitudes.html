@@ -1,0 +1,100 @@
+
+<div class="solicitudes-container">
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+
+    <div class="header-right">
+      <span class="bienvenido">
+        Panel Funcionario
+      </span>
+    </div>
+
+  </header>
+
+  <!-- TITULO -->
+  <section class="title-section">
+
+    <h2>Solicitudes Asignadas</h2>
+
+    <p>
+      Visualiza y responde las solicitudes PQRS.
+    </p>
+
+  </section>
+
+  <!-- TABLA -->
+  <section class="table-section">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>ID</th>
+          <th>Asunto</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Respuesta</th>
+          <th>Acción</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let solicitud of solicitudes">
+
+          <td>
+            {{ solicitud.id }}
+          </td>
+
+          <td>
+            {{ solicitud.type }}
+          </td>
+
+          <td>
+            {{ solicitud.request }}
+          </td>
+
+          <td>
+            <span class="estado">
+              {{ solicitud.status }}
+            </span>
+          </td>
+
+          <td>
+
+            <textarea
+              [(ngModel)]="solicitud.response"
+              placeholder="Escribe una respuesta...">
+            </textarea>
+
+          </td>
+
+          <td>
+
+            <button
+              class="btn-responder"
+              (click)="responderSolicitud(solicitud)">
+
+              Responder
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </section>
+
+</div>
+

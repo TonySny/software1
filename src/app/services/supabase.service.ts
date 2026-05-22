@@ -52,28 +52,6 @@ export class SupabaseService {
       }
     });
 
-    if (error || !data.user) return { data, error };
-
-    // Insertar en profiles con rol Usuario automáticamente
-    const { error: profileError } = await this.client
-      .from('profiles')
-      .insert([{
-        id: data.user.id,
-        role_id: '8b7101d1-6bbf-4d8b-9d6d-186477fdaa36',
-        name: nombre,
-        surname: apellido,
-        dni: numeroDocumento,
-        dni_type_id: tipoDocumentoId,
-        sex: sexo,
-        age: edad,
-        ethnic_group_id: grupoEtnicoId,
-        city_id: ciudadId
-      }]);
-
-    if (profileError) {
-      console.error('Error al crear perfil:', profileError);
-    }
-
     return { data, error };
   }
 
@@ -100,7 +78,7 @@ export class SupabaseService {
       return null;
     }
 
-    return (data as any).profile_roles.name;
+    return (data as any).profile_roles?.name ?? null;
   }
 
   async selectEthnicGroup() {
