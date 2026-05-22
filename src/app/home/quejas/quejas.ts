@@ -28,30 +28,126 @@ export class QuejasComponent {
   constructor(private supabaseService: SupabaseService) {}
 
   onFileSelected(event: any) {
-    const target = event.target as HTMLInputElement;
-    const archivosNuevos = target.files ? Array.from(target.files) : [];
-    const tiposPermitidos = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
-    const archivosValidos: File[] = [];
-    const archivosInvalidos: string[] = [];
 
-    archivosNuevos.forEach((file: any) => {
-      if (tiposPermitidos.includes(file.type)) {
-        archivosValidos.push(file);
-      } else {
-        archivosInvalidos.push(file.name);
-      }
-    });
+  const target = event.target as HTMLInputElement;
 
-    if (archivosInvalidos.length > 0) {
-      this.errorArchivos = archivosInvalidos;
-      Swal.fire('Archivo no permitido', `Los siguientes archivos no son permitidos: ${archivosInvalidos.join(', ')}. Solo se permiten PDF e imágenes (PNG, JPG, JPEG, WEBP).`, 'error');
+  const archivosNuevos =
+    target.files ? Array.from(target.files) : [];
+
+  const tiposPermitidos = [
+    'application/pdf',
+    'image/png',
+    'image/jpeg',
+    'image/webp'
+  ];
+
+  const archivosValidos: File[] = [];
+
+  const archivosInvalidos: string[] = [];
+
+  /* =========================
+     LIMITE DE 4 ARCHIVOS
+     ========================= */
+
+  if ((this.archivo.length + archivosNuevos.length) > 4) {
+
+    Swal.fire(
+      'Límite excedido',
+      'Solo puedes subir máximo 4 archivos',
+      'error'
+    );
+
+    target.value = '';
+
+    return;
+  }
+
+  /* =========================
+     LIMITE TOTAL 100 MB
+     ========================= */
+
+  const pesoActual =
+    this.archivo.reduce(
+      (total, file) => total + file.size,
+      0
+    );
+
+  const pesoNuevo =
+    archivosNuevos.reduce(
+      (total: number, file: any) => total + file.size,
+      0
+    );
+
+  const pesoTotal =
+    pesoActual + pesoNuevo;
+
+  const limiteMB =
+    100 * 1024 * 1024;
+
+  if (pesoTotal > limiteMB) {
+
+    Swal.fire(
+      'Peso excedido',
+      'El tamaño total de los archivos no puede superar 100 MB',
+      'error'
+    );
+
+    target.value = '';
+
+    return;
+  }
+
+  /* =========================
+     VALIDAR TIPOS
+     ========================= */
+
+  archivosNuevos.forEach((file: any) => {
+
+    if (tiposPermitidos.includes(file.type)) {
+
+      archivosValidos.push(file);
+
     } else {
-      this.errorArchivos = [];
+
+      archivosInvalidos.push(file.name);
+
     }
 
-    this.archivo = [...this.archivo, ...archivosValidos];
-    target.value = '';
+  });
+
+  /* =========================
+     ARCHIVOS INVALIDOS
+     ========================= */
+
+  if (archivosInvalidos.length > 0) {
+
+    this.errorArchivos = archivosInvalidos;
+
+    Swal.fire(
+      'Archivo no permitido',
+      `Los siguientes archivos no son permitidos: ${archivosInvalidos.join(', ')}.
+      Solo se permiten PDF e imágenes (PNG, JPG, JPEG, WEBP).`,
+      'error'
+    );
+
+  } else {
+
+    this.errorArchivos = [];
+
   }
+
+  /* =========================
+     GUARDAR ARCHIVOS
+     ========================= */
+
+  this.archivo = [
+    ...this.archivo,
+    ...archivosValidos
+  ];
+
+  target.value = '';
+
+}
 
   removeFile(index: number) {
     this.archivo = this.archivo.filter((_, i) => i !== index);
