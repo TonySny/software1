@@ -1,7 +1,3 @@
-/* ============================================================
-   Admin Dashboard — CSS puro (sin anidado)
-   ============================================================ */
-
 .admin-container {
   font-family: 'Segoe UI', sans-serif;
   color: #333;
@@ -12,7 +8,6 @@
   background: #f8f9fa;
 }
 
-/* ── TOP BANNER ─────────────────────────────────────────────── */
 .admin-container .top-banner {
   background: #0A43B6;
   padding: 8px 20px;
@@ -27,7 +22,6 @@
   object-fit: contain;
 }
 
-/* ── HEADER ─────────────────────────────────────────────────── */
 .admin-container .header {
   display: flex;
   justify-content: space-between;
@@ -74,7 +68,6 @@
   color: white;
 }
 
-/* ── MAIN ───────────────────────────────────────────────────── */
 .admin-container .main-content {
   flex: 1;
   max-width: 800px;
@@ -83,7 +76,6 @@
   padding: 50px 20px;
 }
 
-/* ── PERFIL ─────────────────────────────────────────────────── */
 .admin-container .perfil-section {
   display: flex;
   flex-direction: column;
@@ -137,7 +129,6 @@
   opacity: 0.88;
 }
 
-/* ── CARDS ──────────────────────────────────────────────────── */
 .admin-container .cards-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -201,7 +192,60 @@
   opacity: 0.88;
 }
 
-/* ── FOOTER ─────────────────────────────────────────────────── */
+.admin-container .contact-section {
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #870fa2, #4f1689);
+  text-align: center;
+}
+
+.admin-container .contact-section h3 {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  margin-top: 0;
+}
+
+.admin-container .contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.admin-container .contact-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 14px 12px;
+  color: white;
+  transition: transform 0.3s;
+}
+
+.admin-container .contact-card:hover {
+  transform: translateY(-4px);
+}
+
+.admin-container .contact-card .contact-icon {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+
+.admin-container .contact-card h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.admin-container .contact-card p {
+  font-size: 0.84rem;
+  opacity: 0.85;
+  margin: 0;
+  color: white;
+}
+
 .admin-container .footer {
   background: #0A43B6;
   color: white;
@@ -249,34 +293,32 @@
   white-space: nowrap;
 }
 
+.admin-container .gov-btn {
+  display: inline-block;
+  background: transparent;
+  color: white !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
 .admin-container .gov-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
 }
 
-/* ── ANIMACION ──────────────────────────────────────────────── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .admin-container .cards-section {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-container .header {
-    padding: 14px 16px;
-  }
-
-  .admin-container .bienvenido-text {
-    display: none;
-  }
+  .admin-container .cards-section { grid-template-columns: 1fr; }
+  .admin-container .header { padding: 14px 16px; }
+  .admin-container .bienvenido-text { display: none; }
 }

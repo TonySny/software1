@@ -1,138 +1,200 @@
-<div class="reclamos-container">
+<div class="reclamos-wrapper">
 
-  <div class="header">
-    <h1>🛠️ Reclamos</h1>
-    <button type="button" class="logout" routerLink="/dashboard">← Volver</button>
+  <!-- TOP BANNER -->
+  <div class="top-banner">
+    <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
   </div>
 
-  <div class="form-wrapper">
-
-    <!-- Panel informativo izquierdo -->
-    <div class="info-panel">
-      <h3>¿Qué es un reclamo?</h3>
-      <p>Un reclamo es la manifestación de inconformidad de un ciudadano por el incumplimiento o la deficiente prestación de un servicio al que tiene derecho.</p>
-
-      <div class="info-badge">
-        <span class="info-badge__icon">🛠️</span>
-        <div class="info-badge__text">
-          <strong>Derecho a reclamar</strong>
-          <span>Protegido por la Constitución Política de Colombia, Art. 23</span>
-        </div>
-      </div>
-
-      <div class="info-badge">
-        <span class="info-badge__icon">⏱️</span>
-        <div class="info-badge__text">
-          <strong>Tiempo de respuesta</strong>
-          <span>Máximo 30 días hábiles según la Ley 1755 de 2015</span>
-        </div>
-      </div>
-
-      <div class="info-badge">
-        <span class="info-badge__icon">🔒</span>
-        <div class="info-badge__text">
-          <strong>Datos protegidos</strong>
-          <span>Tratamiento conforme a la Ley 1581 de 2012</span>
-        </div>
-      </div>
-
-      <hr class="info-panel__divider" />
-      <p class="info-panel__law">Ley 1755 de 2015 · Art. 23 C.P.</p>
-      <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334" target="_blank" rel="noopener noreferrer" class="btn-ley">Ver Ley 1755 del 2015</a>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
     </div>
+    <nav class="nav">
+      <button type="button" class="logout-btn" routerLink="/dashboard">← Volver</button>
+    </nav>
+  </header>
 
-    <!-- Formulario -->
-    <div class="form-card">
+  <!-- CONTENIDO -->
+  <main class="main-content">
+    <div class="form-wrapper">
 
-      <div class="form-header">
-        <h2>🛠️ Nuevo Reclamo</h2>
-      </div>
+      <!-- Panel informativo -->
+      <div class="info-panel">
+        <h3>¿Qué es un reclamo?</h3>
+        <p>Un reclamo es la manifestación de inconformidad de un ciudadano por el incumplimiento o la deficiente prestación de un servicio al que tiene derecho.</p>
 
-      <div class="field-group">
-        <label>Tipo de Identificación *</label>
-        <select [(ngModel)]="tipoIdentificacion" required>
-          <option value="">Selecciona</option>
-          <option value="CC">Cédula de Ciudadanía</option>
-          <option value="CE">Cédula de Extranjería</option>
-          <option value="TI">Tarjeta de Identidad</option>
-          <option value="NIT">NIT</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label>Número de Identificación *</label>
-        <input type="text" [(ngModel)]="numeroIdentificacion" placeholder="Ej: 123456789" required />
-      </div>
-
-      <div class="field-group">
-        <label>Nombres *</label>
-        <input type="text" [(ngModel)]="nombres" placeholder="Ej: Juan" required />
-      </div>
-
-      <div class="field-group">
-        <label>Apellidos *</label>
-        <input type="text" [(ngModel)]="apellidos" placeholder="Ej: Pérez" required />
-      </div>
-
-      <div class="field-group">
-        <label>Teléfono *</label>
-        <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
-      </div>
-
-      <div class="field-group">
-        <label>Email *</label>
-        <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
-      </div>
-
-      <div class="field-group">
-        <label>Asunto *</label>
-        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Inconformidad con el servicio" required />
-      </div>
-
-      <div class="field-group">
-        <label>Descripción *</label>
-        <textarea [(ngModel)]="descripcion" placeholder="Explica el motivo de tu reclamo..." rows="4" required></textarea>
-      </div>
-
-      <div class="field-group">
-        <label>Medio de Respuesta Preferido *</label>
-        <select [(ngModel)]="medioRespuesta" required>
-          <option value="">Selecciona</option>
-          <option value="email">Email</option>
-          <option value="telefono">Teléfono</option>
-          <option value="correo">Correo Postal</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label>Adjuntar archivos (opcional)</label>
-        <div class="file-upload">
-          <input type="file" multiple (change)="onFileSelected($event)" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.webp" />
-          <label for="fileInput" class="file-label">📎 Seleccionar archivos</label>
+        <div class="info-badge">
+          <span class="info-badge__icon">🛠️</span>
+          <div class="info-badge__text">
+            <strong>Derecho a reclamar</strong>
+            <span>Protegido por la Constitución Política de Colombia, Art. 23</span>
+          </div>
         </div>
-        <div class="file-list" *ngIf="archivo.length > 0">
-          <span>Archivos cargados ({{ archivo.length }}):</span>
-          <ul>
-            <li *ngFor="let file of archivo; let i = index">
-              {{ file.name }}
-              <button type="button" class="remove-file" (click)="removeFile(i)">Eliminar</button>
-            </li>
-          </ul>
+
+        <div class="info-badge">
+          <span class="info-badge__icon">⏱️</span>
+          <div class="info-badge__text">
+            <strong>Tiempo de respuesta</strong>
+            <span>Máximo 30 días hábiles según la Ley 1755 de 2015</span>
+          </div>
         </div>
-        <div *ngIf="errorArchivos.length > 0" class="error-message">
-          ❌ Archivos no permitidos: {{ errorArchivos.join(', ') }}
+
+        <div class="info-badge">
+          <span class="info-badge__icon">🔒</span>
+          <div class="info-badge__text">
+            <strong>Datos protegidos</strong>
+            <span>Tratamiento conforme a la Ley 1581 de 2012</span>
+          </div>
         </div>
+
+        <hr class="info-panel__divider" />
+        <p class="info-panel__law">Ley 1755 de 2015 · Art. 23 C.P.</p>
+        <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334"
+           target="_blank" rel="noopener noreferrer" class="btn-ley">Ver Ley 1755 del 2015</a>
       </div>
 
-      <div class="field-group">
-        <label>
-          <input type="checkbox" [(ngModel)]="aceptaTerminos" required /> Acepto los términos y condiciones y autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012. *
-        </label>
+      <!-- Formulario -->
+      <div class="form-card">
+
+        <div class="form-header">
+          <div class="form-icon">🛠️</div>
+          <h2>Nuevo Reclamo</h2>
+          <p>Completa todos los campos obligatorios marcados con *</p>
+        </div>
+
+        <div class="field-group">
+          <label>Tipo de Identificación *</label>
+          <select [(ngModel)]="tipoIdentificacion" required>
+            <option value="">Selecciona</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="NIT">NIT</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Número de Identificación *</label>
+          <input type="text" [(ngModel)]="numeroIdentificacion" placeholder="Ej: 123456789" required />
+        </div>
+
+        <div class="row-group">
+          <div class="field-group">
+            <label>Nombres *</label>
+            <input type="text" [(ngModel)]="nombres" placeholder="Ej: Juan" required />
+          </div>
+          <div class="field-group">
+            <label>Apellidos *</label>
+            <input type="text" [(ngModel)]="apellidos" placeholder="Ej: Pérez" required />
+          </div>
+        </div>
+
+        <div class="row-group">
+          <div class="field-group">
+            <label>Teléfono *</label>
+            <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
+          </div>
+          <div class="field-group">
+            <label>Email *</label>
+            <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Asunto *</label>
+          <input type="text" [(ngModel)]="asunto" placeholder="Ej: Inconformidad con el servicio" required />
+        </div>
+
+        <div class="field-group">
+          <label>Descripción *</label>
+          <textarea [(ngModel)]="descripcion" placeholder="Explica el motivo de tu reclamo..." rows="4" required></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Medio de Respuesta Preferido *</label>
+          <select [(ngModel)]="medioRespuesta" required>
+            <option value="">Selecciona</option>
+            <option value="email">Email</option>
+            <option value="telefono">Teléfono</option>
+            <option value="correo">Correo Postal</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Adjuntar archivos (opcional)</label>
+          <div class="file-upload">
+            <input type="file" multiple (change)="onFileSelected($event)" id="fileInput"
+                   accept=".pdf,.png,.jpg,.jpeg,.webp" />
+            <label for="fileInput" class="file-label">📎 Seleccionar archivos</label>
+          </div>
+          <div class="file-list" *ngIf="archivo.length > 0">
+            <span>Archivos cargados ({{ archivo.length }}):</span>
+            <ul>
+              <li *ngFor="let file of archivo; let i = index">
+                {{ file.name }}
+                <button type="button" class="remove-file" (click)="removeFile(i)">Eliminar</button>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="errorArchivos.length > 0" class="error-message">
+            ❌ Archivos no permitidos: {{ errorArchivos.join(', ') }}
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="aceptaTerminos" required />
+            Acepto los términos y condiciones y autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012. *
+          </label>
+        </div>
+
+        <button class="btn-enviar" (click)="enviarReclamo()" [disabled]="errorArchivos.length > 0">
+          🛠️ Enviar Reclamo
+        </button>
+
       </div>
-
-      <button class="btn-enviar" (click)="enviarReclamo()" [disabled]="errorArchivos.length > 0">🛠️ Enviar Reclamo</button>
-
     </div>
-  </div>
+  </main>
+
+  <!-- CONTACTO -->
+  <section class="contact-section">
+    <h3>Contacto</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h4>Correo Electrónico</h4>
+        <p>pqrs@entidad.gov.co</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>Teléfono</h4>
+        <p>(2) 241-3890</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>Dirección</h4>
+        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo-box">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
 
 </div>
