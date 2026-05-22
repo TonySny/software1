@@ -49,32 +49,6 @@
       </div>
 
       <div class="field-group">
-        <label>Tipo de Identificación *</label>
-        <select [(ngModel)]="tipoIdentificacion" required>
-          <option value="">Selecciona</option>
-          <option value="CC">Cédula de Ciudadanía</option>
-          <option value="CE">Cédula de Extranjería</option>
-          <option value="TI">Tarjeta de Identidad</option>
-          <option value="NIT">NIT</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label>Número de Identificación *</label>
-        <input type="text" [(ngModel)]="numeroIdentificacion" placeholder="Ej: 123456789" required />
-      </div>
-
-      <div class="field-group">
-        <label>Nombres *</label>
-        <input type="text" [(ngModel)]="nombres" placeholder="Ej: Juan" required />
-      </div>
-
-      <div class="field-group">
-        <label>Apellidos *</label>
-        <input type="text" [(ngModel)]="apellidos" placeholder="Ej: Pérez" required />
-      </div>
-
-      <div class="field-group">
         <label>Teléfono *</label>
         <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
       </div>
@@ -85,22 +59,17 @@
       </div>
 
       <div class="field-group">
-        <label>Asunto *</label>
-        <input type="text" [(ngModel)]="asunto" placeholder="Ej: Inconformidad con el servicio" required />
-      </div>
-
-      <div class="field-group">
         <label>Descripción *</label>
         <textarea [(ngModel)]="descripcion" placeholder="Explica el motivo de tu reclamo..." rows="4" required></textarea>
       </div>
 
       <div class="field-group">
         <label>Medio de Respuesta Preferido *</label>
-        <select [(ngModel)]="medioRespuesta" required>
+        <select [(ngModel)]="destino" required>
           <option value="">Selecciona</option>
-          <option value="email">Email</option>
-          <option value="telefono">Teléfono</option>
-          <option value="correo">Correo Postal</option>
+          <option value="Email">Email</option>
+          <option value="Teléfono">Teléfono</option>
+          <option value="Correo">Correo Postal</option>
         </select>
       </div>
 
