@@ -1,0 +1,104 @@
+<div class="mispqrs-wrapper">
+
+  <div class="top-banner">
+    <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+  </div>
+
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="logout-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+
+    <div class="page-title">
+      <h2>📋 Mis PQRS</h2>
+      <p *ngIf="solicitudes.length > 0">
+        Has registrado {{ solicitudes.length }} solicitud{{ solicitudes.length === 1 ? '' : 'es' }}.
+      </p>
+      <p *ngIf="solicitudes.length === 0">
+        Aquí puedes ver todas las solicitudes que has enviado.
+      </p>
+    </div>
+
+    <div *ngIf="cargando" class="loading">Cargando tus solicitudes...</div>
+
+    <div *ngIf="!cargando && solicitudes.length === 0" class="empty">
+      <div class="empty-icon">📭</div>
+      <h3>No tienes solicitudes aún</h3>
+      <p>Cuando envíes una PQRS aparecerá aquí</p>
+      <button class="btn-ir" routerLink="/dashboard">Ir al inicio</button>
+    </div>
+
+    <div *ngIf="!cargando && solicitudes.length > 0" class="tabla-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Radicado</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of solicitudes">
+            <td class="radicado">{{ s.ref_number || s.id }}</td>
+            <td>{{ s.type }}</td>
+            <td>{{ s.request }}</td>
+            <td>{{ s.created_at | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span class="estado-badge" [style.background]="getEstadoColor(s.status)">
+                {{ s.status || 'Radicado' }}
+                </span>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+  </main>
+
+  <section class="contact-section">
+    <h3>Contacto</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h4>Correo Electrónico</h4>
+        <p>pqrs@entidad.gov.co</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>Teléfono</h4>
+        <p>(2) 241-3890</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>Dirección</h4>
+        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo-box">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>

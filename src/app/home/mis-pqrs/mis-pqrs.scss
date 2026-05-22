@@ -1,0 +1,212 @@
+.mispqrs-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+.top-banner {
+  background: #0A43B6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.top-banner-logo-img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 30px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  .logo h1 { margin: 0; color: #870fa2; font-size: 1.5rem; }
+}
+
+.nav { display: flex; align-items: center; }
+
+.logout-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { background: #cc0000; }
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 36px;
+
+  h2 { font-size: 1.8rem; font-weight: 800; color: #333; margin-bottom: 8px; }
+  p { color: #666; font-size: 1rem; }
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  padding: 40px;
+  font-size: 1rem;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+
+  .empty-icon { font-size: 4rem; margin-bottom: 16px; }
+  h3 { font-size: 1.4rem; font-weight: 800; color: #333; margin-bottom: 8px; }
+  p { color: #666; margin-bottom: 24px; }
+}
+
+.btn-ir {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  background: #870fa2;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { background: #6a0d7a; }
+}
+
+.tabla-wrapper {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: #870fa2;
+    color: white;
+
+    th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+
+    &:hover { background: #faf5ff; }
+    &:last-child { border-bottom: none; }
+
+    td {
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      color: #333;
+    }
+  }
+}
+
+.radicado {
+  font-weight: 700;
+  color: #870fa2 !important;
+  font-size: 0.8rem !important;
+}
+
+.estado-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.contact-section {
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #870fa2, #4f1689);
+  text-align: center;
+
+  h3 { color: white; font-size: 1.3rem; font-weight: 800; margin-bottom: 18px; margin-top: 0; }
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 14px 12px;
+  color: white;
+  transition: transform 0.3s;
+
+  &:hover { transform: translateY(-4px); }
+  .contact-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+  p { font-size: 0.84rem; opacity: 0.85; margin: 0; }
+}
+
+.footer {
+  background: #0A43B6;
+  color: white;
+  padding: 20px 30px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo-box { height: 50px; display: flex; align-items: center; }
+.footer-logo-img { max-width: 200px; height: 50px; object-fit: contain; }
+.footer-copy { flex: 1; text-align: center; font-size: 0.9rem; }
+
+.gov-btn {
+  color: white !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: 0.3s;
+  &:hover { background: rgba(255,255,255,0.15); }
+}

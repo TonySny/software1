@@ -1,0 +1,112 @@
+.solicitudes-container {
+  min-height: 100vh;
+  background: #f4f6fb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* HEADER */
+
+.header {
+  background: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.logo h1 {
+  color: #7b1fa2;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bienvenido {
+  color: #555;
+}
+
+/* TITULO */
+
+.title-section {
+  padding: 40px;
+}
+
+.title-section h2 {
+  color: #7b1fa2;
+  margin-bottom: 10px;
+}
+
+/* TABLA */
+
+.table-section {
+  padding: 0 40px 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+thead {
+  background: #7b1fa2;
+  color: white;
+}
+
+th,
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  resize: none;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.estado {
+  background: #ede7f6;
+  color: #512da8;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.btn-responder {
+  background: linear-gradient(to right, #7b1fa2, #512da8);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-responder:hover {
+  opacity: 0.9;
+}
+
+
+@media (max-width: 900px) {
+
+  .table-section {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 900px;
+  }
+
+}
