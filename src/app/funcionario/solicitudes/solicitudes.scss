@@ -84,6 +84,42 @@ textarea {
   font-size: 14px;
 }
 
+.btn-detalle {
+  background: #ede7f6;
+  color: #512da8;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+
+  &:hover {
+    background: #d1c4e9;
+  }
+}
+
+.btn-responder {
+  background: linear-gradient(to right, #7b1fa2, #512da8);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .btn-responder {
   background: linear-gradient(to right, #7b1fa2, #512da8);
   color: white;

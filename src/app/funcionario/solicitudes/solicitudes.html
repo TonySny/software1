@@ -30,69 +30,36 @@
   <section class="table-section">
 
     <table>
-
       <thead>
-
         <tr>
-          <th>ID</th>
-          <th>Asunto</th>
+          <th>Radicado</th>
+          <th>Tipo</th>
           <th>Descripción</th>
           <th>Estado</th>
-          <th>Respuesta</th>
-          <th>Acción</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
         </tr>
-
       </thead>
-
       <tbody>
-
         <tr *ngFor="let solicitud of solicitudes">
-
+          <td>{{ solicitud.ref_number }}</td>
+          <td>{{ solicitud.type | titlecase }}</td>
+          <td>{{ solicitud.request }}</td>
           <td>
-            {{ solicitud.id }}
+            <span class="estado-badge">{{ solicitud.status | titlecase }}</span>
           </td>
-
-          <td>
-            {{ solicitud.type }}
+          <td>{{ solicitud.created_at | date:'dd/MM/yyyy' }}</td>
+          <td class="acciones">
+            <button class="btn-detalle" (click)="verDetalle(solicitud)">👁 Ver</button>
+            <button class="btn-responder" (click)="responder(solicitud)">💬 Responder</button>
           </td>
-
-          <td>
-            {{ solicitud.request }}
-          </td>
-
-          <td>
-            <span class="estado">
-              {{ solicitud.status }}
-            </span>
-          </td>
-
-          <td>
-
-            <textarea
-              [(ngModel)]="solicitud.response"
-              placeholder="Escribe una respuesta...">
-            </textarea>
-
-          </td>
-
-          <td>
-
-            <button
-              class="btn-responder"
-              (click)="responderSolicitud(solicitud)">
-
-              Responder
-
-            </button>
-
-          </td>
-
         </tr>
 
+        <!-- Sin resultados -->
+        <tr *ngIf="solicitudes.length === 0">
+          <td colspan="6" class="sin-resultados">No hay solicitudes registradas.</td>
+        </tr>
       </tbody>
-
     </table>
-
   </section>
-
 </div>
