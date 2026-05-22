@@ -14,7 +14,7 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 export class ConsultarComponent {
   numeroRadicado = '';
-  pqrsData: any = null;
+  ticket: any = null;
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -29,9 +29,9 @@ export class ConsultarComponent {
 
       if (error) {
         Swal.fire('Error', 'No se encontró el PQRS con ese número de radicado', 'error');
-        this.pqrsData = null;
+        this.ticket = null;
       } else {
-        this.pqrsData = data;
+        this.ticket = data;
       }
     } catch (err) {
       Swal.fire('Error', 'Error inesperado al consultar el PQRS', 'error');

@@ -119,22 +119,93 @@ export class SupabaseService {
   }
 
   async getSession() {
-    return this.client.auth.getSession();
+    return await this.client.auth.getSession();
   }
 
-  async insertarPQRS(pqrsData: any) {
-    const { data, error } = await this.client
-      .from('pqrs')
-      .insert([pqrsData]);
-    return { data, error };
-  }
+  async insertarPQRS(ticket: any) {
+    const {
+      type,
+      status,
+      profile_id,
+      phone,
+      email,
+      request,
+      destination,
+      ref_number,
+      accept_terms,
+      archivos,
+    } = ticket;
 
-  async consultarPQRS(numeroRadicado: string) {
-    const { data, error } = await this.client
-      .from('pqrs')
-      .select('*')
-      .eq('numeroRadicado', numeroRadicado)
+    // 1. Subir archivos al storage
+    const archivosSubidos = await Promise.all(
+      archivos.map(async (archivo: any) => {
+        const { data: storageData, error: storageError } = await this.client.storage
+          .from("pqrs files")
+          .upload(archivo.ruta, archivo.file, { upsert: false });
+
+        if (storageError) {
+          throw new Error(`Error al subir "${archivo.nombre}" al storage: ${storageError.message}`);
+        }
+
+        return { filepath: storageData.path, filename: archivo.nombre };
+      })
+    );
+
+    // 2. Insertar en public.requests
+    const { data: requestData, error: requestError } = await this.client
+      .from("requests")
+      .insert({
+        type,
+        status,
+        profile_id,
+        phone,
+        email,
+        request,
+        destination,
+        ref_number,
+        accept_terms,
+      })
+      .select("id")
       .single();
-    return { data, error };
+
+    if (requestError) {
+      throw new Error(`Error al insertar en requests: ${requestError.message}`);
+    }
+
+    const request_id = requestData.id;
+
+    // 3.insertar archivos en public.requests
+    if (archivosSubidos.length) {
+      const pathsPayload = archivosSubidos.map(({ filepath, filename }) => ({
+        filepath,
+        filename,
+        request_id,
+      }));
+
+      const { error: pathsError } = await this.client
+        .from("request_paths")
+        .insert(pathsPayload);
+
+      if (pathsError) {
+        throw new Error(`Error al insertar en request_paths: ${pathsError.message}`);
+      }
+    }
+
+    return { success: true, request_id, ref_number };
+  }
+
+  async consultarStatus(estado: string) {
+    return await this.client
+    .from('requests')
+    .select('status')
+    .eq('ref_number', `${estado}`)
+  }
+
+  async consultarPQRS(radicado: string) {
+    return await this.client
+      .from('requests')
+      .select('*')
+      .eq('ref_number', radicado)
+      .single();
   }
 }

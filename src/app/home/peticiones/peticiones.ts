@@ -13,15 +13,14 @@ import { SupabaseService } from '../../services/supabase.service';
   styleUrl: './peticiones.scss'
 })
 export class PeticionesComponent {
-  tipoIdentificacion = '';
-  numeroIdentificacion = '';
-  nombres = '';
-  apellidos = '';
+  tipo_solicitud = 'Petición';
+  estado = 'Registrada';
+  id_perfil = '';
   telefono = '';
+  status = '';
   email = '';
-  asunto = '';
   descripcion = '';
-  medioRespuesta = '';
+  destino = '';
   archivo: File[] = [];
   aceptaTerminos = false;
   errorArchivos: string[] = [];
@@ -58,42 +57,47 @@ export class PeticionesComponent {
     this.archivo = this.archivo.filter((_, i) => i !== index);
   }
 
-  async enviarPeticion() {
-    if (!this.tipoIdentificacion || !this.numeroIdentificacion || !this.nombres || !this.apellidos || !this.telefono || !this.email || !this.asunto || !this.descripcion || !this.medioRespuesta || !this.aceptaTerminos) {
-      Swal.fire('Error', 'Completa todos los campos obligatorios marcados con *', 'error');
+  async inFiletypes() {
+
+  }
+  
+  onTerminos() {
+    return !this.aceptaTerminos
+  }
+
+  async onEnviarPeticion() {
+    if (!this.descripcion || !this.destino || !this.aceptaTerminos) {
+      Swal.fire('Campos incompletos', 'Completa todos los campos obligatorios marcados con *', 'error');
       return;
     }
 
-    const numeroRadicado = this.generarNumeroRadicado();
 
-    const pqrsData = {
-      tipo: 'peticion',
-      tipoIdentificacion: this.tipoIdentificacion,
-      numeroIdentificacion: this.numeroIdentificacion,
-      nombres: this.nombres,
-      apellidos: this.apellidos,
-      telefono: this.telefono,
+    const id_perfil = (await this.supabaseService.getSession()).data.session?.user?.id;
+    const num_radicado = this.generarNumeroRadicado();
+
+    const ticket = {
+      type: this.tipo_solicitud,
+      status: this.estado,
+      profile_id: id_perfil,
+      phone: this.telefono,
       email: this.email,
-      asunto: this.asunto,
-      descripcion: this.descripcion,
-      medioRespuesta: this.medioRespuesta,
-      numeroRadicado: numeroRadicado,
-      estado: 'recibido',
-      fechaCreacion: new Date().toISOString(),
-      archivo: this.archivo.length ? this.archivo.map(file => file.name) : null
+      request: this.descripcion,
+      destination: this.destino,
+      ref_number: num_radicado,
+      accept_terms: this.aceptaTerminos,
+      archivos: this.archivo.map((file: File) => ({
+        ruta: `pqrs/${num_radicado}/${file.name}`,
+        nombre: file.name,
+        file,
+      })),
     };
 
     try {
-      const { data, error } = await this.supabaseService.insertarPQRS(pqrsData);
-
-      if (error) {
-        Swal.fire('Error', 'No se pudo enviar la petición: ' + error.message, 'error');
-      } else {
-        Swal.fire('Enviado', `Tu petición fue enviada correctamente. Número de radicado: ${numeroRadicado}`, 'success');
-        this.limpiarFormulario();
-      }
-    } catch (err) {
-      Swal.fire('Error', 'Error inesperado al enviar la petición', 'error');
+      await this.supabaseService.insertarPQRS(ticket);
+      Swal.fire('Enviado', `Tu solicitud fue enviada correctamente. Número de radicado: ${num_radicado}`, 'success');
+      this.limpiarFormulario();
+    } catch (err: any) {
+      Swal.fire('Error', err?.message ?? 'Error inesperado al enviar la solicitud', 'error');
     }
   }
 
@@ -104,15 +108,12 @@ export class PeticionesComponent {
   }
 
   private limpiarFormulario() {
-    this.tipoIdentificacion = '';
-    this.numeroIdentificacion = '';
-    this.nombres = '';
-    this.apellidos = '';
+    this.id_perfil = '';
+    this.telefono = '';
     this.telefono = '';
     this.email = '';
-    this.asunto = '';
     this.descripcion = '';
-    this.medioRespuesta = '';
+    this.destino = '';
     this.archivo = [];
     this.aceptaTerminos = false;
   }
