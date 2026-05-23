@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
@@ -18,7 +18,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private supabase: SupabaseService
+    private supabase: SupabaseService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
     const nombre = metadata['full_name'];
     const apellido = metadata['full_surname'];
     this.nombreUsuario = [nombre, apellido].filter(Boolean).join(' ') || user.email || 'Usuario';
+    this.cdr.detectChanges();
   }
 
   async logout() {
@@ -56,4 +58,18 @@ export class DashboardComponent implements OnInit {
     }
     this.router.navigate(['/']);
   }
+
+  /*
+  async consultarNombre() {
+    const { data: authData, error: authError } = await this.supabase.client
+      .from('profiles')
+      .select('name')
+      .eq('id', `${(await this.supabase.getSession()).data.session?.user.id}`)
+
+    if (authError) {
+      return { data: null, error: authError }
+    }
+    
+    return { authData, authError }
+  }*/
 }

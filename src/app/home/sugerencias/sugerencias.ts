@@ -189,10 +189,12 @@ export class SugerenciasComponent {
   }
 
   private generarNumeroRadicado(): string {
-    const timestamp = Date.now();
+    const fecha = new Date();
+    const timestamp = `${fecha.getFullYear()}${fecha.getMonth}${fecha.getDay}`;
     const random = Math.floor(Math.random() * 1000);
-    return `PQR-${timestamp}-${random}`;
+    return `PQRS-S-${timestamp}-${random}`;
   }
+
 
   private limpiarFormulario() {
     this.telefono = '';

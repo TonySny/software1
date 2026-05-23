@@ -61,6 +61,10 @@
         <h2>⚠️ Nueva Queja</h2>
         <p>Completa todos los campos obligatorios marcados con *</p>
       </div>
+      <div class="field-group">
+        <label>Descripción *</label>
+        <textarea [(ngModel)]="descripcion" placeholder="Cuéntanos qué inconveniente has tenido..." rows="4" required></textarea>
+      </div>
 
       <div class="field-group">
         <label>Teléfono *</label>
@@ -71,11 +75,6 @@
         <label>Email *</label>
         <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
       </div>
-
-        <div class="field-group">
-          <label>Descripción *</label>
-          <textarea [(ngModel)]="descripcion" placeholder="Cuéntanos qué inconveniente has tenido..." rows="4" required></textarea>
-        </div>
 
       <div class="field-group">
         <label>Medio de Respuesta Preferido *</label>
