@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home';
 import { DashboardComponent } from './dashboard/dashboard';
-import { PeticionesComponent } from './home/peticiones/peticiones';
-import { QuejasComponent } from './home/quejas/quejas';
-import { ReclamosComponent } from './home/reclamos/reclamos';
-import { SugerenciasComponent } from './home/sugerencias/sugerencias';
+import { PeticionesComponent } from './home/pages/peticiones/peticiones';
+import { QuejasComponent } from './home/pages/quejas/quejas';
+import { ReclamosComponent } from './home/pages/reclamos/reclamos';
+import { SugerenciasComponent } from './home/pages/sugerencias/sugerencias';
 import { ConsultarComponent } from './home/consultar/consultar';
 import { MisPqrsComponent } from './home/mis-pqrs/mis-pqrs';
 import { ResetPasswordComponent } from './reset-password/reset.password';

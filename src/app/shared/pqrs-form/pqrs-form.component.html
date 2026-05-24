@@ -21,82 +21,79 @@
 
       <!-- Panel informativo -->
       <div class="info-panel">
-        <h3>¿Qué es una petición?</h3>
-        <p>Una petición es el derecho que tiene todo ciudadano de presentar solicitudes respetuosas a las autoridades por motivos de interés general o particular.</p>
+        <h3>{{ config.infoPanelTitle }}</h3>
+        <p>{{ config.infoPanelDescription }}</p>
 
-        <div class="info-badge">
-          <span class="info-badge__icon">📋</span>
+        <div class="info-badge" *ngFor="let badge of config.infoBadges">
+          <span class="info-badge__icon">{{ badge.icon }}</span>
           <div class="info-badge__text">
-            <strong>Derecho de petición</strong>
-            <span>Protegido por la Constitución Política de Colombia, Art. 23</span>
-          </div>
-        </div>
-
-        <div class="info-badge">
-          <span class="info-badge__icon">⏱️</span>
-          <div class="info-badge__text">
-            <strong>Tiempo de respuesta</strong>
-            <span>Máximo 15 días hábiles según la Ley 1755 de 2015</span>
-          </div>
-        </div>
-
-        <div class="info-badge">
-          <span class="info-badge__icon">🔒</span>
-          <div class="info-badge__text">
-            <strong>Datos protegidos</strong>
-            <span>Tratamiento conforme a la Ley 1581 de 2012</span>
+            <strong>{{ badge.title }}</strong>
+            <span>{{ badge.description }}</span>
           </div>
         </div>
 
         <hr class="info-panel__divider" />
-        <p class="info-panel__law">Ley 1755 de 2015 · Art. 23 C.P.</p>
-        <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334" target="_blank" rel="noopener noreferrer" class="btn-ley">Ver Ley 1755 del 2015</a>
+        <p class="info-panel__law">{{ config.legalText }}</p>
+        <a [href]="config.legalUrl" target="_blank" rel="noopener noreferrer" class="btn-ley">
+          {{ config.legalLabel }}
+        </a>
       </div>
 
       <!-- Formulario -->
       <div class="form-card">
 
         <div class="form-header">
-          <div class="form-icon">📩</div>
-          <h2>Nueva Petición</h2>
+          <div class="form-icon">{{ config.formIcon }}</div>
+          <h2>{{ config.formTitle }}</h2>
           <p>Completa todos los campos obligatorios marcados con *</p>
         </div>
 
-      <div class="field-group">
-        <label>Descripción *</label>
-        <textarea [(ngModel)]="descripcion" placeholder="Describe tu petición con el mayor detalle posible..." rows="4" required></textarea>
-      </div>
+        <div class="field-group">
+          <label>Descripción *</label>
+          <textarea
+            [(ngModel)]="descripcion"
+            placeholder="Describe tu solicitud con el mayor detalle posible..."
+            rows="4"
+            required>
+          </textarea>
+        </div>
 
-      <div class="field-group">
-        <label>Teléfono *</label>
-        <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
-      </div>
+        <div class="field-group">
+          <label>Teléfono *</label>
+          <input type="tel" [(ngModel)]="telefono" placeholder="Ej: 3001234567" required />
+        </div>
 
-      <div class="field-group">
-        <label>Email *</label>
-        <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
-      </div>
+        <div class="field-group">
+          <label>Email *</label>
+          <input type="email" [(ngModel)]="email" placeholder="correo@ejemplo.com" required />
+        </div>
 
-      <div class="field-group">
-        <label>Medio de Respuesta Preferido *</label>
-        <select [(ngModel)]="destino" required>
-          <option value="">Selecciona</option>
-          <option value="Email">Email</option>
-          <option value="Teléfono">Teléfono</option>
-          <option value="Correo">Correo Postal</option>
-        </select>
-      </div>
+        <div class="field-group">
+          <label>Medio de Respuesta Preferido *</label>
+          <select [(ngModel)]="destino" required>
+            <option value="">Selecciona</option>
+            <option value="Email">Email</option>
+            <option value="Teléfono">Teléfono</option>
+            <option value="Correo">Correo Postal</option>
+          </select>
+        </div>
 
         <div class="field-group">
           <label>Adjuntar archivos (opcional)</label>
           <div class="file-upload">
-            <input type="file" multiple (change)="onFileSelected($event)" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.webp" />
+            <input
+              type="file"
+              multiple
+              (change)="onFileSelected($event)"
+              id="fileInput"
+              accept=".pdf,.png,.jpg,.jpeg,.webp"
+            />
             <label for="fileInput" class="file-label">📎 Seleccionar archivos</label>
           </div>
-          <div class="file-list" *ngIf="archivo.length > 0">
-            <span>Archivos cargados ({{ archivo.length }}):</span>
+          <div class="file-list" *ngIf="archivos.length > 0">
+            <span>Archivos cargados ({{ archivos.length }}):</span>
             <ul>
-              <li *ngFor="let file of archivo; let i = index">
+              <li *ngFor="let file of archivos; let i = index">
                 {{ file.name }}
                 <button type="button" class="remove-file" (click)="removeFile(i)">Eliminar</button>
               </li>
@@ -114,7 +111,12 @@
           </label>
         </div>
 
-      <button class="btn-enviar" (click)="onEnviarPeticion()" [disabled]="errorArchivos.length > 0">📩 Enviar Petición</button>
+        <button
+          class="btn-enviar"
+          (click)="onEnviar()"
+          [disabled]="errorArchivos.length > 0">
+          {{ config.submitLabel }}
+        </button>
 
       </div>
     </div>
