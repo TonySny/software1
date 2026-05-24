@@ -11,17 +11,24 @@ import { SupabaseService } from '../../services/supabase.service';
   templateUrl: './solicitudes.html',
   styleUrls: ['./solicitudes.scss']
 })
-
 export class SolicitudesComponent implements OnInit {
 
   solicitudes: any[] = [];
-  solicitudSeleccionada: any = null;
-  solicitudResponder: any = null;
-  textoRespuesta: string = '';
+  solicitudesFiltradas: any[] = [];
+  filtroActivo = 'todos';
+
+  tipos = [
+    { nombre: 'Todos',       valor: 'todos'      },
+    { nombre: 'Peticiones',  valor: 'petición'   },
+    { nombre: 'Quejas',      valor: 'queja'      },
+    { nombre: 'Reclamos',    valor: 'reclamo'    },
+    { nombre: 'Sugerencias', valor: 'sugerencia' },
+  ];
 
   constructor(
-    private supabase: SupabaseService, 
-    private cdr: ChangeDetectorRef) {}
+    private supabase: SupabaseService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   async ngOnInit() {
     await this.cargarSolicitudes();
@@ -39,7 +46,23 @@ export class SolicitudesComponent implements OnInit {
     }
 
     this.solicitudes = data || [];
+    this.aplicarFiltro();
     this.cdr.markForCheck();
+  }
+
+  filtrar(tipo: string) {
+    this.filtroActivo = tipo;
+    this.aplicarFiltro();
+  }
+
+  aplicarFiltro() {
+    if (this.filtroActivo === 'todos') {
+      this.solicitudesFiltradas = [...this.solicitudes];
+    } else {
+      this.solicitudesFiltradas = this.solicitudes.filter(s =>
+        s.type?.toLowerCase() === this.filtroActivo
+      );
+    }
   }
 
   verDetalle(solicitud: any) {

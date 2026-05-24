@@ -3,33 +3,33 @@
 
   <!-- HEADER -->
   <header class="header">
-
     <div class="logo">
       <h1>PQRSync</h1>
     </div>
-
     <div class="header-right">
-      <span class="bienvenido">
-        Panel Funcionario
-      </span>
+      <span class="bienvenido">Panel Funcionario</span>
     </div>
-
   </header>
 
   <!-- TITULO -->
   <section class="title-section">
-
     <h2>Solicitudes Asignadas</h2>
+    <p>Visualiza y responde las solicitudes PQRS.</p>
+  </section>
 
-    <p>
-      Visualiza y responde las solicitudes PQRS.
-    </p>
-
+  <!-- FILTROS -->
+  <section class="filtros-section">
+    <button
+      *ngFor="let tipo of tipos"
+      class="filtro-btn"
+      [class.activo]="filtroActivo === tipo.valor"
+      (click)="filtrar(tipo.valor)">
+      {{ tipo.nombre }}
+    </button>
   </section>
 
   <!-- TABLA -->
   <section class="table-section">
-
     <table>
       <thead>
         <tr>
@@ -42,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let solicitud of solicitudes">
+        <tr *ngFor="let solicitud of solicitudesFiltradas">
           <td>{{ solicitud.ref_number }}</td>
           <td>{{ solicitud.type | titlecase }}</td>
           <td>{{ solicitud.request }}</td>
@@ -56,12 +56,11 @@
           </td>
         </tr>
 
-        <!-- Sin resultados -->
-        <tr *ngIf="solicitudes.length === 0">
-          <td colspan="6" class="sin-resultados">No hay solicitudes registradas.</td>
+        <tr *ngIf="solicitudesFiltradas.length === 0">
+          <td colspan="6" class="sin-resultados">No hay solicitudes para mostrar.</td>
         </tr>
       </tbody>
     </table>
   </section>
-</div>
 
+</div>
