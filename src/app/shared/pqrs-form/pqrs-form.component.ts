@@ -91,6 +91,7 @@ export class PqrFormComponent {
   // ── Envío ──────────────────────────────────────────────────────────────────
 
   async onEnviar() {
+    console.log(this.aceptaTerminos);
     if (!this.descripcion || !this.destino || !this.aceptaTerminos) {
       Swal.fire(
         'Campos incompletos',
@@ -106,7 +107,7 @@ export class PqrFormComponent {
 
     const ticket = {
       type:         this.config.tipo_solicitud,
-      status:       'Registrada',
+      status:       'Radicada',
       profile_id:   id_perfil,
       phone:        this.telefono,
       email:        this.email,

@@ -1,4 +1,4 @@
-.peticiones-wrapper {
+.solicitudes-wrapper {
   font-family: 'Segoe UI', sans-serif;
   color: #333;
   line-height: 1.6;
@@ -229,6 +229,7 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 0.85rem !important;
+  appearance: auto !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
   font-weight: 400 !important;
@@ -241,8 +242,31 @@
     height: 16px;
     margin-top: 2px;
     flex-shrink: 0;
-    accent-color: #870fa2;
     cursor: pointer;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: white !important;
+    border: 2px solid #870fa2 !important;
+    border-radius: 3px !important;
+    position: relative !important;
+    padding: 0 !important;
+
+    &:checked {
+      background: #870fa2 !important;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 3px;
+        top: 0px;
+        width: 5px;
+        height: 9px;
+        border: 2px solid white;
+        border-top: none;
+        border-left: none;
+        transform: rotate(45deg);
+      }
+    }
   }
 }
 
