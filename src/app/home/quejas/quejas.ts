@@ -192,7 +192,7 @@ const id_perfil = (await this.supabaseService.getSession()).data.session?.user?.
 
   private generarNumeroRadicado(): string {
     const fecha = new Date();
-    const timestamp = `${fecha.getFullYear()}${fecha.getMonth}${fecha.getDay}`;
+    const timestamp = `${fecha.getFullYear()}${fecha.getMonth()}${fecha.getDay()}`;
     const random = Math.floor(Math.random() * 1000);
     return `PQRS-Q-${timestamp}-${random}`;
   }

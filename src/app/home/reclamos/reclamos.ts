@@ -191,7 +191,7 @@ export class ReclamosComponent {
 
   private generarNumeroRadicado(): string {
     const fecha = new Date();
-    const timestamp = `${fecha.getFullYear()}${fecha.getMonth}${fecha.getDay}`;
+    const timestamp = `${fecha.getFullYear()}${fecha.getMonth()}${fecha.getDay()}`;
     const random = Math.floor(Math.random() * 1000);
     return `PQRS-R-${timestamp}-${random}`;
   }
