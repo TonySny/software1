@@ -42,6 +42,7 @@ table {
   background: white;
   border-radius: 12px;
   overflow: hidden;
+  table-layout: fixed;
 }
 
 thead {
@@ -53,6 +54,10 @@ th, td {
   padding: 16px;
   text-align: left;
   border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
 }
 
 .rol-select {
@@ -64,6 +69,7 @@ th, td {
   background: white;
   cursor: pointer;
   transition: border 0.2s;
+  width: 100%;
 
   &:focus {
     outline: none;
@@ -101,7 +107,7 @@ th, td {
 
 @media (max-width: 900px) {
   .table-section { overflow-x: auto; }
-  table { min-width: 900px; }
+  table { min-width: 700px; }
   .title-section { padding: 20px; }
   .header { padding: 16px 20px; }
 }

@@ -35,38 +35,15 @@ export class UsuariosComponent implements OnInit {
   }
 
   async cargarUsuarios() {
-    // 1. Traer perfiles
     const { data: perfiles, error: errorPerfiles } = await this.supabase.client
-      .from('profiles')
-      .select('id, name, surname, role_id')
-      .order('name', { ascending: true });
+      .rpc('get_all_profiles');
 
     if (errorPerfiles) {
       Swal.fire('Error', 'No se pudieron cargar los usuarios', 'error');
       return;
     }
 
-    // 2. Para cada perfil, buscar el request más reciente con su email y phone
-    const usuariosConDatos = await Promise.all(
-      (perfiles || []).map(async (perfil: any) => {
-        const { data: req } = await this.supabase.client
-          .from('requests')
-          .select('email, phone')
-          .eq('profile_id', perfil.id)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-
-        return {
-          ...perfil,
-          email: req?.email ?? '—',
-          phone: req?.phone ?? '—',
-        };
-      })
-    );
-
-    this.usuarios = usuariosConDatos;
-
+    this.usuarios = perfiles || [];
     this.usuarios.forEach(u => {
       this.rolesOriginales[u.id] = u.role_id;
     });
@@ -89,7 +66,8 @@ export class UsuariosComponent implements OnInit {
       const { error } = await this.supabase.client
         .from('profiles')
         .update({ role_id: usuario.role_id })
-        .eq('id', usuario.id);
+        .eq('id', usuario.id)
+        .select();
 
       if (error) {
         errores.push(usuario.name ?? usuario.id);

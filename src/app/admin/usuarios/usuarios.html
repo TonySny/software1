@@ -21,12 +21,11 @@
     <table>
       <thead>
         <tr>
-          <th>ID Usuario</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
+          <th style="width: 130px">ID Usuario</th>
+          <th style="width: 150px">Nombre</th>
+          <th style="width: 150px">Apellido</th>
           <th>Email</th>
-          <th>Teléfono</th>
-          <th>Rol Actual</th>
+          <th style="width: 180px">Rol Actual</th>
         </tr>
       </thead>
       <tbody>
@@ -35,16 +34,15 @@
           <td>{{ usuario.name ?? '—' }}</td>
           <td>{{ usuario.surname ?? '—' }}</td>
           <td>{{ usuario.email ?? '—' }}</td>
-          <td>{{ usuario.phone ?? '—' }}</td>
           <td>
-            <select class="rol-select" [(ngModel)]="usuario.role_id">
-              <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
+            <select class="rol-select" [(ngModel)]="usuario.role_id" (ngModelChange)="usuario.role_id = $event">
+              <option *ngFor="let rol of roles" [ngValue]="rol.id">{{ rol.name }}</option>
             </select>
           </td>
         </tr>
 
         <tr *ngIf="usuarios.length === 0">
-          <td colspan="6" class="sin-resultados">No hay usuarios registrados.</td>
+          <td colspan="5" class="sin-resultados">No hay usuarios registrados.</td>
         </tr>
       </tbody>
     </table>
