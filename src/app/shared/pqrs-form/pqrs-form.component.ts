@@ -1,10 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SupabaseService } from '../../services/supabase.service';
 import { PqrConfig } from '../pqrs-config';
+
+const LIMITE_MB = 100;
+const LIMITE_BYTES = LIMITE_MB * 1024 * 1024;
 
 @Component({
   selector: 'app-pqr-form',
@@ -15,10 +18,8 @@ import { PqrConfig } from '../pqrs-config';
 })
 export class PqrFormComponent {
 
-  /** Configuración inyectada por el componente padre (petición, queja, etc.) */
   @Input({ required: true }) config!: PqrConfig;
 
-  // ── Estado del formulario ──────────────────────────────────────────────────
   telefono = '';
   email = '';
   descripcion = '';
@@ -26,6 +27,28 @@ export class PqrFormComponent {
   archivos: File[] = [];
   aceptaTerminos = false;
   errorArchivos: string[] = [];
+
+  // ── Getters para la barra de espacio ──────────────────────────────────────
+
+  get pesoUsadoBytes(): number {
+    return this.archivos.reduce((t, f) => t + f.size, 0);
+  }
+
+  get pesoUsadoMB(): string {
+    return (this.pesoUsadoBytes / 1024 / 1024).toFixed(2);
+  }
+
+  get pesoRestanteMB(): string {
+    return ((LIMITE_BYTES - this.pesoUsadoBytes) / 1024 / 1024).toFixed(2);
+  }
+
+  get pesoRestanteMBNum(): number {
+    return (LIMITE_BYTES - this.pesoUsadoBytes) / 1024 / 1024;
+  }
+
+  get porcentajeUsado(): number {
+    return Math.min(100, (this.pesoUsadoBytes / LIMITE_BYTES) * 100);
+  }
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -42,25 +65,26 @@ export class PqrFormComponent {
       'image/webp',
     ];
 
-    // Límite: máximo 4 archivos en total
     if (this.archivos.length + archivosNuevos.length > 4) {
       Swal.fire('Límite excedido', 'Solo puedes subir máximo 4 archivos', 'error');
       target.value = '';
       return;
     }
 
-    // Límite: máximo 100 MB en total
-    const pesoActual = this.archivos.reduce((t, f) => t + f.size, 0);
-    const pesoNuevo  = archivosNuevos.reduce((t, f) => t + f.size, 0);
+    const pesoNuevo = archivosNuevos.reduce((t, f) => t + f.size, 0);
 
-    if (pesoActual + pesoNuevo > 100 * 1024 * 1024) {
-      Swal.fire('Peso excedido', 'El tamaño total no puede superar 100 MB', 'error');
+    if (this.pesoUsadoBytes + pesoNuevo > LIMITE_BYTES) {
+      const restante = ((LIMITE_BYTES - this.pesoUsadoBytes) / 1024 / 1024).toFixed(2);
+      Swal.fire(
+        'Peso excedido',
+        `El tamaño total no puede superar ${LIMITE_MB} MB. Te quedan ${restante} MB disponibles.`,
+        'error'
+      );
       target.value = '';
       return;
     }
 
-    // Validar tipos
-    const validos:   File[]   = [];
+    const validos: File[] = [];
     const invalidos: string[] = [];
 
     archivosNuevos.forEach((file) => {
@@ -91,17 +115,12 @@ export class PqrFormComponent {
   // ── Envío ──────────────────────────────────────────────────────────────────
 
   async onEnviar() {
-    console.log(this.aceptaTerminos);
     if (!this.descripcion || !this.destino || !this.aceptaTerminos) {
-      Swal.fire(
-        'Campos incompletos',
-        'Completa todos los campos obligatorios marcados con *',
-        'error'
-      );
+      Swal.fire('Campos incompletos', 'Completa todos los campos obligatorios marcados con *', 'error');
       return;
     }
 
-    const session   = await this.supabaseService.getSession();
+    const session = await this.supabaseService.getSession();
     const id_perfil = session.data.session?.user?.id;
     const num_radicado = this.generarNumeroRadicado();
 
@@ -124,18 +143,12 @@ export class PqrFormComponent {
 
     try {
       await this.supabaseService.insertarPQRS(ticket);
-      Swal.fire(
-        'Enviado',
-        `Tu solicitud fue enviada. Número de radicado: ${num_radicado}`,
-        'success'
-      );
+      Swal.fire('Enviado', `Tu solicitud fue enviada. Número de radicado: ${num_radicado}`, 'success');
       this.limpiarFormulario();
     } catch (err: any) {
       Swal.fire('Error', err?.message ?? 'Error inesperado al enviar', 'error');
     }
   }
-
-  // ── Helpers privados ───────────────────────────────────────────────────────
 
   private generarNumeroRadicado(): string {
     const fecha = new Date();

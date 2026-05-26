@@ -1,0 +1,60 @@
+<div class="solicitudes-container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <div class="header-right">
+      <span class="bienvenido">Panel Administrador</span>
+    </div>
+  </header>
+
+  <!-- TITULO -->
+  <section class="title-section">
+    <h2>Gestionar Usuarios</h2>
+    <p>Visualiza y administra los usuarios registrados en la plataforma.</p>
+  </section>
+
+  <!-- TABLA -->
+  <section class="table-section">
+    <table>
+      <thead>
+        <tr>
+          <th>ID Usuario</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Rol Actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.id | slice:0:8 }}...</td>
+          <td>{{ usuario.name ?? '—' }}</td>
+          <td>{{ usuario.surname ?? '—' }}</td>
+          <td>{{ usuario.email ?? '—' }}</td>
+          <td>{{ usuario.phone ?? '—' }}</td>
+          <td>
+            <select class="rol-select" [(ngModel)]="usuario.role_id">
+              <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr *ngIf="usuarios.length === 0">
+          <td colspan="6" class="sin-resultados">No hay usuarios registrados.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="guardar-section">
+      <button class="btn-guardar" (click)="guardarCambios()" [disabled]="guardando">
+        {{ guardando ? 'Guardando...' : '💾 Guardar cambios' }}
+      </button>
+    </div>
+
+  </section>
+
+</div>

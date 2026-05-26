@@ -39,10 +39,6 @@ export class FuncionarioComponent implements OnInit {
     this.router.navigate([ruta]);
   }
 
-  editarPerfil() {
-    this.router.navigate(['/funcionario/perfil']);
-  }
-
   async logout() {
     const result = await Swal.fire({
       title: '¿Cerrar sesión?',

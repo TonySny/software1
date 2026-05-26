@@ -17,10 +17,6 @@ export class AdminComponent {
     this.router.navigate(['/']);
   }
 
-  editarPerfil() {
-    alert('Editar perfil');
-  }
-
   irA(ruta: string) {
     this.router.navigate([ruta]);
   }

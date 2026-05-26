@@ -9,6 +9,7 @@ import { ConsultarComponent } from './home/consultar/consultar';
 import { MisPqrsComponent } from './home/mis-pqrs/mis-pqrs';
 import { ResetPasswordComponent } from './reset-password/reset.password';
 import { AdminComponent } from './admin/admin';
+import { UsuariosComponent } from './admin/usuarios/usuarios';
 import { FuncionarioComponent } from './funcionario/funcionario';
 import { SolicitudesComponent } from './funcionario/solicitudes/solicitudes';
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'consultar', component: ConsultarComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'admin/usuarios', component: UsuariosComponent },
   { path: 'funcionario', component: FuncionarioComponent },
   { path: 'funcionario/solicitudes', component: SolicitudesComponent },
   { path: 'mis-pqrs', component: MisPqrsComponent }

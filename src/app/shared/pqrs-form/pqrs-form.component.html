@@ -90,15 +90,34 @@
             />
             <label for="fileInput" class="file-label">📎 Seleccionar archivos</label>
           </div>
+
+          <!-- BARRA DE ESPACIO -->
+          <div class="storage-bar-wrapper" *ngIf="archivos.length > 0">
+            <div class="storage-bar-header">
+              <span>Espacio usado</span>
+              <span [ngClass]="pesoRestanteMBNum < 10 ? 'storage-warning' : 'storage-ok'">
+                {{ pesoUsadoMB }} MB usados · {{ pesoRestanteMB }} MB restantes
+              </span>
+            </div>
+            <div class="storage-bar">
+              <div
+                class="storage-bar__fill"
+                [style.width.%]="porcentajeUsado"
+                [ngClass]="porcentajeUsado > 80 ? 'danger' : porcentajeUsado > 50 ? 'warning' : 'ok'">
+              </div>
+            </div>
+          </div>
+
           <div class="file-list" *ngIf="archivos.length > 0">
-            <span>Archivos cargados ({{ archivos.length }}):</span>
+            <span>Archivos cargados ({{ archivos.length }}/4):</span>
             <ul>
               <li *ngFor="let file of archivos; let i = index">
-                {{ file.name }}
+                {{ file.name }} <em class="file-size">({{ (file.size / 1024 / 1024).toFixed(2) }} MB)</em>
                 <button type="button" class="remove-file" (click)="removeFile(i)">Eliminar</button>
               </li>
             </ul>
           </div>
+
           <div *ngIf="errorArchivos.length > 0" class="error-message">
             ❌ Archivos no permitidos: {{ errorArchivos.join(', ') }}
           </div>
