@@ -151,8 +151,8 @@ export class PqrFormComponent {
   }
 
   private generarNumeroRadicado(): string {
-    const fecha = new Date();
-    const timestamp = `${fecha.getFullYear()}${fecha.getMonth() + 1}${fecha.getDate()}`;
+    const fecha = new Date()
+    const timestamp = `${fecha.getFullYear()}${String(fecha.getMonth() + 1).padStart(2, '0')}${fecha.getDate()}`;
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     return `${this.config.radicadoPrefix}-${timestamp}-${random}`;
   }

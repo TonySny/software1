@@ -12,6 +12,8 @@ import { AdminComponent } from './admin/admin';
 import { UsuariosComponent } from './admin/usuarios/usuarios';
 import { FuncionarioComponent } from './funcionario/funcionario';
 import { SolicitudesComponent } from './funcionario/solicitudes/solicitudes';
+import { AsignarSolicitudesComponent } from './admin/asignar-solicitudes/asignar-solicitudes';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,5 +29,9 @@ export const routes: Routes = [
   { path: 'admin/usuarios', component: UsuariosComponent },
   { path: 'funcionario', component: FuncionarioComponent },
   { path: 'funcionario/solicitudes', component: SolicitudesComponent },
-  { path: 'mis-pqrs', component: MisPqrsComponent }
+  { path: 'mis-pqrs', component: MisPqrsComponent },
+  { path: 'admin/solicitudes', component: AsignarSolicitudesComponent }
+
+
 ];
+

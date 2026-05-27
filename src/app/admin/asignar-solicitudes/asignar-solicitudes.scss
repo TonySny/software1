@@ -1,0 +1,62 @@
+.solicitudes-container {
+  padding: 40px;
+}
+
+h1 {
+  color: #004884;
+  margin-bottom: 25px;
+}
+
+.tabla-wrapper {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  overflow-x: auto;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #004884;
+  color: white;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: center;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.estado {
+  background: #fff3cd;
+  color: #856404;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+select {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.btn-asignar {
+  background: #004884;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-asignar:hover {
+  background: #00345f;
+}

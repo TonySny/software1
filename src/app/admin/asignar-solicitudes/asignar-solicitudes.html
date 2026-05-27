@@ -1,0 +1,74 @@
+<div class="solicitudes-container">
+
+  <h1>Asignar Solicitudes</h1>
+
+  <div class="tabla-wrapper">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Correo</th>
+          <th>Solicitud</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Funcionario</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let solicitud of solicitudes">
+
+          <td>{{ solicitud.id }}</td>
+
+          <td>{{ solicitud.email }}</td>
+
+          <td>{{ solicitud.request }}</td>
+
+          <td>{{ solicitud.type }}</td>
+
+          <td>
+            <span class="estado">
+              {{ solicitud.status }}
+            </span>
+          </td>
+
+          <td>
+
+            <select [(ngModel)]="solicitud.func_id">
+
+              <option [ngValue]="null">
+                Seleccionar
+              </option>
+
+              <option *ngFor="let fun of funcionarios" [ngValue]="fun.id">
+                {{ fun.name }} {{ fun.surname }}
+              </option>
+
+            </select>
+
+          </td>
+
+          <td>
+
+            <button
+              class="btn-asignar"
+              (click)="asignarSolicitud(solicitud)"
+            >
+              Asignar
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
