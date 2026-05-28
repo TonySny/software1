@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './usuarios.html',
   styleUrls: ['./usuarios.scss']
 })
@@ -60,14 +61,14 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.guardando = true;
+    this.cdr.markForCheck();
     const errores: string[] = [];
 
     for (const usuario of modificados) {
       const { error } = await this.supabase.client
         .from('profiles')
         .update({ role_id: usuario.role_id })
-        .eq('id', usuario.id)
-        .select();
+        .eq('id', usuario.id);
 
       if (error) {
         errores.push(usuario.name ?? usuario.id);
@@ -77,6 +78,7 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.guardando = false;
+    this.cdr.markForCheck();
 
     if (errores.length > 0) {
       Swal.fire('Error parcial', `No se pudo actualizar: ${errores.join(', ')}`, 'warning');
