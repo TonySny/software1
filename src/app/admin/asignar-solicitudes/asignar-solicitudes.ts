@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asignar-solicitudes',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './asignar-solicitudes.html',
   styleUrls: ['./asignar-solicitudes.scss']
 })
@@ -26,7 +27,6 @@ export class AsignarSolicitudesComponent implements OnInit {
   }
 
   async cargarSolicitudes() {
-
     const { data, error } = await this.supabase.client
       .from('requests')
       .select('*')
@@ -42,8 +42,6 @@ export class AsignarSolicitudesComponent implements OnInit {
   }
 
   async cargarFuncionarios() {
-
-    // 1. Obtener el rol "Funcionario"
     const { data: rol, error: errorRol } = await this.supabase.client
       .from('profile_roles')
       .select('id')
@@ -55,7 +53,6 @@ export class AsignarSolicitudesComponent implements OnInit {
       return;
     }
 
-    // 2. Buscar perfiles con ese role_id
     const { data, error } = await this.supabase.client
       .from('profiles')
       .select('*')
@@ -67,14 +64,12 @@ export class AsignarSolicitudesComponent implements OnInit {
     }
 
     this.funcionarios = data || [];
-    console.log(data)
     this.cdr.detectChanges();
   }
 
   async asignarSolicitud(solicitud: any) {
-
     if (!solicitud.func_id) {
-      Swal.fire('error', 'Seleccione un funcionario', 'error');
+      Swal.fire('Error', 'Seleccione un funcionario', 'error');
       return;
     }
 
@@ -82,22 +77,16 @@ export class AsignarSolicitudesComponent implements OnInit {
       .from('requests')
       .update({
         func_id: solicitud.func_id,
-        status: 'Asignada en area' // cambia estado
+        status: 'Asignada en area'
       })
       .eq('id', solicitud.id);
 
-
-
-    // AQUÍ LUEGO LLAMAR FUNCIÓN NOTIFICACIÓN USUARIO
-
     if (error) {
-      Swal.fire('Error','Error al asignar '+error,'error');
+      Swal.fire('Error', 'Error al asignar: ' + error.message, 'error');
       return;
     }
 
-    Swal.fire('¡Asignada en area!','Solicitud asignada correctamente a un funcionario','success');
-
+    Swal.fire('¡Asignada!', 'Solicitud asignada correctamente a un funcionario', 'success');
     await this.cargarSolicitudes();
   }
-
 }
