@@ -61,14 +61,14 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.guardando = true;
+    this.cdr.markForCheck();
     const errores: string[] = [];
 
     for (const usuario of modificados) {
       const { error } = await this.supabase.client
         .from('profiles')
         .update({ role_id: usuario.role_id })
-        .eq('id', usuario.id)
-        .select();
+        .eq('id', usuario.id);
 
       if (error) {
         errores.push(usuario.name ?? usuario.id);
@@ -78,6 +78,7 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.guardando = false;
+    this.cdr.markForCheck();
 
     if (errores.length > 0) {
       Swal.fire('Error parcial', `No se pudo actualizar: ${errores.join(', ')}`, 'warning');
