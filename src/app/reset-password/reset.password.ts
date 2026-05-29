@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './reset.password.html',
   styleUrls: ['./reset.password.scss']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
 
   newPassword = '';
   confirmPassword = '';
@@ -22,6 +22,31 @@ export class ResetPasswordComponent {
     private supabase: SupabaseService,
     private router: Router
   ) {}
+
+async ngOnInit() {
+  const fullHash = window.location.href;
+  
+  
+  const match = fullHash.match(/access_token=([^&]+)/);
+  const refreshMatch = fullHash.match(/refresh_token=([^&]+)/);
+
+  const accessToken = match ? match[1] : null;
+  const refreshToken = refreshMatch ? refreshMatch[1] : null;
+
+  console.log('Access token:', accessToken);
+  console.log('Refresh token:', refreshToken);
+
+  if (accessToken && refreshToken) {
+    const { data, error } = await this.supabase.client.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken
+    });
+    console.log('Sesión seteada:', data);
+    console.log('Error sesión:', error);
+  } else {
+    console.log('No se encontraron tokens');
+  }
+}
 
   async resetPassword() {
     if (!this.newPassword || !this.confirmPassword) {
