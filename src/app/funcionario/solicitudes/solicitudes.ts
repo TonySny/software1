@@ -48,10 +48,13 @@ export class SolicitudesComponent implements OnInit {
   }
 
   async cargarSolicitudes() {
+    const { data: Session } = await this.supabase.client.auth.getSession();
+    const user = Session.session?.user
+    
     const { data, error } = await this.supabase.client
     .from('requests')
     .select('*')
-    .eq('func_id', `${await this.supabase.getSession()}`);
+    .eq('func_id', `${user?.id}`);
     /**
      * CAMBIAR AQUÍ NO OLVIDAR 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️
      * .eq('func_id', `${await this.supabase.getSession()}`)
