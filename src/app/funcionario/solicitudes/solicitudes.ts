@@ -15,16 +15,11 @@ import { SupabaseService } from '../../services/supabase.service';
 export class SolicitudesComponent implements OnInit {
 
   solicitudes: any[] = [];
-  solicitudesFiltradas: any[] = [];
-  filtroActivo = 'todos';
+  selectedSolicitud: any = null;
+  respuesta = '';
+  modalOpen = false;
 
-  tipos = [
-    { nombre: 'Todos',       valor: 'todos'      },
-    { nombre: 'Peticiones',  valor: 'petición'   },
-    { nombre: 'Quejas',      valor: 'queja'      },
-    { nombre: 'Reclamos',    valor: 'reclamo'    },
-    { nombre: 'Sugerencias', valor: 'sugerencia' },
-  ];
+  remitente: any = null;
 
   constructor(
     private supabase: SupabaseService,
@@ -34,77 +29,69 @@ export class SolicitudesComponent implements OnInit {
   async ngOnInit() {
     await this.cargarSolicitudes();
   }
+  
+  async openModal(solicitud: any) {
+    this.modalOpen = true;
+    this.selectedSolicitud = solicitud;
+    await this.consultarRemitente(solicitud.profile_id);
+    
+    this.cdr.detectChanges();
+  }
+
+  closeModal() {
+    this.modalOpen = false;
+    this.selectedSolicitud = null;
+    this.respuesta = '';
+    this.remitente = null
+
+    // document.body.style.overflow = 'auto';
+  }
 
   async cargarSolicitudes() {
     const { data, error } = await this.supabase.client
-      .from('requests')
-      .select('*')
-      .order('created_at', { ascending: false });
+    .from('requests')
+    .select('*')
+    .eq('func_id', `${await this.supabase.getSession()}`);
+    /**
+     * CAMBIAR AQUÍ NO OLVIDAR 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️
+     * .eq('func_id', `${await this.supabase.getSession()}`)
+     */
 
     if (error) {
       Swal.fire('Error', 'No se pudieron cargar las solicitudes', 'error');
       return;
     }
 
+    if (data.length == 0) {
+      Swal.fire('Error', 'No se encontraron solicitudes asignadas', 'error');
+      return;
+    }
+
     this.solicitudes = data || [];
-    this.aplicarFiltro();
     this.cdr.markForCheck();
   }
 
-  filtrar(tipo: string) {
-    this.filtroActivo = tipo;
-    this.aplicarFiltro();
+  async consultarRemitente(id: string) {
+    this.remitente = await this.supabase.getUserEQ(id);
   }
 
-  aplicarFiltro() {
-    if (this.filtroActivo === 'todos') {
-      this.solicitudesFiltradas = [...this.solicitudes];
-    } else {
-      this.solicitudesFiltradas = this.solicitudes.filter(s =>
-        s.type?.toLowerCase() === this.filtroActivo
-      );
+  async responder(solicitud: any, respuesta: string) {
+    if (!respuesta?.trim()) {
+      Swal.fire('Campo vacío', 'Escribe una respuesta antes de enviar.', 'warning');
+      return;
     }
-  }
 
-  verDetalle(solicitud: any) {
-    Swal.fire({
-      title: '📋 Detalle de solicitud',
-      html: `
-        <div style="text-align:left; display:grid; grid-template-columns:1fr 1fr; gap:12px 24px;">
-          <div><strong>Radicado</strong><br>${solicitud.ref_number}</div>
-          <div><strong>Tipo</strong><br>${solicitud.type}</div>
-          <div><strong>Estado</strong><br>${solicitud.status}</div>
-          <div><strong>Destino</strong><br>${solicitud.destination}</div>
-          <div><strong>Email</strong><br>${solicitud.email || '—'}</div>
-          <div><strong>Teléfono</strong><br>${solicitud.phone}</div>
-          <div><strong>Fecha</strong><br>${new Date(solicitud.created_at).toLocaleDateString('es-CO')}</div>
-          <div style="grid-column:1/-1"><strong>Descripción</strong><br>${solicitud.request}</div>
-        </div>
-      `,
-      confirmButtonText: 'Cerrar',
-      confirmButtonColor: '#7b1fa2',
-      width: 600,
-    });
-  }
-
-  async responder(solicitud: any) {
-    const { value: respuesta, isConfirmed } = await Swal.fire({
-      title: '💬 Responder solicitud',
-      html: `<p style="text-align:left; margin-bottom:8px;">Radicado: <strong>${solicitud.ref_number}</strong></p>`,
-      input: 'textarea',
-      inputPlaceholder: 'Escribe la respuesta...',
-      inputAttributes: { rows: '5' },
+    const { isConfirmed } = await Swal.fire({
+      title: '¿Enviar respuesta?',
+      html: `<p style="text-align:left">Radicado: <strong>${solicitud.ref_number}</strong></p>`,
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Enviar respuesta',
+      confirmButtonText: 'Enviar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#7b1fa2',
-      inputValidator: (value) => {
-        if (!value?.trim()) return 'Escribe una respuesta antes de enviar';
-        return undefined;
-      }
+      confirmButtonColor: '#4f46e5',
     });
 
-    if (!isConfirmed || !respuesta?.trim()) return;
+    if (!isConfirmed) return;
 
     const { error } = await this.supabase.client
       .from('request_responses')
@@ -120,10 +107,11 @@ export class SolicitudesComponent implements OnInit {
 
     await this.supabase.client
       .from('requests')
-      .update({ status: 'Respondida' })
+      .update({ status: 'Solucionada' })
       .eq('id', solicitud.id);
 
-    Swal.fire('Enviado', 'Respuesta enviada correctamente', 'success');
+    Swal.fire('Enviado ✓', 'Respuesta enviada correctamente.', 'success');
+    this.closeModal();
     await this.cargarSolicitudes();
   }
 }

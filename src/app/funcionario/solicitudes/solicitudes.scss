@@ -1,3 +1,290 @@
+// DE PRUEBA PARA MODO MODULAR
+// ── Tokens ─────────────────────────────────────────────
+$surface:       #ffffff;
+$surface-alt:   #f7f7f8;
+$border:        #e4e4e8;
+$text-primary:  #111118;
+$text-muted:    #6b6b80;
+$accent:        #7b1fa2;
+$accent-light:  #ede9fe;
+$danger:        #ef4444;
+$radius-sm:     8px;
+$radius-md:     12px;
+$radius-lg:     16px;
+$shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-md:     0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
+$shadow-lg:     0 20px 60px rgba(0, 0, 0, 0.14), 0 8px 24px rgba(0, 0, 0, 0.08);
+$transition:    180ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// ── Grid ────────────────────────────────────────────────
+.modulo-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+// ── Card ────────────────────────────────────────────────
+.card {
+  background: $surface;
+  position: relative;
+  padding: 24px;
+  border-radius: $radius-lg;
+  border: 1px solid $border;
+  box-shadow: $shadow-sm;
+  transition:
+    box-shadow $transition,
+    transform $transition,
+    border-color $transition;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: darken($border, 6%);
+    transform: translateY(-2px);
+  }
+}
+
+// ── Modal backdrop ──────────────────────────────────────
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: backdropIn 200ms ease both;
+
+  @keyframes backdropIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+// ── Modal ───────────────────────────────────────────────
+.modal {
+  background: $surface;
+  width: min(700px, calc(100vw - 40px));
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $border;
+  padding: 32px;
+  box-shadow: $shadow-lg;
+  animation: modalIn 220ms cubic-bezier(0.34, 1.36, 0.64, 1) both;
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0);    }
+  }
+
+  // scrollbar sutil
+  scrollbar-width: thin;
+  scrollbar-color: $border transparent;
+
+  &::-webkit-scrollbar       { width: 5px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: $border; border-radius: 99px; }
+}
+
+// ── Modal header ────────────────────────────────────────
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border;
+}
+
+// ── Close button ────────────────────────────────────────
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: $text-muted;
+  font-size: 18px;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition: background $transition, color $transition;
+
+  &:hover {
+    background: $surface-alt;
+    color: $text-primary;
+  }
+
+  &:active {
+    background: darken($surface-alt, 4%);
+  }
+}
+
+// ── Modal sections ──────────────────────────────────────
+.modal-section {
+  margin-bottom: 28px;
+
+
+  h4 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-muted;
+    margin-bottom: 10px;
+  }
+
+  --grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px 24px;
+  }
+}
+
+
+// ── Request text ────────────────────────────────────────
+.request-text {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.65;
+  color: $text-primary;
+  background: $surface-alt;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  padding: 14px 16px;
+}
+
+// ── Textarea ────────────────────────────────────────────
+textarea {
+  width: 95%;
+  resize: vertical;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+  background: $surface;
+  color: $text-primary;
+  font-size: 14px;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color $transition, box-shadow $transition;
+
+  &::placeholder {
+    color: lighten($text-muted, 15%);
+  }
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 3px $accent-light;
+  }
+}
+
+// ── Send button ─────────────────────────────────────────
+.send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $accent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background $transition, box-shadow $transition, transform $transition;
+
+  &:hover {
+    background: darken($accent, 6%);
+    box-shadow: 0 4px 12px rgba($accent, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    background: darken($accent, 10%);
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ── Status badge ────────────────────────────────────────
+.status {
+  display: inline-flex;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: $surface-alt;
+  border: 1px solid $border;
+  font-size: 12px;
+  font-weight: 500;
+  color: $text-muted;
+  letter-spacing: 0.02em;
+
+  // variantes semánticas
+  &--solucionada { background: #f0fdf4; border-color: #86efac; color: #15803d; }
+  &--asignada { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+  &--reabierta   { background: #fef2f2; border-color: #fca5a5; color: $danger;  }
+}
+
+// DE PRUEBA PARA MODO MODULAR
+
+.panel {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 24px;
+  box-shadow: $shadow-sm;
+  
+  width: 95%;
+  margin: 0 auto 36px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $border;
+}
+
+.panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $text-muted;
+}
+
+.panel-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 99px;
+  background: $accent-light;
+  color: $accent;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .solicitudes-container {
   min-height: 100vh;
   background: #f4f6fb;
