@@ -20,6 +20,9 @@ export class SolicitudesComponent implements OnInit {
   modalOpen = false;
 
   remitente: any = null;
+  
+  reclasificacionOpen = false;
+  nuevaClasificacion = '';
 
   constructor(
     private supabase: SupabaseService,
@@ -28,6 +31,44 @@ export class SolicitudesComponent implements OnInit {
 
   async ngOnInit() {
     await this.cargarSolicitudes();
+  }
+
+  openReclasificacion() {
+    this.nuevaClasificacion = this.selectedSolicitud?.clasificacion_funcionario ?? '';
+    this.reclasificacionOpen = true;
+  }
+
+  closeReclasificacion() {
+    this.reclasificacionOpen = false;
+    this.nuevaClasificacion = '';
+  }
+
+  async guardarReclasificacion(solicitud: any) {
+    if (!this.nuevaClasificacion) {
+      Swal.fire('Atención', 'Debes seleccionar una clasificación', 'warning');
+      return;
+    }
+
+    const { error } = await this.supabase.client
+      .from('requests')
+      .update({
+        clasificacion_funcionario: this.nuevaClasificacion,
+        pendiente_reclasificacion: false
+      })
+      .eq('id', solicitud.id);
+
+    if (error) {
+      Swal.fire('Error', 'No se pudo guardar la reclasificación', 'error');
+      return;
+    }
+
+    // Actualizar localmente sin recargar
+    solicitud.clasificacion_funcionario = this.nuevaClasificacion;
+    solicitud.pendiente_reclasificacion = false;
+
+    this.closeReclasificacion();
+    Swal.fire('Listo', 'Solicitud reclasificada correctamente', 'success');
+    this.cdr.markForCheck();
   }
   
   async openModal(solicitud: any) {
@@ -70,8 +111,48 @@ export class SolicitudesComponent implements OnInit {
       return;
     }
 
-    this.solicitudes = data || [];
+    const solicitudesConArchivos = await Promise.all(
+      data.map(async (solicitud) => {
+        const { data: paths } = await this.supabase.client
+          .from('request_paths')
+          .select('*')
+          .eq('request_id', solicitud.id);
+
+        return { ...solicitud, files: paths ?? [] };
+      })
+    );
+
+
+    this.solicitudes = solicitudesConArchivos;
     this.cdr.markForCheck();
+  }
+
+  async downloadAllFiles(solicitud: any) {
+    if (!solicitud.files || solicitud.files.length === 0) {
+      return
+    }
+
+    for (const path of solicitud.files) {
+      const { data: fileBlob, error } = await this.supabase.client
+        .storage
+        .from('pqrs files')
+        .download(path.filepath);
+
+        console.log('DESCARGÓ')
+
+      if (error) {
+        console.error(`Error descargando ${path.filepath}:`, error);
+        continue;
+      }
+
+      const url = URL.createObjectURL(fileBlob);
+      const a = document.createElement('a');
+
+      a.href = url;
+      a.download = path.filename ?? path.filepath.split('/').pop();
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   }
 
   async consultarRemitente(id: string) {

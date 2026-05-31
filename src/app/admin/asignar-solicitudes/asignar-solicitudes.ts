@@ -30,7 +30,7 @@ export class AsignarSolicitudesComponent implements OnInit {
     const { data, error } = await this.supabase.client
       .from('requests')
       .select('*')
-      .eq('status', 'Radicada');
+      .is('func_id', null);
 
     if (error) {
       console.error(error);
@@ -73,11 +73,20 @@ export class AsignarSolicitudesComponent implements OnInit {
       return;
     }
 
+    const { data } = await this.supabase.getSession()
+    
+    if (!data.session) {
+      throw new Error('No hay sesión activa')
+    }
+
+    const profile = await this.supabase.getUserEQ(data.session.user.id)
+
     const { error } = await this.supabase.client
       .from('requests')
       .update({
         func_id: solicitud.func_id,
-        status: 'Asignada en area'
+        status: 'Asignada en area',
+        quien_asigno_solicitud: `${profile?.name}` // SI LLEGASEN A HABER ADMINISTRADORES CON NOMBRES PERSONALIZADOS AGREGAR A LA CADENA ${profile?.name}
       })
       .eq('id', solicitud.id);
 
