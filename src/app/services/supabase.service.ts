@@ -122,6 +122,21 @@ export class SupabaseService {
     return await this.client.auth.getSession();
   }
 
+  async getUserEQ(identification: string) {
+    const { data, error } = await this.client
+    .from('profiles')
+    .select('*')
+    .eq('id', identification)
+    .single();
+
+    if (error) {
+      console.error(error)
+      return null
+    }
+
+    return data
+  }
+
   async insertarPQRS(ticket: any) {
     const {
       type,

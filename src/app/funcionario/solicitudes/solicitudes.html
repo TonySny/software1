@@ -21,52 +21,181 @@
     <p>Visualiza y responde las solicitudes PQRS.</p>
   </section>
 
-  <!-- FILTROS -->
-  <section class="filtros-section">
-    <button
-      *ngFor="let tipo of tipos"
-      class="filtro-btn"
-      [class.activo]="filtroActivo === tipo.valor"
-      (click)="filtrar(tipo.valor)">
-      {{ tipo.nombre }}
-    </button>
+  <!-- PANEL DE MÓDULOS -->
+  <section class="modulos-section">
+    <div class="panel">
+
+      <div class="panel-header">
+        <span class="panel-title">Solicitudes activas</span>
+        <span class="panel-count">{{ solicitudes.length }}</span>
+      </div>
+
+      <div class="modulo-container">
+        <div
+          class="card"
+          *ngFor="let solicitud of solicitudes"
+          (click)="openModal(solicitud)"
+          role="button"
+          tabindex="0"
+        >
+          <span class="status status--{{ solicitud.status | lowercase }} card-status">
+            {{ solicitud.status }}
+          </span>
+
+          <span class="card-accent"></span>
+
+          <div class="card-body">
+            <div class="card-top">
+              <span class="card-type">{{ (solicitud.clasificacion_funcionario ?? solicitud.clasificacion_usuario).toUpperCase() }}</span>
+            </div>
+            <p class="card-date">{{ solicitud.created_at | date:'short' }}</p>
+            <p class="card-ref">#{{ solicitud.ref_number }}</p>
+          </div>
+
+          <div class="card-footer">
+            <span class="card-sender">{{ solicitud.created_by }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
-  <!-- TABLA -->
-  <section class="table-section">
-    <table>
-      <thead>
-        <tr>
-          <th>Radicado</th>
-          <th>Tipo</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let solicitud of solicitudesFiltradas">
-          <td>{{ solicitud.ref_number }}</td>
-          <td>{{ solicitud.type | titlecase }}</td>
-          <td>{{ solicitud.request }}</td>
-          <td>
-            <span class="estado-badge">{{ solicitud.status | titlecase }}</span>
-          </td>
-          <td>{{ solicitud.created_at | date:'dd/MM/yyyy' }}</td>
-          <td class="acciones">
-            <button class="btn-detalle" (click)="verDetalle(solicitud)">👁 Ver</button>
-            <button class="btn-responder" (click)="responder(solicitud)">💬 Responder</button>
-          </td>
-        </tr>
+  <!-- MODAL DE VISUALIZACIÓN -->
+  <div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
 
-        <tr *ngIf="solicitudesFiltradas.length === 0">
-          <td colspan="6" class="sin-resultados">No hay solicitudes para mostrar.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      <!-- HEADER -->
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-eyebrow">Solicitud</span>
+          <h2 class="modal-title">{{ (selectedSolicitud?.clasificacion_funcionario ?? selectedSolicitud?.clasificacion_usuario)?.toUpperCase() }}</h2>
+        </div>
+        <div class="modal-header-meta">
+          <span class="status status--{{ selectedSolicitud?.status | lowercase }}">
+            {{ selectedSolicitud?.status }}
+          </span>
+          <button class="close-btn" (click)="closeModal()" aria-label="Cerrar">✕</button>
+        </div>
+      </div>
+      
+      <!-- META ROW: ref + fecha + remitente en una sola fila -->
+      <div class="modal-section modal-section--grid">
+        <h4>
+          <p>ASIGNADA POR: {{ selectedSolicitud?.quien_asigno_solicitud}}</p>
+        </h4>
+        <div>
+          <h4>Clasificación</h4>
+          
+          <p>{{ (selectedSolicitud?.clasificacion_funcionario ?? selectedSolicitud?.clasificacion_usuario)?.toUpperCase() }}</p>
+          <span class="reclasificacion-badge" *ngIf="selectedSolicitud?.clasificacion_funcionario">
+            ✏️ Reclasificado por funcionario
+          </span>
+          <button class="btn-reclasificar" (click)="openReclasificacion()">🔁 Reclasificar</button>
+        </div>
+        <div>
+          <h4>Referencia</h4>
+          <p>#{{ selectedSolicitud?.ref_number }}</p>
+        </div>
 
+        <div>
+          <h4>Remitente</h4>
+          <p>{{ remitente?.name }} {{ remitente?.surname}}</p>
+        </div>
+
+        <div>
+          <h4>Fecha</h4>
+          <p>{{ selectedSolicitud?.created_at | date:'yyyy-MM-dd' }}</p>
+        </div>
+
+        <div>
+          <h4>Hora</h4>
+          <p>{{ selectedSolicitud?.created_at | date:'HH:mm:ss' }}</p>
+        </div>
+
+      </div>
+
+      <!-- SOLICITUD -->
+      <div class="modal-section">
+        <h4>Contenido de la solicitud</h4>
+        <p class="request-text">{{ selectedSolicitud?.request }}</p>
+        
+        <!-- ARCHIVOS ADJUNTOS -->
+        <div class="attachments-section">
+          <h5 class="attachments-title">📎 Archivos adjuntos</h5>
+
+          <ng-container *ngIf="selectedSolicitud?.files?.length; else noFiles">
+            <div class="attachments-list">
+              <div class="attachment-row" *ngFor="let file of selectedSolicitud.files">
+                <span class="file-info">
+                  🗂️ <strong>{{ file.filename }}</strong>
+                  <span class="file-meta">{{ file.filetype }} · {{ file.filesize }}</span>
+                </span>
+              </div>
+            </div>
+            <button class="btn-reclasificar" (click)="downloadAllFiles(selectedSolicitud)">
+              ⬇️ Descargar todos los archivos
+            </button>
+          </ng-container>
+
+          <ng-template #noFiles>
+            <p class="no-files">📭 No se proporcionaron archivos adjuntos</p>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- RESPUESTA -->
+      <div class="modal-section">
+        <h4>Zona de respuesta</h4>
+        <textarea rows="5" placeholder="Escribe tu respuesta aquí..." [(ngModel)]="respuesta"></textarea>
+        <div class="send-row">
+          <span class="send-hint">La respuesta será enviada al remitente por el método de respuesta que este haya seleccionado.</span>
+          <button class="send-btn" (click)="responder(selectedSolicitud, respuesta)">
+            📩 Enviar respuesta
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL RECLASIFICACIÓN -->
+  <div class="modal-backdrop" *ngIf="reclasificacionOpen" (click)="closeReclasificacion()">
+    <div class="modal modal--sm" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-eyebrow">Solicitud #{{ selectedSolicitud?.ref_number }}</span>
+          <h2 class="modal-title">Reclasificar solicitud</h2>
+        </div>
+        <button class="close-btn" (click)="closeReclasificacion()">✕</button>
+      </div>
+
+      <div class="modal-section">
+        <h4>Clasificación original del usuario</h4>
+        <p class="request-text">{{ selectedSolicitud?.clasificacion_usuario?.toUpperCase() }}</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Nueva clasificación del funcionario</h4>
+        <select [(ngModel)]="nuevaClasificacion">
+          <option value="">— Selecciona un tipo —</option>
+          <option value="Petición">Petición</option>
+          <option value="Queja">Queja</option>
+          <option value="Reclamo">Reclamo</option>
+          <option value="Sugerencia">Sugerencia</option>
+        </select>
+      </div>
+
+      <div class="modal-section send-row">
+        <button class="send-btn" (click)="guardarReclasificacion(selectedSolicitud)">
+          💾 Guardar reclasificación
+        </button>
+      </div>
+
+    </div>
+  </div>
+  
   <!-- CONTACTO -->
   <section class="contact-section">
     <h3>Contacto</h3>

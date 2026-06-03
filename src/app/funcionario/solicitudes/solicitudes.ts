@@ -15,16 +15,14 @@ import { SupabaseService } from '../../services/supabase.service';
 export class SolicitudesComponent implements OnInit {
 
   solicitudes: any[] = [];
-  solicitudesFiltradas: any[] = [];
-  filtroActivo = 'todos';
+  selectedSolicitud: any = null;
+  respuesta = '';
+  modalOpen = false;
 
-  tipos = [
-    { nombre: 'Todos',       valor: 'todos'      },
-    { nombre: 'Peticiones',  valor: 'petición'   },
-    { nombre: 'Quejas',      valor: 'queja'      },
-    { nombre: 'Reclamos',    valor: 'reclamo'    },
-    { nombre: 'Sugerencias', valor: 'sugerencia' },
-  ];
+  remitente: any = null;
+  
+  reclasificacionOpen = false;
+  nuevaClasificacion = '';
 
   constructor(
     private supabase: SupabaseService,
@@ -35,76 +33,149 @@ export class SolicitudesComponent implements OnInit {
     await this.cargarSolicitudes();
   }
 
-  async cargarSolicitudes() {
-    const { data, error } = await this.supabase.client
+  openReclasificacion() {
+    this.nuevaClasificacion = this.selectedSolicitud?.clasificacion_funcionario ?? '';
+    this.reclasificacionOpen = true;
+  }
+
+  closeReclasificacion() {
+    this.reclasificacionOpen = false;
+    this.nuevaClasificacion = '';
+  }
+
+  async guardarReclasificacion(solicitud: any) {
+    if (!this.nuevaClasificacion) {
+      Swal.fire('Atención', 'Debes seleccionar una clasificación', 'warning');
+      return;
+    }
+
+    const { error } = await this.supabase.client
       .from('requests')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .update({
+        clasificacion_funcionario: this.nuevaClasificacion,
+        pendiente_reclasificacion: false
+      })
+      .eq('id', solicitud.id);
+
+    if (error) {
+      Swal.fire('Error', 'No se pudo guardar la reclasificación', 'error');
+      return;
+    }
+
+    // Actualizar localmente sin recargar
+    solicitud.clasificacion_funcionario = this.nuevaClasificacion;
+    solicitud.pendiente_reclasificacion = false;
+
+    this.closeReclasificacion();
+    Swal.fire('Listo', 'Solicitud reclasificada correctamente', 'success');
+    this.cdr.markForCheck();
+  }
+  
+  async openModal(solicitud: any) {
+    this.modalOpen = true;
+    this.selectedSolicitud = solicitud;
+    await this.consultarRemitente(solicitud.profile_id);
+    
+    this.cdr.detectChanges();
+  }
+
+  closeModal() {
+    this.modalOpen = false;
+    this.selectedSolicitud = null;
+    this.respuesta = '';
+    this.remitente = null
+
+    // document.body.style.overflow = 'auto';
+  }
+
+  async cargarSolicitudes() {
+    const { data: Session } = await this.supabase.client.auth.getSession();
+    const user = Session.session?.user
+    
+    const { data, error } = await this.supabase.client
+    .from('requests')
+    .select('*')
+    .eq('func_id', `${user?.id}`);
+    /**
+     * CAMBIAR AQUÍ NO OLVIDAR 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️
+     * .eq('func_id', `${await this.supabase.getSession()}`)
+     */
 
     if (error) {
       Swal.fire('Error', 'No se pudieron cargar las solicitudes', 'error');
       return;
     }
 
-    this.solicitudes = data || [];
-    this.aplicarFiltro();
+    if (data.length == 0) {
+      Swal.fire('Error', 'No se encontraron solicitudes asignadas', 'error');
+      return;
+    }
+
+    const solicitudesConArchivos = await Promise.all(
+      data.map(async (solicitud) => {
+        const { data: paths } = await this.supabase.client
+          .from('request_paths')
+          .select('*')
+          .eq('request_id', solicitud.id);
+
+        return { ...solicitud, files: paths ?? [] };
+      })
+    );
+
+
+    this.solicitudes = solicitudesConArchivos;
     this.cdr.markForCheck();
   }
 
-  filtrar(tipo: string) {
-    this.filtroActivo = tipo;
-    this.aplicarFiltro();
-  }
+  async downloadAllFiles(solicitud: any) {
+    if (!solicitud.files || solicitud.files.length === 0) {
+      return
+    }
 
-  aplicarFiltro() {
-    if (this.filtroActivo === 'todos') {
-      this.solicitudesFiltradas = [...this.solicitudes];
-    } else {
-      this.solicitudesFiltradas = this.solicitudes.filter(s =>
-        s.type?.toLowerCase() === this.filtroActivo
-      );
+    for (const path of solicitud.files) {
+      const { data: fileBlob, error } = await this.supabase.client
+        .storage
+        .from('pqrs files')
+        .download(path.filepath);
+
+        console.log('DESCARGÓ')
+
+      if (error) {
+        console.error(`Error descargando ${path.filepath}:`, error);
+        continue;
+      }
+
+      const url = URL.createObjectURL(fileBlob);
+      const a = document.createElement('a');
+
+      a.href = url;
+      a.download = path.filename ?? path.filepath.split('/').pop();
+      a.click();
+      URL.revokeObjectURL(url);
     }
   }
 
-  verDetalle(solicitud: any) {
-    Swal.fire({
-      title: '📋 Detalle de solicitud',
-      html: `
-        <div style="text-align:left; display:grid; grid-template-columns:1fr 1fr; gap:12px 24px;">
-          <div><strong>Radicado</strong><br>${solicitud.ref_number}</div>
-          <div><strong>Tipo</strong><br>${solicitud.type}</div>
-          <div><strong>Estado</strong><br>${solicitud.status}</div>
-          <div><strong>Destino</strong><br>${solicitud.destination}</div>
-          <div><strong>Email</strong><br>${solicitud.email || '—'}</div>
-          <div><strong>Teléfono</strong><br>${solicitud.phone}</div>
-          <div><strong>Fecha</strong><br>${new Date(solicitud.created_at).toLocaleDateString('es-CO')}</div>
-          <div style="grid-column:1/-1"><strong>Descripción</strong><br>${solicitud.request}</div>
-        </div>
-      `,
-      confirmButtonText: 'Cerrar',
-      confirmButtonColor: '#7b1fa2',
-      width: 600,
-    });
+  async consultarRemitente(id: string) {
+    this.remitente = await this.supabase.getUserEQ(id);
   }
 
-  async responder(solicitud: any) {
-    const { value: respuesta, isConfirmed } = await Swal.fire({
-      title: '💬 Responder solicitud',
-      html: `<p style="text-align:left; margin-bottom:8px;">Radicado: <strong>${solicitud.ref_number}</strong></p>`,
-      input: 'textarea',
-      inputPlaceholder: 'Escribe la respuesta...',
-      inputAttributes: { rows: '5' },
+  async responder(solicitud: any, respuesta: string) {
+    if (!respuesta?.trim()) {
+      Swal.fire('Campo vacío', 'Escribe una respuesta antes de enviar.', 'warning');
+      return;
+    }
+
+    const { isConfirmed } = await Swal.fire({
+      title: '¿Enviar respuesta?',
+      html: `<p style="text-align:left">Radicado: <strong>${solicitud.ref_number}</strong></p>`,
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Enviar respuesta',
+      confirmButtonText: 'Enviar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#7b1fa2',
-      inputValidator: (value) => {
-        if (!value?.trim()) return 'Escribe una respuesta antes de enviar';
-        return undefined;
-      }
+      confirmButtonColor: '#4f46e5',
     });
 
-    if (!isConfirmed || !respuesta?.trim()) return;
+    if (!isConfirmed) return;
 
     const { error } = await this.supabase.client
       .from('request_responses')
@@ -120,10 +191,11 @@ export class SolicitudesComponent implements OnInit {
 
     await this.supabase.client
       .from('requests')
-      .update({ status: 'Respondida' })
+      .update({ status: 'Solucionada' })
       .eq('id', solicitud.id);
 
-    Swal.fire('Enviado', 'Respuesta enviada correctamente', 'success');
+    Swal.fire('Enviado ✓', 'Respuesta enviada correctamente.', 'success');
+    this.closeModal();
     await this.cargarSolicitudes();
   }
 }

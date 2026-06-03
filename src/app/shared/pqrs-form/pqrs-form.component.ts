@@ -143,7 +143,7 @@ export class PqrFormComponent {
 
     try {
       await this.supabaseService.insertarPQRS(ticket);
-      Swal.fire('Enviado', `Tu solicitud fue enviada. Número de radicado: ${num_radicado}`, 'success');
+      Swal.fire(`Número: ${num_radicado}`, 'Su solicitud fue enviada exitosamente. Por favor, conserve el número de radicado, le servirá para consultar una posible respuesta a su solicitud.', 'success');
       this.limpiarFormulario();
     } catch (err: any) {
       Swal.fire('Error', err?.message ?? 'Error inesperado al enviar', 'error');
