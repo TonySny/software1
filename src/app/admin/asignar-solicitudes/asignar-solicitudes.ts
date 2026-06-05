@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service';
 import Swal from 'sweetalert2';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-asignar-solicitudes',
@@ -18,6 +19,7 @@ export class AsignarSolicitudesComponent implements OnInit {
 
   constructor(
     private supabase: SupabaseService,
+    private notification: NotificationService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -94,6 +96,14 @@ export class AsignarSolicitudesComponent implements OnInit {
       Swal.fire('Error', 'Error al asignar: ' + error.message, 'error');
       return;
     }
+
+    // Notificación al ciudadano
+    await this.notification.enviar('cambio_estado', solicitud.email, {
+      id: solicitud.ref_number,
+      nombre: solicitud.nombre ?? solicitud.email,
+      estado: 'Asignada en área',
+    });
+
 
     Swal.fire('¡Asignada!', 'Solicitud asignada correctamente a un funcionario', 'success');
     await this.cargarSolicitudes();

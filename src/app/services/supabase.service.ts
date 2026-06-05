@@ -139,7 +139,7 @@ export class SupabaseService {
 
   async insertarPQRS(ticket: any) {
     const {
-      type,
+      clasificacion_usuario,
       status,
       profile_id,
       phone,
@@ -170,7 +170,7 @@ export class SupabaseService {
     const { data: requestData, error: requestError } = await this.client
       .from("requests")
       .insert({
-        type,
+        clasificacion_usuario,
         status,
         profile_id,
         phone,

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SupabaseService } from '../../services/supabase.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-solicitudes',
@@ -26,6 +27,7 @@ export class SolicitudesComponent implements OnInit {
 
   constructor(
     private supabase: SupabaseService,
+    private notification: NotificationService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -65,6 +67,13 @@ export class SolicitudesComponent implements OnInit {
     // Actualizar localmente sin recargar
     solicitud.clasificacion_funcionario = this.nuevaClasificacion;
     solicitud.pendiente_reclasificacion = false;
+
+    // Notificación al ciudadano
+    await this.notification.enviar('cambio_clasificacion', solicitud.email, {
+      id: solicitud.ref_number,
+      nombre: solicitud.nombre ?? solicitud.email,
+      clasificacion: this.nuevaClasificacion,
+    });
 
     this.closeReclasificacion();
     Swal.fire('Listo', 'Solicitud reclasificada correctamente', 'success');
@@ -112,7 +121,7 @@ export class SolicitudesComponent implements OnInit {
     }
 
     const solicitudesConArchivos = await Promise.all(
-      data.map(async (solicitud) => {
+      data.map(async (solicitud: any) => {
         const { data: paths } = await this.supabase.client
           .from('request_paths')
           .select('*')
@@ -193,6 +202,13 @@ export class SolicitudesComponent implements OnInit {
       .from('requests')
       .update({ status: 'Solucionada' })
       .eq('id', solicitud.id);
+
+    // Notificación al ciudadano
+    await this.notification.enviar('solicitud_respondida', solicitud.email, {
+      id: solicitud.ref_number,
+      nombre: solicitud.nombre ?? solicitud.email,
+      respuesta: respuesta.trim(),
+    });
 
     Swal.fire('Enviado ✓', 'Respuesta enviada correctamente.', 'success');
     this.closeModal();

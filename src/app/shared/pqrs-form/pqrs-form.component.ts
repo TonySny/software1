@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SupabaseService } from '../../services/supabase.service';
 import { PqrConfig } from '../pqrs-config';
+import { NotificationService } from '../../services/notification.service';
 
 const LIMITE_MB = 100;
 const LIMITE_BYTES = LIMITE_MB * 1024 * 1024;
@@ -50,7 +51,10 @@ export class PqrFormComponent {
     return Math.min(100, (this.pesoUsadoBytes / LIMITE_BYTES) * 100);
   }
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private notification: NotificationService
+  ) {}
 
   // ── Manejo de archivos ─────────────────────────────────────────────────────
 
@@ -125,7 +129,7 @@ export class PqrFormComponent {
     const num_radicado = this.generarNumeroRadicado();
 
     const ticket = {
-      type:         this.config.tipo_solicitud,
+      clasificacion_usuario:         this.config.tipo_solicitud,
       status:       'Radicada',
       profile_id:   id_perfil,
       phone:        this.telefono,
@@ -141,12 +145,20 @@ export class PqrFormComponent {
       })),
     };
 
+    // Notificación al ciudadano
+    await this.notification.enviar('solicitud_registrada', this.email, {
+      id: num_radicado,
+      nombre: this.email,
+      tipo: this.config.tipo_solicitud,
+    });
+
     try {
       await this.supabaseService.insertarPQRS(ticket);
       Swal.fire(`Número: ${num_radicado}`, 'Su solicitud fue enviada exitosamente. Por favor, conserve el número de radicado, le servirá para consultar una posible respuesta a su solicitud.', 'success');
       this.limpiarFormulario();
     } catch (err: any) {
-      Swal.fire('Error', err?.message ?? 'Error inesperado al enviar', 'error');
+      Swal.fire('Error', 'Ocurrió un error inesperado en nuestro sistema. ¡Estamos trabajando para corregirlo!', 'error');
+      console.log('error'+ err?.message)
     }
   }
 
