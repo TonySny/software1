@@ -47,8 +47,14 @@
         <p>Revisa y asigna las solicitudes PQRS pendientes a los funcionarios responsables.</p>
         <button class="btn-ir">Ir →</button>
       </div>
+      <div class="card" (click)="irA('/admin/estadisticas')">
+        <div class="card-icon">📊</div>
+        <h3>Estadísticas</h3>
+        <p>Visualiza reportes y estadísticas de las solicitudes PQRS por tipo y estado.</p>
+        <button class="btn-ir">Ir →</button>
+      </div>
     </section>
-    
+
   </main>
 
   <!-- CONTACTO -->
@@ -81,7 +87,7 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-brand">
-      <div class="footer-logo">
+      <div class="footer-logo-box">
         <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
       </div>
       <div class="footer-copy">

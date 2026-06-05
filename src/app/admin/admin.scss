@@ -71,7 +71,7 @@
 
 .admin-container .main-content {
   flex: 1;
-  max-width: 800px;
+  max-width: 1100px;
   width: 100%;
   margin: 0 auto;
   padding: 50px 20px;
@@ -112,7 +112,7 @@
 
 .admin-container .cards-section {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   animation: fadeUp 0.6s ease 0.1s both;
 }
@@ -200,7 +200,7 @@
   &:hover { transform: translateY(-4px); }
 
   .contact-icon { font-size: 1.4rem; margin-bottom: 6px; }
-  h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; color: white; }
+  h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; color: white; margin-top: 0; }
   p { font-size: 0.84rem; opacity: 0.85; margin: 0; color: white; }
 }
 
@@ -256,8 +256,13 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 900px) {
+  .admin-container .cards-section { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 600px) {
   .admin-container .cards-section { grid-template-columns: 1fr; }
   .admin-container .header { padding: 14px 16px; }
   .admin-container .bienvenido-text { display: none; }
+  .admin-container .footer-brand { flex-direction: column; text-align: center; }
 }

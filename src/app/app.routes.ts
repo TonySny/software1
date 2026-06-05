@@ -13,7 +13,7 @@ import { UsuariosComponent } from './admin/usuarios/usuarios';
 import { FuncionarioComponent } from './funcionario/funcionario';
 import { SolicitudesComponent } from './funcionario/solicitudes/solicitudes';
 import { AsignarSolicitudesComponent } from './admin/asignar-solicitudes/asignar-solicitudes';
-
+import { EstadisticasComponent } from './admin/estadisticas/estadisticas';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,11 +27,9 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/usuarios', component: UsuariosComponent },
+  { path: 'admin/solicitudes', component: AsignarSolicitudesComponent },
+  { path: 'admin/estadisticas', component: EstadisticasComponent },
   { path: 'funcionario', component: FuncionarioComponent },
   { path: 'funcionario/solicitudes', component: SolicitudesComponent },
   { path: 'mis-pqrs', component: MisPqrsComponent },
-  { path: 'admin/solicitudes', component: AsignarSolicitudesComponent }
-
-
 ];
-

@@ -1,0 +1,139 @@
+<div class="estadisticas-container">
+
+  <div class="top-banner">
+    <img src="/assets/gov-logo.png" alt="GOV.CO" class="top-banner-logo-img" />
+  </div>
+
+  <header class="header">
+    <div class="logo">
+      <h1>PQRSync</h1>
+    </div>
+    <nav class="nav">
+      <button class="logout-btn" (click)="volver()">← Volver</button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+
+    <div class="page-title">
+      <h2>📊 Estadísticas PQRS</h2>
+      <p>Resumen de solicitudes registradas en el sistema</p>
+    </div>
+
+    <div *ngIf="cargando" class="loading">Cargando estadísticas...</div>
+
+    <ng-container *ngIf="!cargando">
+
+      <div class="totales-grid">
+        <div class="total-card">
+          <div class="total-icon">📩</div>
+          <div class="total-info">
+            <span class="total-num">{{ totales.peticion }}</span>
+            <span class="total-label">Peticiones</span>
+          </div>
+        </div>
+        <div class="total-card">
+          <div class="total-icon">⚠️</div>
+          <div class="total-info">
+            <span class="total-num">{{ totales.queja }}</span>
+            <span class="total-label">Quejas</span>
+          </div>
+        </div>
+        <div class="total-card">
+          <div class="total-icon">🛠️</div>
+          <div class="total-info">
+            <span class="total-num">{{ totales.reclamo }}</span>
+            <span class="total-label">Reclamos</span>
+          </div>
+        </div>
+        <div class="total-card">
+          <div class="total-icon">💡</div>
+          <div class="total-info">
+            <span class="total-num">{{ totales.sugerencia }}</span>
+            <span class="total-label">Sugerencias</span>
+          </div>
+        </div>
+        <div class="total-card total-card--total">
+          <div class="total-icon">📋</div>
+          <div class="total-info">
+            <span class="total-num">{{ totales.total }}</span>
+            <span class="total-label">Total PQRS</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Por Estado</h3>
+      <div class="estados-grid">
+        <div class="estado-card" *ngFor="let e of estados">
+          <span class="estado-badge" [style.background]="e.color">{{ e.label }}</span>
+          <span class="estado-num">{{ e.count }}</span>
+        </div>
+      </div>
+
+      <h3 class="section-title">Detalle por Tipo</h3>
+      <div class="tabla-wrapper">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Total</th>
+              <th>Radicadas</th>
+              <th>Asignadas en área</th>
+              <th>Solucionadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fila of tablaDetalle">
+              <td><strong>{{ fila.tipo }}</strong></td>
+              <td>{{ fila.total }}</td>
+              <td>{{ fila.radicadas }}</td>
+              <td>{{ fila.asignadas }}</td>
+              <td>{{ fila.solucionadas }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </ng-container>
+
+  </main>
+
+  <section class="contact-section">
+    <h3>Contacto</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h4>Correo Electrónico</h4>
+        <p>pqrs@entidad.gov.co</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>Teléfono</h4>
+        <p>(2) 241-3890</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>Dirección</h4>
+        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo-box">
+        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
+      </div>
+      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
+    </div>
+  </footer>
+
+</div>
