@@ -218,6 +218,27 @@
   }
 }
 
+/* NUEVAS CLASES: SEMÁFORO DE TIEMPOS DE RESPUESTA */
+.tiempo-alerta {
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  display: inline-block;
+
+  &.ok {
+    background-color: #e8f8f5;
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  &.danger {
+    background-color: #fdedec;
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 77, 77, 0.2);
+  }
+}
+
 /* CONTACTO */
 .contact-section {
   padding: 20px 30px;
