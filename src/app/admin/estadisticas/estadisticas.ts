@@ -162,7 +162,7 @@ this.radicados = registros.map(r => {
     (fechaFin.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24)
   ));
   return {
-    numero:            'RAD-' + (r.id as string).substring(0, 8).toUpperCase(),
+    numero: r.ref_number ?? 'SIN RADICADO',
     tipo:              r.clasificacion_usuario ?? 'N/A',
     estado:            r.status ?? 'N/A',
     fecha:             r.created_at
