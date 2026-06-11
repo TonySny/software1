@@ -51,7 +51,7 @@
             (click)="verDetalle(s)"
             style="cursor:pointer">
             <td class="radicado">{{ s.ref_number || s.id }}</td>
-            <td>{{ s.type }}</td>
+            <td>{{ s.clasificacion_usuario | titlecase }}</td>
             <td>{{ s.request }}</td>
             <td>{{ s.created_at | date:'dd/MM/yyyy' }}</td>
             <td>
@@ -84,7 +84,7 @@
 
         <div class="resultado-item">
           <span class="resultado-label">Tipo</span>
-          <span class="resultado-valor">{{ solicitudSeleccionada?.type | titlecase }}</span>
+          <span class="resultado-valor">{{ solicitudSeleccionada?.clasificacion_usuario | titlecase }}</span>
         </div>
 
         <div class="resultado-item">
