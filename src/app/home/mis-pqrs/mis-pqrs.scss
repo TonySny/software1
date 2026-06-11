@@ -123,6 +123,7 @@
   tbody tr {
     border-bottom: 1px solid #f0f0f0;
     transition: background 0.2s;
+    cursor: pointer;
 
     &:hover { background: #faf5ff; }
     &:last-child { border-bottom: none; }
@@ -209,4 +210,112 @@
   border-radius: 6px;
   transition: 0.3s;
   &:hover { background: rgba(255,255,255,0.15); }
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover { background: #ddd; }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+
+  .modal-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  h2 { font-size: 1.4rem; font-weight: 800; color: #333; margin: 0 0 4px; }
+  p { color: #870fa2; font-size: 0.88rem; font-weight: 600; margin: 0; }
+}
+
+.resultado-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resultado-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  gap: 16px;
+
+  &--full { flex-direction: column; gap: 6px; }
+}
+
+.resultado-label {
+  font-weight: 700;
+  color: #555;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.resultado-valor {
+  color: #333;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.respuesta-texto {
+  text-align: left !important;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
+  line-height: 1.6;
+  font-size: 0.88rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sin-respuesta .resultado-valor {
+  color: #888;
+  font-style: italic;
+  text-align: left;
 }

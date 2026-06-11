@@ -46,7 +46,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let s of solicitudes">
+          <tr
+            *ngFor="let s of solicitudes"
+            (click)="verDetalle(s)"
+            style="cursor:pointer">
             <td class="radicado">{{ s.ref_number || s.id }}</td>
             <td>{{ s.type }}</td>
             <td>{{ s.request }}</td>
@@ -54,14 +57,76 @@
             <td>
               <span class="estado-badge" [style.background]="getEstadoColor(s.status)">
                 {{ s.status || 'Radicado' }}
-                </span>
+              </span>
             </td>
-            </tr>
+          </tr>
         </tbody>
-    </table>
-</div>
+      </table>
+    </div>
 
   </main>
+
+  <!-- MODAL DETALLE -->
+  <div class="modal-overlay" *ngIf="modalOpen" (click)="cerrarModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+
+      <button class="modal-close" (click)="cerrarModal()">✕</button>
+
+      <div class="modal-header">
+        <div class="modal-icon">📋</div>
+        <h2>Estado de tu solicitud</h2>
+        <p>#{{ solicitudSeleccionada?.ref_number }}</p>
+      </div>
+
+      <div *ngIf="cargandoDetalle" class="loading">Cargando detalle...</div>
+
+      <div *ngIf="!cargandoDetalle" class="resultado-grid">
+
+        <div class="resultado-item">
+          <span class="resultado-label">Tipo</span>
+          <span class="resultado-valor">{{ solicitudSeleccionada?.type | titlecase }}</span>
+        </div>
+
+        <div class="resultado-item">
+          <span class="resultado-label">Estado</span>
+          <span class="estado-badge" [style.background]="getEstadoColor(solicitudSeleccionada?.status)">
+            {{ solicitudSeleccionada?.status | titlecase }}
+          </span>
+        </div>
+
+        <div class="resultado-item">
+          <span class="resultado-label">Fecha de creación</span>
+          <span class="resultado-valor">{{ solicitudSeleccionada?.created_at | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="resultado-item">
+          <span class="resultado-label">Descripción</span>
+          <span class="resultado-valor">{{ solicitudSeleccionada?.request }}</span>
+        </div>
+
+        <!-- CON RESPUESTA -->
+        <ng-container *ngIf="respuestaDetalle; else sinRespuesta">
+          <div class="resultado-item">
+            <span class="resultado-label">Fecha de respuesta</span>
+            <span class="resultado-valor">{{ respuestaDetalle.created_at | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="resultado-item resultado-item--full">
+            <span class="resultado-label">Respuesta del funcionario</span>
+            <span class="resultado-valor respuesta-texto">{{ respuestaDetalle.response }}</span>
+          </div>
+        </ng-container>
+
+        <!-- SIN RESPUESTA -->
+        <ng-template #sinRespuesta>
+          <div class="resultado-item resultado-item--full sin-respuesta">
+            <span class="resultado-label">Respuesta</span>
+            <span class="resultado-valor">Tu solicitud aún no tiene respuesta. Te notificaremos cuando esté lista.</span>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
 
   <section class="contact-section">
     <h3>Contacto</h3>

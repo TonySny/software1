@@ -5,16 +5,21 @@ import { SupabaseService } from '../../services/supabase.service';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-mis-pqrs',
-    standalone: true,
-    imports: [RouterModule, CommonModule],
-    templateUrl: './mis-pqrs.html',
-    styleUrl: './mis-pqrs.scss'
+  selector: 'app-mis-pqrs',
+  standalone: true,
+  imports: [RouterModule, CommonModule],
+  templateUrl: './mis-pqrs.html',
+  styleUrl: './mis-pqrs.scss'
 })
 export class MisPqrsComponent implements OnInit {
 
   solicitudes: any[] = [];
   cargando = true;
+
+  modalOpen = false;
+  cargandoDetalle = false;
+  solicitudSeleccionada: any = null;
+  respuestaDetalle: any = null;
 
   constructor(
     private supabase: SupabaseService,
@@ -51,11 +56,40 @@ export class MisPqrsComponent implements OnInit {
     }
   }
 
+  async verDetalle(solicitud: any) {
+    this.solicitudSeleccionada = solicitud;
+    this.respuestaDetalle = null;
+    this.modalOpen = true;
+    this.cargandoDetalle = true;
+    this.cdr.detectChanges();
+
+    const { data, error } = await this.supabase.client
+      .from('request_responses')
+      .select('*')
+      .eq('request_id', solicitud.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!error && data) {
+      this.respuestaDetalle = data;
+    }
+
+    this.cargandoDetalle = false;
+    this.cdr.detectChanges();
+  }
+
+  cerrarModal() {
+    this.modalOpen = false;
+    this.solicitudSeleccionada = null;
+    this.respuestaDetalle = null;
+  }
+
   getEstadoColor(estado: string): string {
     switch (estado?.toLowerCase()) {
-      case 'resuelto': return '#22c55e';
-      case 'en proceso': return '#f59e0b';
-      default: return '#870fa2';
+      case 'resuelto':    return '#22c55e';
+      case 'en proceso':  return '#f59e0b';
+      default:            return '#870fa2';
     }
   }
 

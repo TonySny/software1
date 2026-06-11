@@ -27,12 +27,23 @@ export class ConsultarComponent {
     try {
       const { data, error } = await this.supabaseService.consultarPQRS(this.numeroRadicado);
 
-      if (error) {
+      if (error || !data) {
         Swal.fire('Error', 'No se encontró el PQRS con ese número de radicado', 'error');
         this.ticket = null;
-      } else {
-        this.ticket = data;
+        return;
       }
+
+      // Buscar respuesta del funcionario
+      const { data: respuesta } = await this.supabaseService.client
+        .from('request_responses')
+        .select('*')
+        .eq('request_id', data.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      this.ticket = { ...data, respuesta: respuesta ?? null };
+
     } catch (err) {
       Swal.fire('Error', 'Error inesperado al consultar el PQRS', 'error');
     }
