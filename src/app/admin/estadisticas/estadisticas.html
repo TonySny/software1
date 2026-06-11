@@ -94,6 +94,86 @@
         </table>
       </div>
 
+      <h3 class="section-title">⏱️ Reporte de Oportunidad y Tiempos</h3>
+
+      <div class="kpi-tiempos-grid">
+        <div class="kpi-tiempo-card" *ngFor="let kpi of kpiTiempos">
+          <div class="kpi-tiempo-top">
+            <span class="kpi-tiempo-icono">{{ kpi.icono }}</span>
+            <span class="tiempo-alerta"
+                  [ngClass]="kpi.tiempoPromedioDias <= kpi.tiempoLimiteLegal ? 'ok' : 'danger'">
+              {{ kpi.tiempoPromedioDias <= kpi.tiempoLimiteLegal ? '🟢 En términos' : '🔴 Vencida' }}
+            </span>
+          </div>
+          <div class="kpi-tiempo-valor">
+            {{ kpi.tiempoPromedioDias }}<span class="kpi-tiempo-unit"> días</span>
+          </div>
+          <div class="kpi-tiempo-tipo">{{ kpi.tipo }}</div>
+          <div class="kpi-tiempo-limite">Límite legal: {{ kpi.tiempoLimiteLegal }} días hábiles</div>
+        </div>
+      </div>
+
+      <div class="tabla-wrapper">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Tipo de Solicitud</th>
+              <th>Tiempo Promedio de Gestión</th>
+              <th>Término Legal Máximo</th>
+              <th>Indicador de Cumplimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tiempo of reporteTiempos">
+              <td><strong>{{ tiempo.tipo }}</strong></td>
+              <td>{{ tiempo.tiempoPromedioDias }} días</td>
+              <td>{{ tiempo.tiempoLimiteLegal }} días hábiles</td>
+              <td>
+                <span class="tiempo-alerta"
+                      [ngClass]="tiempo.tiempoPromedioDias <= tiempo.tiempoLimiteLegal ? 'ok' : 'danger'">
+                  {{ tiempo.tiempoPromedioDias <= tiempo.tiempoLimiteLegal ? '🟢 Dentro de Términos' : '🔴 Vencida' }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-title">🗂️ Listado de Radicados</h3>
+      <div class="tabla-wrapper">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>N° Radicado</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Fecha de Registro</th>
+              <th>Días Transcurridos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rad of radicados">
+              <td><strong>{{ rad.numero }}</strong></td>
+              <td>{{ rad.tipo }}</td>
+              <td>
+                <span class="estado-badge"
+                      [style.background]="rad.estado === 'Solucionada' ? '#22c55e' :
+                                          rad.estado === 'Asignada en area' ? '#f59e0b' : '#870fa2'">
+                  {{ rad.estado }}
+                </span>
+              </td>
+              <td>{{ rad.fecha }}</td>
+              <td>
+                <span class="tiempo-alerta"
+                      [ngClass]="rad.diasTranscurridos <= 15 ? 'ok' : 'danger'">
+                  {{ rad.diasTranscurridos }} días
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </ng-container>
 
   </main>
@@ -109,31 +189,14 @@
       <div class="contact-card">
         <div class="contact-icon">📞</div>
         <h4>Teléfono</h4>
-        <p>(2) 241-3890</p>
+        <p>601 123 4567</p>
       </div>
       <div class="contact-card">
         <div class="contact-icon">📍</div>
         <h4>Dirección</h4>
-        <p>Cra. 5 #12-34, Buenaventura, Valle del Cauca</p>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon">🕐</div>
-        <h4>Horario de atención</h4>
-        <p>Lunes a Viernes 8:00am - 5:00pm</p>
+        <p>Calle 123 # 45-67, Bogotá</p>
       </div>
     </div>
   </section>
-
-  <footer class="footer">
-    <div class="footer-brand">
-      <div class="footer-logo-box">
-        <img src="/assets/gov-logo.png" alt="GOV.CO" class="footer-logo-img" />
-      </div>
-      <div class="footer-copy">
-        <p>&copy; 2026 PQRSync. Todos los derechos reservados.</p>
-      </div>
-      <a href="https://www.gov.co/" target="_blank" class="gov-btn">Conoce GOV.CO aquí</a>
-    </div>
-  </footer>
 
 </div>
