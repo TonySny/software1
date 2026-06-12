@@ -27,11 +27,35 @@ export class FuncionarioComponent implements OnInit {
       this.router.navigate(['/home']);
       return;
     }
-    const user = session.data.session.user;
-    const metadata = user.user_metadata || {};
-    const nombre = metadata['full_name'];
-    const apellido = metadata['full_surname'];
-    this.nombreFuncionario = [nombre, apellido].filter(Boolean).join(' ') || user.email || 'Funcionario';
+
+    const userId = session.data.session.user.id;
+
+    // Intentar obtener nombre desde user_metadata primero
+    const metadata = session.data.session.user.user_metadata || {};
+    const nombreMeta = [metadata['full_name'], metadata['full_surname']]
+      .filter(Boolean).join(' ');
+
+    if (nombreMeta) {
+      this.nombreFuncionario = nombreMeta;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    // Si no hay metadata, consultar desde profiles
+    const { data, error } = await this.supabase.client
+      .from('profiles')
+      .select('name, surname')
+      .eq('id', userId)
+      .single();
+
+    if (!error && data) {
+      this.nombreFuncionario = [data.name, data.surname].filter(Boolean).join(' ')
+        || session.data.session.user.email
+        || 'Funcionario';
+    } else {
+      this.nombreFuncionario = session.data.session.user.email || 'Funcionario';
+    }
+
     this.cdr.detectChanges();
   }
 
